@@ -1,19 +1,21 @@
 
 import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'admin-login',
   template: `
-    <football-login loginRole="admin"></football-login>
+    <football-login loginRole="admin" redirectURL="home"></football-login>
   `,
   styles: []
 })
 export class LoginComponent implements OnInit {
   user$ = new BehaviorSubject(null);
   constructor() {
-
-    this.user$.switchMap(res => console.log(res))
+    this.user$.pipe(
+      switchMap(res=>  new BehaviorSubject(null))
+    )
   }
 
   ngOnInit() {

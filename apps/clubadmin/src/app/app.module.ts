@@ -1,3 +1,4 @@
+
 import { environment } from './../environments/environment';
 // import { newsRoutes } from './../../../../libs/news/src/lib/news.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,7 @@ import { RoutingModule } from './routing.module';
 
 import {testing } from '@football/events';
 
-import {SharedModule } from '@football/shared';
+import { SharedModule, AuthenticationService } from '@football/shared';
 import { LoginComponent } from './login/login.component';
 
 
@@ -35,7 +36,7 @@ import { LoginComponent } from './login/login.component';
     // AngularFireAuthModule,
     SharedModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

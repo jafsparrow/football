@@ -20,10 +20,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
           MaterialLibraryModule,
           FlexLayoutModule,
           AngularFirestoreModule,
-          AngularFireAuthModule
+          AngularFireAuthModule,
+
         ],
         declarations: [LoginComponent],
+        providers: [],
         exports: [LoginComponent],
-        providers: [AuthenticationService]
       })
       export class SharedModule { }

@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'football-login',
@@ -13,10 +14,19 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnChanges {
   @Input() loginRole: String = 'user';
+  @Input() redirectURL;
 
+  isLoading = false;
+  isError = false;
   items: Observable<any[]>;
-  constructor(db: AngularFirestore, private auth: AuthenticationService) {
+
+  constructor(db: AngularFirestore,
+              private auth: AuthenticationService,
+              private router: Router) {
+    console.log('login component is constructed')
     this.items = db.collection('news').valueChanges();
+
+
   }
 
   ngOnChanges(changes) {
@@ -25,10 +35,31 @@ export class LoginComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('Init', this.loginRole);
+      this.auth.user$.subscribe(
+      user => {
+      if(user) {
+        this.router.navigate([this.redirectURL]);
+      }
+    }
+    )
   }
 
   login(loginForm: FormGroup) {
-    this.auth.login();
+    this.isLoading = true;
+    this.auth.login()
+      .then(res => {
+        // navigate to the URL if given as Input.
+
+        if(this.redirectURL) {
+          console.log('redirecting to location');
+          this.router.navigate([this.redirectURL]);
+        }
+        console.log(res);
+      })
+      .catch(error => {
+        this.isLoading = false;
+        this.isError = true;
+      });
     console.log(loginForm);
       console.log(typeof(loginForm));
 

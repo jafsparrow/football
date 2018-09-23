@@ -1,9 +1,8 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-import { map, filter, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -14,20 +13,27 @@ export class AuthenticationService {
   user: BehaviorSubject<any> = new BehaviorSubject(null)
   user$: Observable<any>;
 
+
   email = "jafar@test.com";
-  password = "jafroddse";
+  password = "jafrose";
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
-    this.user$ = this.afAuth.authState
-        .switchMap(user => {
-          if (user) {
-            return this.afs.doc<any>(`users/${user.uid}`).valueChanges()
-          } else {
-            return Observable.of(null)
-          }
-        })
+    console.log('auth service is constructed');
+    this.user$ = this.afAuth.authState.pipe
+      (switchMap(user => {
+        if(user) {
+          return this.afs.doc<any>(`users/${user.uid}`).valueChanges()
+        } else {
+          return of(null);
+        }
+
+      }))
   }
 
-  login() {
-    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(user => console.log(user)).catch(err => console.log(err));
+  login(): Promise<any> {
+    return this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
+  }
+
+  logout() {
+    return this.afAuth.auth.signOut();
   }
 }
