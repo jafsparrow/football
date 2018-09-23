@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="space-around center">
+
+  <mat-card>
+      <div class="login-brand-area">
+        <img src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX17572194.jpg" alt="" srcset="">
+        <p>Please Login to Timeout</p>
+      </div>
+      <mat-card-content>
+        <form #loginForm="ngForm"
+          (ngSubmit)="login(loginForm)">
+          <mat-form-field class="full-width">
+            <input matInput type="text"
+              placeholder="Please enter user name"
+              ngModel
+              name="email"
+              required>
+            <!-- <mat-hint>Please use the email used while creating account</mat-hint> -->
+            <mat-error *ngIf="true">Please enter a valid user name</mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+              <input matInput type="password"
+                placeholder="Please enter password"
+                ngModel
+                name="password"
+                required>
+              <!-- <mat-hint>Please enter the password</mat-hint> -->
+              <mat-error *ngIf="true">Please enter a valid user name</mat-error>
+            </mat-form-field>
+        <div class="login-button">
+          <button mat-button>Forgot Password</button>
+          <button mat-raised-button color="accent"
+            type="submit">Login</button>
+        </div>
+        </form>
+      </mat-card-content>
+  </mat-card>
+</div>
+<ul>
+    <li class="text" *ngFor="let item of items | async">
+      {{item.title}}
+    </li>
+  </ul>

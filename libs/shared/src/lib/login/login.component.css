@@ -1,0 +1,22 @@
+mat-card {
+  min-width: 500px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-brand-area {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.login-brand-area > img {
+  max-width: 100px;
+  height: auto;
+}
+.login-button {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}

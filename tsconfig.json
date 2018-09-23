@@ -16,6 +16,15 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@football/news": [
+        "libs/news/src/index.ts"
+      ],
+      "@football/events": [
+        "libs/events/src/index.ts"
+      ],
+      "@football/shared": [
+        "libs/shared/src/index.ts"
+      ]
     }
   },
   "exclude": [

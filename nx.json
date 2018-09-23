@@ -13,6 +13,15 @@
     },
     "clubadmin-e2e": {
       "tags": []
+    },
+    "news": {
+      "tags": []
+    },
+    "events": {
+      "tags": []
+    },
+    "shared": {
+      "tags": []
     }
   }
 }
