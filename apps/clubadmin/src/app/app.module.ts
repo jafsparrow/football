@@ -18,6 +18,7 @@ import { RoutingModule } from './routing.module';
 import {testing } from '@football/events';
 
 import { SharedModule, AuthenticationService } from '@football/shared';
+import { NewsModule } from '@football/news';
 import { LoginComponent } from './login/login.component';
 
 
@@ -34,7 +35,8 @@ import { LoginComponent } from './login/login.component';
     RoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     // AngularFireAuthModule,
-    SharedModule
+    SharedModule,
+    NewsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

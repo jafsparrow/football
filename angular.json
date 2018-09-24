@@ -132,7 +132,7 @@
       "root": "libs/news",
       "sourceRoot": "libs/news/src",
       "projectType": "library",
-      "prefix": "libs/news",
+      "prefix": "",
       "architect": {
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
