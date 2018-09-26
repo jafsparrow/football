@@ -6,7 +6,7 @@
 /out-tsc
 
 # firestore
-/functions
+/functions/node_modules
 # dependencies
 /node_modules
 
