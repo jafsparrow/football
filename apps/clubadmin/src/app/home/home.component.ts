@@ -1,6 +1,7 @@
-import { AuthenticationService } from '@football/shared';
 
-import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, NavRoute } from '@football/shared';
+
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'football-home',
@@ -8,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  sideNavOptions: NavRoute[] = [
+    { name: 'Dashboard', route: 'dashboard'},
+    { name: 'News', route: 'news', icon: 'more'}
+  ]
   constructor(public auth: AuthenticationService) { }
 
   ngOnInit() {

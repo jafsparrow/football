@@ -1,0 +1,75 @@
+<div class="newspage">
+  <div fxLayout="row" fxLayout.lt-sm="column"
+    fxLayoutAlign="space-evenly center"
+    fxLayoutGap="20px"
+    class="item-container">
+    <div class="stat-wrapper" fxFlex *ngFor="let item of numberNeeded" >
+
+      <mat-card class="stat-container">
+        <mat-card-header class="stat-header">
+          <mat-card class="stat-icon-container">
+            <mat-icon class="mat-18">ligature</mat-icon>
+          </mat-card>
+          <p class="stat-category">Published News</p>
+          <h3 class="stat-value">49/50
+              <small>GB</small>
+          </h3>
+        </mat-card-header>
+        <mat-card-footer>
+            <div class="stats">
+                <mat-icon class="mat-18">ligature</mat-icon>
+                <a href="#pablo">Get More Space...</a>
+            </div>
+        </mat-card-footer>
+
+      </mat-card>
+<!--
+            <div class="card card-stats">
+
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <mat-card>
+                    <i class="material-icons">content_copy</i>
+                  </mat-card>
+                </div>
+                <p class="card-category">Used Space</p>
+                <h3 class="card-title">49/50
+                  <small>GB</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger">warning</i>
+                  <a href="#pablo">Get More Space...</a>
+                </div>
+              </div> -->
+    </div>
+
+    test content
+  </div>
+
+  <hr>
+  <div class="news-summary"
+    fxLayout="row" fxLayout.lt-sm="column">
+      <mat-card fxFlex>
+          <mat-card-header class="">
+              <mat-card-title>Title</mat-card-title>
+              <mat-card-subtitle>Subtitle</mat-card-subtitle>
+          </mat-card-header>
+          <img matCardImage src="Card wide image source">
+          <mat-card-content>
+              Text content
+          </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex>
+          <mat-card-header>
+              <mat-card-title>Title</mat-card-title>
+              <mat-card-subtitle>Subtitle</mat-card-subtitle>
+          </mat-card-header>
+          <img matCardImage src="Card wide image source">
+          <mat-card-content>
+              Text content
+          </mat-card-content>
+      </mat-card>
+  </div>
+</div>

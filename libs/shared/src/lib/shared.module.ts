@@ -11,11 +11,16 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
+import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
+import { SideNavHeaderComponent } from './navigation/side-nav-header/side-nav-header.component';
+import { RouterModule } from '@angular/router';
 
 
       @NgModule({
         imports: [
           CommonModule,
+          RouterModule,
           FormsModule,
           MaterialLibraryModule,
           FlexLayoutModule,
@@ -23,8 +28,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
           AngularFireAuthModule,
 
         ],
-        declarations: [LoginComponent],
+        declarations: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent],
         providers: [],
-        exports: [LoginComponent],
+        exports: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent],
       })
       export class SharedModule { }

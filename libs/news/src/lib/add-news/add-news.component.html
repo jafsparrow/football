@@ -1,0 +1,51 @@
+<div id="overlay" [ngStyle]="{'display':submitting ? 'block' : 'none' }">
+  <div id="text">News is being added. please wait..!</div>
+
+</div>
+
+<mat-card *ngIf="!submitting">
+
+  <form [formGroup]="articleAddFrom" (ngSubmit)= "submitNews()"
+    class="form-container">
+
+      <mat-form-field>
+          <input matInput placeholder="News Title" [formControl]="title">
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [formControl]="published_date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field> -->
+
+      <mat-form-field>
+        <textarea matInput name="" id="" rows="3" [formControl]="summary"
+          placeholder="Add news summary"
+          matTextareaAutosize></textarea>
+      </mat-form-field>
+
+      <mat-card-subtitle>Add Related Image</mat-card-subtitle>
+      <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)">
+
+
+      <mat-form-field>
+        <mat-select placeholder="Clubs" [formControl]="tagged_clubs" multiple>
+          <mat-option *ngFor="let club of clubList" [value]="club.id">{{club.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <textarea matInput [formControl]="content"></textarea>
+      </mat-form-field>
+
+
+
+      <button mat-raised-button type="submit" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
+  </form>
+
+
+
+  <!-- <button (click)="uploadImage()">upload image</button> -->
+</mat-card>

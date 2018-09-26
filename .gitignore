@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 
+# firestore
+/functions
 # dependencies
 /node_modules
 

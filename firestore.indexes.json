@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionId": "news",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "is_active",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_on",
+          "mode": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}

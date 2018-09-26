@@ -1,0 +1,8 @@
+.flex-full-width {
+  flex: 1 1 auto;
+}
+
+.username {
+  font-size: 5;
+  font-weight: 100;
+}

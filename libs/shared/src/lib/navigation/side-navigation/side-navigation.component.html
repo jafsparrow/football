@@ -1,0 +1,23 @@
+<mat-nav-list class="sidenav-list">
+    <mat-list-item *ngFor="let link of navConfig" (click)="onToggleClose()"
+        [routerLink]="link.route">
+      <button mat-icon-button>
+        <mat-icon>{{link.icon ? link.icon : 'more'}}</mat-icon>
+      </button>
+      {{ link.name }}
+    </mat-list-item>
+  </mat-nav-list>
+
+
+
+  <!-- <mat-nav-list class="sidenav-list">
+      <mat-list-item *ngFor="let link of navConfig" (click)="onToggleClose()"
+          [routerLink]="link.route"
+          routerLinkActive #{{link.name}}="routerLinkActive"
+          [active]="{{link.name}}.isActive">
+        <button mat-icon-button>
+          <mat-icon>{{link.icon ? link.icon : 'more'}}</mat-icon>
+        </button>
+        {{ link.name }}
+      </mat-list-item>
+    </mat-nav-list> -->

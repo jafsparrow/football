@@ -1,4 +1,4 @@
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from './../environments/environment';
 // import { newsRoutes } from './../../../../libs/news/src/lib/news.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,16 +17,29 @@ import { RoutingModule } from './routing.module';
 
 import {testing } from '@football/events';
 
-import { SharedModule, AuthenticationService } from '@football/shared';
+import { SharedModule, AuthenticationService, MaterialLibraryModule} from '@football/shared';
 import { NewsModule } from '@football/news';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NewsComponent } from './news/news.component';
+import { EventsComponent } from './events/events.component';
+import { ClubInfoComponent } from './club-info/club-info.component';
+import { NewsAddComponent } from './news/news-add/news-add.component';
+import { NewsListComponent } from './news/news-list/news-list.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    NewsComponent,
+    EventsComponent,
+    ClubInfoComponent,
+    NewsAddComponent,
+    NewsListComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +48,10 @@ import { LoginComponent } from './login/login.component';
     RoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     // AngularFireAuthModule,
+    FlexLayoutModule,
     SharedModule,
-    NewsModule
+    // NewsModule,
+    MaterialLibraryModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

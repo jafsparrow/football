@@ -1,4 +1,4 @@
-<p>
+<!-- <p>
   home works!
 </p>
 <div class="full-width">
@@ -7,4 +7,17 @@
 
   <news-list class="full-width"></news-list>
 </div>
-<button (click)="signOut()">logout</button>
+<button (click)="signOut()">logout</button> -->
+<mat-sidenav-container class="main-container">
+  <mat-sidenav #sidenav mode="over">
+    <football-side-nav-header></football-side-nav-header>
+    <football-side-navigation (menuClicked)="sidenav.toggle()"
+      [navConfig]="sideNavOptions"></football-side-navigation>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <football-toolbar (menuClicked)="sidenav.toggle()"></football-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
