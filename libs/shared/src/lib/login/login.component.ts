@@ -44,31 +44,40 @@ export class LoginComponent implements OnInit, OnChanges {
     )
   }
 
-  login(loginForm: FormGroup) {
-    this.isLoading = true;
-    this.auth.login()
-      .then(res => {
-        // navigate to the URL if given as Input.
-
-        if(this.redirectURL) {
-          console.log('redirecting to location');
-          this.router.navigate([this.redirectURL]);
-        }
-        console.log(res);
-      })
-      .catch(error => {
-        this.isLoading = false;
-        this.isError = true;
-      });
-    console.log(loginForm);
-      console.log(typeof(loginForm));
-
-    //get the user name and password and send for login
-    // from fail part , fail the login.
-    // from success part, save the user info , check if role is not user then switchMap to user collectino for role data.
-    // if the user do not have the given role, logout the user and show error message.
-  }
+login() {
+  this.auth.googleLogin();
 }
+
+signUp() {
+  // this.auth.
+}
+
+}
+//   login(loginForm: FormGroup) {
+//     this.isLoading = true;
+//     this.auth.login()
+//       .then(res => {
+//         // navigate to the URL if given as Input.
+
+//         if(this.redirectURL) {
+//           console.log('redirecting to location');
+//           this.router.navigate([this.redirectURL]);
+//         }
+//         console.log(res);
+//       })
+//       .catch(error => {
+//         this.isLoading = false;
+//         this.isError = true;
+//       });
+//     console.log(loginForm);
+//       console.log(typeof(loginForm));
+
+//     //get the user name and password and send for login
+//     // from fail part , fail the login.
+//     // from success part, save the user info , check if role is not user then switchMap to user collectino for role data.
+//     // if the user do not have the given role, logout the user and show error message.
+//   }
+// }
 
 
 /**

@@ -25,3 +25,20 @@ mat-spinner {
   margin-top: 100px;
   margin: auto;
 }
+
+
+
+/* after tab login implementation with only google auth */
+.stretched-tabs {
+  max-width: 800px;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.login_contaier {
+  padding: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}

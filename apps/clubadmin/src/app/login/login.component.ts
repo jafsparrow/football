@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'admin-login',
+  selector: 'football-login-page',
   template: `
     <football-login loginRole="admin" redirectURL="home"></football-login>
   `,

@@ -1,4 +1,6 @@
+import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'football-toolbar',
@@ -7,13 +9,19 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   @Output() menuClicked = new EventEmitter();
-  constructor() { }
+  constructor(private auth: AuthenticationService,
+              private router: Router) { }
 
   ngOnInit() {
   }
 
   openSideNav(){
     this.menuClicked.emit('opened');
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
 }

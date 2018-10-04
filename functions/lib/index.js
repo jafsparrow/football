@@ -29,4 +29,11 @@ exports.unindexAnimal = functions.firestore
     // Delete an ID from the index
     return index.deleteObject(objectId);
 });
+exports.onUserRegistration = functions.firestore
+    .document('users/{userID}')
+    .onCreate((snap, context) => {
+    const user = snap.data();
+    user['createdOn'] = new Date();
+    return snap.ref.set(user, { merge: true });
+});
 //# sourceMappingURL=index.js.map

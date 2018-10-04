@@ -3,49 +3,88 @@
 
 </div>
 
-<mat-card *ngIf="!submitting">
-
-  <form [formGroup]="articleAddFrom" (ngSubmit)= "submitNews()"
-    class="form-container">
-
-      <mat-form-field>
-          <input matInput placeholder="News Title" [formControl]="title">
-      </mat-form-field>
-
-      <!-- <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [formControl]="published_date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field> -->
-
-      <mat-form-field>
-        <textarea matInput name="" id="" rows="3" [formControl]="summary"
-          placeholder="Add news summary"
-          matTextareaAutosize></textarea>
-      </mat-form-field>
-
-      <mat-card-subtitle>Add Related Image</mat-card-subtitle>
-      <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)">
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="articleAddFrom">
+      <form [formGroup]="articleAddFrom" (ngSubmit)= "submitNews()"
+      class="form-container">
+        <ng-template matStepLabel>Create the article</ng-template>
+      <mat-card *ngIf="!submitting" class="form-container">
 
 
-      <mat-form-field>
-        <mat-select placeholder="Clubs" [formControl]="tagged_clubs" multiple>
-          <mat-option *ngFor="let club of clubList" [value]="club.id">{{club.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="News Title" [formControl]="title">
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" [formControl]="published_date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> -->
+
+            <mat-form-field>
+              <textarea matInput name="" id="" rows="3" [formControl]="summary"
+                placeholder="Add news summary"
+                matTextareaAutosize></textarea>
+            </mat-form-field>
+
+            <mat-card-subtitle>Add Related Image</mat-card-subtitle>
+            <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)">
+            <img [src]="url" height="200"> <br/>
 
 
 
-      <mat-form-field>
-        <textarea matInput [formControl]="content"></textarea>
-      </mat-form-field>
+
+
+            <mat-form-field>
+              <textarea matInput [formControl]="content"></textarea>
+            </mat-form-field>
 
 
 
-      <button mat-raised-button type="submit" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
-  </form>
+            <button mat-raised-button type="submit" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
 
 
 
-  <!-- <button (click)="uploadImage()">upload image</button> -->
-</mat-card>
+
+        <!-- <button (click)="uploadImage()">upload image</button> -->
+      </mat-card>
+
+    </form>
+  </mat-step>
+  <mat-step >
+    <!-- <form > -->
+      <ng-template matStepLabel>Add tags and clubs</ng-template>
+      <mat-card>
+
+        Related sports.
+
+        <mat-selection-list #shoes>
+            <!-- <mat-list-option *ngFor="let shoe of typesOfShoes">
+              {{shoe}}
+            </mat-list-option> -->
+            <mat-list-option>test option</mat-list-option>
+          </mat-selection-list>
+
+        <mat-form-field>
+          <mat-select placeholder="Clubs" [formControl]="tagged_clubs" multiple>
+            <mat-option *ngFor="let club of clubList" [value]="club.id">{{club.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-card>
+    <!-- </form> -->
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Upload Image</ng-template>
+    Here please upload images
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+
+
+

@@ -55,6 +55,20 @@ export class AddNewsComponent implements OnInit {
         console.log(res);
         this.clubList = res;
       });
+
+      if(true) {
+        this.articleAddFrom.setValue({
+          title: 'hello world the set value title',
+          summary: 'the set value summary which is of lenght tooo hight tcoood cococ cococo',
+          tagged_clubs: '',
+          content: ''
+        });
+
+        setTimeout(() => {
+          this.articleAddFrom.patchValue({content: 'the patched value contnet after 5 sec'})
+
+        }, 5000);
+      }
   }
 
 
@@ -75,11 +89,22 @@ export class AddNewsComponent implements OnInit {
       });
   }
 
-
+  url='';
 
   fileSelection($event) {
     console.log($event.target.files);
     this.selectedFiles = ($event.target as HTMLInputElement).files;
+
+    if ($event.target.files && $event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL($event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+
+        this.url = event.target.result;
+      }
+    }
   }
 
   uploadImage() {

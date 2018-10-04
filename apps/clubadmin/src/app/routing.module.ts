@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-import { newsRoutes } from '@football/news'
+// import { newsRoutes } from '@football/news'
 import { EventsComponent } from './events/events.component';
 
 const routes: Routes= [

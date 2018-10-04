@@ -39,4 +39,13 @@ exports.unindexAnimal = functions.firestore
 });
 
 
+exports.onUserRegistration = functions.firestore
+  .document('users/{userID}')
+  .onCreate((snap, context) => {
+
+      const user = snap.data();
+      user['createdOn'] = new Date();
+      return snap.ref.set(user, {merge: true});
+  })
+
 
