@@ -58,12 +58,24 @@
 
         Related sports.
 
-        <mat-selection-list #shoes>
-            <!-- <mat-list-option *ngFor="let shoe of typesOfShoes">
-              {{shoe}}
-            </mat-list-option> -->
-            <mat-list-option>test option</mat-list-option>
-          </mat-selection-list>
+        <mat-selection-list #sport (selectionChange)="listSelection(sport)">
+            <mat-list-option >
+              football
+            </mat-list-option>
+        </mat-selection-list>
+
+
+
+        <div *ngFor="let sport of sportsType">
+
+          <mat-checkbox
+             [name]="sport"
+             (change)="sportSelectionChange($event)"
+             labelPosition="before">
+           {{sport}}
+         </mat-checkbox>
+        </div>
+
 
         <mat-form-field>
           <mat-select placeholder="Clubs" [formControl]="tagged_clubs" multiple>

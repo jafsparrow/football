@@ -27,6 +27,7 @@ export const newsRoutes: Route[] = [
       @NgModule({
         imports: [
           CommonModule,
+          FormsModule,
           ReactiveFormsModule,
           RouterModule.forChild(newsRoutes),
           MaterialLibraryModule,

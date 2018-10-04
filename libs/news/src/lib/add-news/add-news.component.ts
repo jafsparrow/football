@@ -14,6 +14,7 @@ export class AddNewsComponent implements OnInit {
 
   submitting = false;
   startDate = new Date();
+
   title = new FormControl('', [Validators.required]);
   // createdDate = new FormControl(new Date(), [Validators.required]);
   summary = new FormControl('test content to make it 50, hello super duper world', [Validators.required, Validators.minLength(50)]);
@@ -23,16 +24,15 @@ export class AddNewsComponent implements OnInit {
   selectedFiles: FileList | null;
   createdNewsKey: any = null;
   clubList = [];
-  // clubList = [ { name: 'PFC Kunnumpuram', key: 'key1'},
-  //     { name: 'KASC', key: 'key1'},
-  //     { name: 'Fifa Manjeri', key: 'key1'},
-  //     { name: 'Balck and White', key: 'key1'},
-  //     { name: 'Al Madina', key: 'key1'},
-  //     { name: 'ALS Makappuram', key: 'key1'}
-  //   ];
 
-
+  // Declare 3 sections with 2 separate forms 1- news content, 2- tagged clubs and sports type, 3- upload image - this doesn't need a form.
   articleAddFrom: FormGroup;
+  extraDataForm: FormGroup;
+
+  // To render the relatedSports section.
+  selectedSports = {};
+
+  sportsType: Array<any> = ['football', 'cricket', 'basketball', 'tug of war', 'badminton', 'other'];
 
   constructor(private formBuilder: FormBuilder,
     private newService: NewsService,
@@ -42,9 +42,16 @@ export class AddNewsComponent implements OnInit {
       this.articleAddFrom = this.formBuilder.group({
         title: this.title,
         summary: this.summary,
+        content: this.content,
         tagged_clubs: this.tagged_clubs,
-        content: this.content
+
       });
+
+      this.extraDataForm = this.formBuilder.group({
+        taggedClubs: new FormControl(''),
+        relatedSports: new FormControl(this.sportsType)
+      })
+
 
      }
 
@@ -75,6 +82,8 @@ export class AddNewsComponent implements OnInit {
   submitNews() {
     this.submitting = true;
     console.log(this.articleAddFrom);
+    // adding the related sports to the form value.
+    this.articleAddFrom.value['relatedSports'] = this.selectedSports;
     this.newService.createNews(this.articleAddFrom.value)
       .then(res => {
         if (res) {
@@ -124,5 +133,14 @@ export class AddNewsComponent implements OnInit {
     }
   }
 
+  sportSelectionChange($event) {
+    this.selectedSports[$event.source.name] = $event.checked;
+    console.log(this.selectedSports);
+  };
+
+  listSelection($event) {
+    console.log($event);
+    console.log($event.selectedOptions)
+  }
 
 }
