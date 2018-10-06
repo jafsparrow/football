@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     //  check if the user has completed the onBoarding. if not redirect after 2 min.
     this.auth.user$.subscribe(
       res => {
-        if (res.registrationStep !== 100) {
+        if (res && res.registrationStep !== 100) {
           // navigate to onBoarding page.
           setTimeout(()=>{
             console.log('navigating to on borading page');

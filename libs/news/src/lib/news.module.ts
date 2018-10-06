@@ -22,6 +22,10 @@ export const newsRoutes: Route[] = [
   {
     path: 'add',
     component: AddNewsComponent
+  },
+  {
+    path: 'detail',
+    component:NewsDetailComponent
   }
 ];
       @NgModule({

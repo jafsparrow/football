@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { News } from '../modals/news';
 
 @Component({
   selector: 'news-detail',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news-detail.component.css']
 })
 export class NewsDetailComponent implements OnInit {
-  news = {
+  @Input() news: News
+  news1 = {
     author: 'Jafar Chembatty',
     title: 'hello title of the news',
     image: '',
@@ -16,6 +18,14 @@ export class NewsDetailComponent implements OnInit {
     content: 'hello content teams',
     article: 'some valya sambhavam'
   }
+
+  get relatedGames() {
+    if(this.news.relatedSports && (Object.keys(this.news.relatedSports)).length > 0) {
+      return Object.keys(this.news.relatedSports);
+    }
+    return [];
+  }
+
   constructor() { }
 
   ngOnInit() {

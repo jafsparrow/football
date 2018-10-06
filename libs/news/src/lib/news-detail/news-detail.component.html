@@ -1,18 +1,20 @@
 <mat-card class="news-detail-card">
   <mat-card-header>
     <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg)','background-position': 'center','background-size': 'cover', 'max-height': '150px'}">
-
-
     </div>
     <mat-card-title class="news-title">
       {{news.title}}
     </mat-card-title>
     <mat-card-subtitle>
-      <span> {{news.author}} </span>
-      <span class="news-publish-date">: {{news.publishedDate | date}}</span>
+      <span> {{news.author? news.author : "News Author Name"}} </span>
+      <span class="news-publish-date">: {{news.publishedDate? news.publishedDate : news.createdDate | date}}</span>
     </mat-card-subtitle>
   </mat-card-header>
-
+  <mat-chip-list >
+    <mat-chip *ngFor="let game of relatedGames">
+      {{game}}
+    </mat-chip>
+  </mat-chip-list>
   <img *ngIf="news.image" mat-card-image src="{{news.image}}" alt="{{news.title}}" class="news-image">
   <mat-card-content>
     <mat-chip-list>

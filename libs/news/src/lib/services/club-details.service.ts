@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore, AngularFirestoreCollection  } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 // This brings me meta data about clubs which is used for news read and create.
 @Injectable()
@@ -11,13 +12,8 @@ export class ClubDetailsService {
   constructor(private db: AngularFirestore) {
     this.clubs = this.db.collection('clubs');
     console.log('club details dservice.');
-    this.testSubcollection();
    }
 
-   testSubcollection() {
-    this.db.collection('fxtures', ref => ref.where('teams.team1.playing', '==', true)).snapshotChanges()
-      .subscribe(res => console.log(res));
-   }
    // this shoudl return observable of filtered clubs based on the key.
   getTaggedClubs(clubs) {
     // this.getAllclubs()
@@ -47,10 +43,31 @@ export class ClubDetailsService {
         });
       })
     )
-
-
-
   }
+
+  searchClubs(term$: Observable<string>) {
+    return term$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      switchMap((term)=> {
+        return this.findClubs(term)
+      })
+    )
+   }
+
+   private findClubs(term) {
+    return this.db.collection('clubs', ref=> ref.where('name', '>=',term))
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+         return res.map(item => {
+           const data = item.payload.doc.data();
+           const id = item.payload.doc.id;
+           return { id, ...data };
+         });
+       })
+       );
+   }
 
   getAllclubs() {
     return this.clubs.snapshotChanges()
