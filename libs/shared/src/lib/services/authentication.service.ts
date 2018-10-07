@@ -57,7 +57,7 @@ export class AuthenticationService {
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    console.log(user);
+    console.log('google response', user);
 
     userRef
         .valueChanges()
@@ -66,7 +66,7 @@ export class AuthenticationService {
         )
         .subscribe( res => {
           const data = {
-            dispalyName: user.displayName,
+            displayName: user.displayName,
             photoUrl: user.photoURL
           };
 

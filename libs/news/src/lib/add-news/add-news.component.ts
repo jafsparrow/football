@@ -1,4 +1,5 @@
-import { News } from './../modals/news';
+import { AuthenticationService } from '@football/shared';
+import { News, ClubMeta } from './../modals/news';
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import {
   FormControl,
@@ -19,6 +20,8 @@ import { Subject, Observable } from 'rxjs';
 })
 export class AddNewsComponent implements OnInit {
   mode = 'edit' // by default the mode is add but if the input has been given then it should be edit.
+  // the input is used when this component is used as a child component in the news edit component, so that
+  // add component can be used to achive edit if pass the news data.
   @Input()
     set newsData(newsData) {
       if(newsData) {
@@ -41,7 +44,12 @@ export class AddNewsComponent implements OnInit {
   ];
   selectedSports = {}; // this holds the user selected sports for the news
   clubSearchResults$: Observable<Array<any>>; // this refers to the search result array for clubs based on user typed input
-  taggedClubs = []; // array of objects which has club name and club unique id.
+  taggedClubs: ClubMeta[] = []; // array of objects which has club name and club unique id.
+
+  someClubs = [
+    { name: 'new castle', id: 'eieire'},
+    { name: 'manchester united', id: 'blah blah'}
+  ]
   imageUrl = ''; // to map to the url preview after selecting image.
   searchTerm$ = new Subject<string>(); // rxjs subject declared to make the search function work.
   newsObject: News = {
@@ -50,13 +58,15 @@ export class AddNewsComponent implements OnInit {
     createdDate: new Date(),
     content: '',
     relatedSports: {},
-    taggedClubs: []
+    taggedClubs: [],
+    author:{}
   } // this holds the data of the whole news from client before submitting to the server so that it can be shown in the preview
   constructor(
     private formBuilder: FormBuilder,
     private newService: NewsService,
     private clubDetailService: ClubDetailsService,
-    private route: Router
+    private route: Router,
+    private auth: AuthenticationService
   ) {
     this.articleAddFrom = this.formBuilder.group({
       title: ['Sample title for the news', Validators.required],
@@ -74,6 +84,21 @@ export class AddNewsComponent implements OnInit {
     );
 
     // setInterval(()=> console.log(this.newsObject), 15000);
+    // sample taggedclub populaton
+    this.taggedClubs = [ { name: 'liverpool', id: 'eik323'},
+    { name: 'barca', id: 'eik323'}
+
+        ]
+
+    this.auth.user$.subscribe(
+      res => {
+        this.newsObject.author = {
+          name: res.displayName,
+          uid: res.uid,
+          photoUrl: res.photoUrl
+        }
+      }
+    )
 
   }
 
@@ -173,5 +198,20 @@ export class AddNewsComponent implements OnInit {
       image: this.imageUrl ? this.imageUrl : null
     }
     console.log(this.newsObject)
+  }
+
+  clubTagToggle($event, club) {
+    console.log($event, club)
+    if($event.checked) {
+      this.taggedClubs.push(club);
+    } else {
+
+      const index = this.taggedClubs.indexOf(club);
+
+      if (index !== -1) {
+          this.taggedClubs.splice(index, 1);
+      }
+    }
+
   }
 }

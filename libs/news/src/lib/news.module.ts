@@ -1,3 +1,4 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialLibraryModule } from '@football/shared';
@@ -35,7 +36,8 @@ export const newsRoutes: Route[] = [
           ReactiveFormsModule,
           RouterModule.forChild(newsRoutes),
           MaterialLibraryModule,
-          AngularFireStorageModule
+          AngularFireStorageModule,
+          FlexLayoutModule
         ],
         declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent],
         exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent],

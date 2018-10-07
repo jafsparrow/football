@@ -9,7 +9,9 @@
   width: 100%;
 }
 
-
+.full-width {
+  width: 100%;
+}
 #overlay {
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
@@ -41,4 +43,50 @@ mat-card {
 
 selectedSports {
   width:  100%;
+}
+
+.related-sport-check {
+  padding: 5px;
+}
+.related-sport-check::after{
+  content: ' |'
+}
+
+/* css code for club search results */
+.club-search-info {
+  padding: 5px;
+  background-color: #E0E0E0;
+  margin-bottom: 2px;
+  height: 60px;
+}
+.logo-area {
+  text-align: center;
+  border-radius: 30px;
+
+}
+.logo-area > img {
+  width: 50px;
+  height: auto;
+}
+.club-info-area {
+  font-weight: 100;
+  font-size: 14px;
+}
+.action-button-area {
+  text-align: center;
+}
+
+.tag-cancel-cross {
+  padding-left: 10px;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.tag-cancel-cross:hover {
+  transform: scale(1.5);
+}
+
+.tagged-clubs-list {
+  padding: 5px;
+  margin: 10px;
 }
