@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { NewsService } from './../services/news.service';
 // import { Component, OnInit, ViewChild } from '@angular/core';
 // import { News } from '../modals/news';
 // import { MatTableDataSource, MatSort } from '@angular/material';
@@ -40,7 +42,7 @@
 
 
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -62,6 +64,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
 
+const newsSample = [
+  {title:'hello world', status: 'published'},
+  {title:'second title', status: 'draft'}
+]
+
+export interface News {
+  title: string;
+  status: string;
+  actions: string;
+}
+
+
 /**
  * @title Table with sorting
  */
@@ -71,16 +85,33 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
+  displayedColumns: string[] = ['title', 'status', 'actions'];
+  dataSource: MatTableDataSource<News>;
+  news$ : Observable<any[]>;
+  news: Array<News>;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  constructor(private newsService: NewsService) {
+    this.newsService.getNews()
+      .subscribe(news => {
+        this.dataSource = new MatTableDataSource(news);
+
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+
+    //
+  }
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    // console.log(this.dataSource);
+
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
 

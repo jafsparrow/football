@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ClubDetailsService } from '../services/club-details.service';
 import { FileUpload } from '../modals/upload-file';
 import { Subject, Observable } from 'rxjs';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'add-news',
@@ -23,11 +24,11 @@ export class AddNewsComponent implements OnInit {
   // the input is used when this component is used as a child component in the news edit component, so that
   // add component can be used to achive edit if pass the news data.
   @Input()
-    set newsData(newsData) {
-      if(newsData) {
-        this.mode = 'edit'
-      }
+  set newsData(newsData) {
+    if (newsData) {
+      this.mode = 'edit'
     }
+  }
   submitting = false;
   selectedFiles: FileList | null;
   createdNewsKey: any = null;
@@ -47,8 +48,8 @@ export class AddNewsComponent implements OnInit {
   taggedClubs: ClubMeta[] = []; // array of objects which has club name and club unique id.
 
   someClubs = [
-    { name: 'new castle', id: 'eieire'},
-    { name: 'manchester united', id: 'blah blah'}
+    { name: 'new castle', id: 'eieire' },
+    { name: 'manchester united', id: 'blah blah' }
   ]
   imageUrl = ''; // to map to the url preview after selecting image.
   searchTerm$ = new Subject<string>(); // rxjs subject declared to make the search function work.
@@ -59,8 +60,34 @@ export class AddNewsComponent implements OnInit {
     content: '',
     relatedSports: {},
     taggedClubs: [],
-    author:{}
+    author: {}
   } // this holds the data of the whole news from client before submitting to the server so that it can be shown in the preview
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '25rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    uploadUrl: 'v1/images', // if needed
+    customClasses: [ // optional
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private newService: NewsService,
@@ -85,10 +112,10 @@ export class AddNewsComponent implements OnInit {
 
     // setInterval(()=> console.log(this.newsObject), 15000);
     // sample taggedclub populaton
-    this.taggedClubs = [ { name: 'liverpool', id: 'eik323'},
-    { name: 'barca', id: 'eik323'}
+    this.taggedClubs = [{ name: 'liverpool', id: 'eik323' },
+    { name: 'barca', id: 'eik323' }
 
-        ]
+    ]
 
     this.auth.user$.subscribe(
       res => {
@@ -112,8 +139,8 @@ export class AddNewsComponent implements OnInit {
 
     });
 
-    if(this.mode === 'edit') {
-      this.articleAddFrom.patchValue({title: 'editing the content'});
+    if (this.mode === 'edit') {
+      this.articleAddFrom.patchValue({ title: 'editing the content' });
     }
 
 
@@ -135,9 +162,12 @@ export class AddNewsComponent implements OnInit {
   submitNews() {
     this.submitting = true;
     console.log(this.articleAddFrom);
+    const formValue = this.articleAddFrom.value;
     // adding the related sports to the form value.
-    this.articleAddFrom.value['relatedSports'] = this.selectedSports;
-    this.newService.createNews(this.articleAddFrom.value).then(res => {
+    formValue['relatedSports'] = this.selectedSports;
+    formValue['taggedClubs'] = this.taggedClubs;
+
+    this.newService.createNews(formValue).then(res => {
       if (res) {
         // save the news id in a local variable.
         this.createdNewsKey = res.id;
@@ -202,14 +232,14 @@ export class AddNewsComponent implements OnInit {
 
   clubTagToggle($event, club) {
     console.log($event, club)
-    if($event.checked) {
+    if ($event.checked) {
       this.taggedClubs.push(club);
     } else {
 
       const index = this.taggedClubs.indexOf(club);
 
       if (index !== -1) {
-          this.taggedClubs.splice(index, 1);
+        this.taggedClubs.splice(index, 1);
       }
     }
 

@@ -27,6 +27,7 @@ import { ClubInfoComponent } from './club-info/club-info.component';
 import { NewsAddComponent } from './news/news-add/news-add.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { NewsListComponent } from './news/news-list/news-list.component';
     EventsComponent,
     ClubInfoComponent,
     NewsAddComponent,
-    NewsListComponent
+    NewsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +52,9 @@ import { NewsListComponent } from './news/news-list/news-list.component';
     FlexLayoutModule,
     SharedModule,
     // NewsModule,
-    MaterialLibraryModule
+    MaterialLibraryModule,
+
+    HttpClientModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

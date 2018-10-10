@@ -38,7 +38,12 @@ export class LoginComponent implements OnInit, OnChanges {
       this.auth.user$.subscribe(
       user => {
       if(user) {
-        this.router.navigate([this.redirectURL]);
+        if(this.auth.canLogin(user, 'admin')) {
+          this.router.navigate([this.redirectURL]);
+        }else {
+          this.auth.logout();
+          console.log('you do not have permission to login to admin site')
+        }
       }
     }
     )

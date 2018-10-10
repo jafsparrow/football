@@ -47,7 +47,7 @@ export class NewsService {
     news.isActive = true;
     news.createdDate = new Date();
     news.status = 'published';
-
+    console.log(news);
     return this.news.add(news)
       .then( res =>  {
         console.log(res.id);

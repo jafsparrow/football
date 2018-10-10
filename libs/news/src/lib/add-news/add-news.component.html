@@ -9,7 +9,7 @@
 
 
 
-    <form [formGroup]="articleAddFrom" (ngSubmit)="submitNews()" class="form-container">
+    <form [formGroup]="articleAddFrom"  class="form-container">
       <ng-template matStepLabel>Create the article</ng-template>
         <mat-form-field>
           <input matInput placeholder="News Title" formControlName="title">
@@ -21,9 +21,9 @@
         <mat-card-subtitle>Add Related Image</mat-card-subtitle>
         <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)">
         <img [src]="imageUrl"> <br />
-        <mat-form-field>
-          <textarea matInput formControlName="content"></textarea>
-        </mat-form-field>
+
+        <angular-editor [config]="editorConfig" formControlName="content"></angular-editor>
+
         <button type="button" mat-button matStepperNext>Next</button>
       </form>
     </mat-card>
@@ -101,7 +101,7 @@
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <!-- need to display update button if the mode is edit -->
-          <button mat-raised-button type="submit" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
+          <button mat-raised-button type="submit" (click)="submitNews()" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
         </div>
     </mat-card>
   </mat-step>

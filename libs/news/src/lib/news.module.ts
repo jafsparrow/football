@@ -3,6 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialLibraryModule } from '@football/shared';
 
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
@@ -13,6 +15,8 @@ import { AddNewsComponent } from './add-news/add-news.component';
 import { NewsService } from './services/news.service';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ClubDetailsService } from './services/club-details.service';
+import { NewsViewComponent } from './news-view/news-view.component';
+import { NewsActionsComponent } from './news-actions/news-actions.component';
 
 
 export const newsRoutes: Route[] = [
@@ -25,8 +29,8 @@ export const newsRoutes: Route[] = [
     component: AddNewsComponent
   },
   {
-    path: 'detail',
-    component:NewsDetailComponent
+    path: 'view',
+    component:NewsViewComponent
   }
 ];
       @NgModule({
@@ -37,9 +41,10 @@ export const newsRoutes: Route[] = [
           RouterModule.forChild(newsRoutes),
           MaterialLibraryModule,
           AngularFireStorageModule,
-          FlexLayoutModule
+          FlexLayoutModule,
+          AngularEditorModule,
         ],
-        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent],
+        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent],
         exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent],
         providers: [NewsService, ClubDetailsService]
       })

@@ -85,6 +85,20 @@ export class AuthenticationService {
 
   }
 
+  // This will look into the permission document of the user and returns the role assigned and club
+  canLogin(user, siteType) {
+    if(siteType === 'admin') {
+      if(user && user.permission) {
+        // console.log(user.permission)
+        if(user.permission.role === 'admin' || user.permission.role === 'editor') return true;
+        return false;
+      }else {
+        return false;
+      }
+    }
+
+    return true;
+  }
   ///// Role-based Authorization //////
 canRead(user: User): boolean {
   const allowed = ['admin', 'editor', 'subscriber'];
