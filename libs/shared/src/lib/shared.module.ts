@@ -15,6 +15,8 @@ import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { SideNavigationComponent } from './navigation/side-navigation/side-navigation.component';
 import { SideNavHeaderComponent } from './navigation/side-nav-header/side-nav-header.component';
 import { RouterModule } from '@angular/router';
+import { NewsTeaserComponent } from './news/news-teaser/news-teaser.component';
+import { NewsSummaryViewComponent } from './news/news-summary-view/news-summary-view.component';
 
 
       @NgModule({
@@ -28,8 +30,8 @@ import { RouterModule } from '@angular/router';
           AngularFireAuthModule,
 
         ],
-        declarations: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent],
+        declarations: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent, NewsTeaserComponent, NewsSummaryViewComponent],
         providers: [],
-        exports: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent],
+        exports: [LoginComponent, ToolbarComponent, SideNavigationComponent, SideNavHeaderComponent, NewsTeaserComponent, NewsSummaryViewComponent],
       })
       export class SharedModule { }

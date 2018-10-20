@@ -119,6 +119,8 @@ export class AddNewsComponent implements OnInit {
 
     this.auth.user$.subscribe(
       res => {
+        console.log('response ')
+        console.log(res)
         this.newsObject.author = {
           name: res.displayName,
           uid: res.uid,
@@ -161,13 +163,16 @@ export class AddNewsComponent implements OnInit {
 
   submitNews() {
     this.submitting = true;
-    console.log(this.articleAddFrom);
-    const formValue = this.articleAddFrom.value;
-    // adding the related sports to the form value.
-    formValue['relatedSports'] = this.selectedSports;
-    formValue['taggedClubs'] = this.taggedClubs;
+    // console.log(this.articleAddFrom);
+    // const formValue = this.articleAddFrom.value;
+    // // adding the related sports to the form value.
+    // formValue['relatedSports'] = this.selectedSports;
+    // formValue['taggedClubs'] = this.taggedClubs;
+    const newsItem = this.newsObject;
+    newsItem['image'] = '';
+    newsItem['status'] = 'published';
 
-    this.newService.createNews(formValue).then(res => {
+    this.newService.createNews(newsItem).then(res => {
       if (res) {
         // save the news id in a local variable.
         this.createdNewsKey = res.id;
@@ -218,15 +223,13 @@ export class AddNewsComponent implements OnInit {
   }
 
   randomClickEvent() {
-    this.newsObject = {
-      title: this.articleAddFrom.get('title').value,
-      summary: this.articleAddFrom.get('summary').value,
-      createdDate: new Date(),
-      content: this.articleAddFrom.get('content').value,
-      taggedClubs: this.taggedClubs,
-      relatedSports: this.selectedSports,
-      image: this.imageUrl ? this.imageUrl : null
-    }
+      this.newsObject.title = this.articleAddFrom.get('title').value;
+      this.newsObject.summary = this.articleAddFrom.get('summary').value;
+      this.newsObject.createdDate = new Date();
+      this.newsObject.content = this.articleAddFrom.get('content').value;
+      this.newsObject.taggedClubs = this.taggedClubs;
+      this.newsObject.relatedSports = this.selectedSports;
+      this.newsObject.image = this.imageUrl ? this.imageUrl : null;
     console.log(this.newsObject)
   }
 

@@ -1,0 +1,69 @@
+
+.event-item-container {
+  max-height: 125px;
+  padding: 5px;
+  /* border: 2px solid red; */
+}
+.time-section {
+  background-color: #eeeeee;
+  color: #bbbbbb;
+  text-transform: uppercase;
+  /* font-size: 20px; */
+  text-align: center;
+  width: 100px;
+  padding: 5px;
+}
+
+.time-section > .day, .month, .year {
+  display: block
+}
+
+.day {
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.month {
+  font-weight: 100;
+}
+.year {
+  font-weight: 100;
+  font-size: 14;
+}
+
+.event-summary-section {
+
+  padding-left: 15px;
+  position: relative;
+}
+
+
+.event-title {
+  font-size: 14px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 100;
+}
+
+.event-summary {
+  font-weight: 200;
+  font-size: 14px;
+}
+
+.event-bottom-action {
+  /* margin-bottom: 0px; */
+  position: absolute;
+  bottom: 5px;
+
+}
+
+.club-tags {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 100;
+  border-radius: 10px;
+  background: #eeeeee;
+  padding: 2px;
+  margin-right: 5px;
+}

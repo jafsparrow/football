@@ -1,0 +1,9 @@
+.section-header {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 26;
+  font-weight: 200;
+  background: #eeeeee;
+  padding: 10px;
+  letter-spacing: 5px;
+}

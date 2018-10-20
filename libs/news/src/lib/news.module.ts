@@ -1,3 +1,5 @@
+import { ClubManagementGuard } from '@football/shared';
+import { AuthGuard } from '@football/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -17,6 +19,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ClubDetailsService } from './services/club-details.service';
 import { NewsViewComponent } from './news-view/news-view.component';
 import { NewsActionsComponent } from './news-actions/news-actions.component';
+import { NewsTeaserTwoComponent } from './news-teaser-two/news-teaser-two.component';
+import { NewsSummaryViewSecondComponent } from './news-teaser-two/news-summary-view-second/news-summary-view-second.component';
 
 
 export const newsRoutes: Route[] = [
@@ -26,10 +30,11 @@ export const newsRoutes: Route[] = [
   },
   {
     path: 'add',
-    component: AddNewsComponent
+    component: AddNewsComponent,
+    canActivate: [AuthGuard, ClubManagementGuard]
   },
   {
-    path: 'view',
+    path: 'view/:id',
     component:NewsViewComponent
   }
 ];
@@ -44,8 +49,8 @@ export const newsRoutes: Route[] = [
           FlexLayoutModule,
           AngularEditorModule,
         ],
-        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent],
-        exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent],
+        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent],
+        exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent],
         providers: [NewsService, ClubDetailsService]
       })
       export class NewsModule { }

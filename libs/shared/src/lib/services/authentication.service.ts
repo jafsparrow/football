@@ -99,6 +99,11 @@ export class AuthenticationService {
 
     return true;
   }
+
+  isClubManagementUser(user) {
+    const allowed = ['admin', 'editor'];
+    return this.checkAuthorization(user, allowed);
+  }
   ///// Role-based Authorization //////
 canRead(user: User): boolean {
   const allowed = ['admin', 'editor', 'subscriber'];
@@ -115,8 +120,14 @@ canDelete(user: User): boolean {
 // determines if user has matching role
 private checkAuthorization(user: User, allowedRoles: string[]): boolean {
   if (!user) {return false; }
-  for (const role of allowedRoles) {
-    if ( user.roles[role] ) {
+  // for (const role of allowedRoles) {
+  //   if ( user.roles[role] ) {
+  //     return true;
+  //   }
+  // }
+
+  for(const role of allowedRoles) {
+    if( user.permission && user.permission.role === role) {
       return true;
     }
   }

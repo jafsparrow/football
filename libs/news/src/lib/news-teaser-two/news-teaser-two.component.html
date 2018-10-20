@@ -1,0 +1,9 @@
+<mat-card class="club-news-container"
+    fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start none" >
+    <div class="club-news-item-container" fxFlex="32%" fxFlex.lg="25" *ngFor="let item of news">
+
+        <news-summary-view-second [news]="item"></news-summary-view-second>
+
+    </div>
+  </mat-card>
+item works

@@ -1,3 +1,4 @@
+import { AuthenticationService } from '@football/shared';
 import { Observable } from 'rxjs';
 import { NewsService } from './../services/news.service';
 // import { Component, OnInit, ViewChild } from '@angular/core';
@@ -43,6 +44,7 @@ import { NewsService } from './../services/news.service';
 
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
+import { switchMap } from 'rxjs/operators';
 
 export interface PeriodicElement {
   name: string;
@@ -92,14 +94,27 @@ export class NewsListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private newsService: NewsService) {
-    this.newsService.getNews()
-      .subscribe(news => {
-        this.dataSource = new MatTableDataSource(news);
+  constructor(private newsService: NewsService,
+              private auth: AuthenticationService) {
+    // this.newsService.getNews()
+    //   .subscribe(news => {
+    //     this.dataSource = new MatTableDataSource(news);
 
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      });
+    //     this.dataSource.sort = this.sort;
+    //     this.dataSource.paginator = this.paginator;
+    //   });
+
+    this.auth.user$.pipe(
+      switchMap(user => {
+        return this.newsService.getNewsForAdmin(user)
+      })
+    )
+    .subscribe(news => {
+      this.dataSource = new MatTableDataSource(news);
+
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
 
     //
   }

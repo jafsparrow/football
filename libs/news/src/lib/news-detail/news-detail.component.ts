@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { News } from '../modals/news';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'news-detail',
@@ -21,9 +22,11 @@ export class NewsDetailComponent implements OnInit {
 
   get relatedGames() {
     if(this.news.relatedSports && (Object.keys(this.news.relatedSports)).length > 0) {
+
       return Object.keys(this.news.relatedSports);
     }
     return [];
+
   }
 
   constructor() { }

@@ -1,0 +1,56 @@
+<mat-card class="summary-container" [routerLink]="['detail', news.id]">
+
+  <mat-card-header>
+    <mat-card-title>
+      {{ news.title}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      <span>{{ news.author }} </span>
+      <!-- <span class="news-publish-date">: {{ news.published_date | date }}</span> -->
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- the following line used for showing background image for the card which is taking off as it might cause loading issue -->
+  <mat-card-content [ngStyle]="{ 'background-image': 'url(' + news.image + ')','background-position': 'center','background-size': 'cover', 'min-height': '150px'}"
+    
+    class="news-summary-container">
+    <div class="news-summary">
+      <div class="news-summary-text">
+        {{news.summary}}
+
+      </div>
+    </div>
+  </mat-card-content>
+  <div >
+    <ul class="news-tags">
+
+      <li>liverpool</li>
+      <li>liverpool</li>
+      <li>liverpool</li>
+    </ul>
+  </div>
+<!--
+  <mat-card-actions align="end">
+    liverpool
+    <a mat-button [routerLink]="['/news/detail', news.id]">Read more..</a>
+  </mat-card-actions> -->
+</mat-card>
+
+<!--
+<div fxLayout="row">
+  <div class="summary-container">
+    <div class="image-contaner" fxFlex="20">
+      <img src="{{news.image}}" alt="" class="news-image">
+    </div>
+
+    <div class="news-text" fxFlex>
+        <mat-card-content [routerLink]="['/news/detail', news.id]">
+          {{news.title}}
+      </mat-card-content>
+
+      <mat-card-content [routerLink]="['/news/detail', news.id]">
+          {{news.summary}}
+      </mat-card-content>
+    </div>
+  </div>
+</div> -->

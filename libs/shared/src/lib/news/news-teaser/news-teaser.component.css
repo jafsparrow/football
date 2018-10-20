@@ -1,0 +1,15 @@
+.teaser-container {
+  margin: 0px;
+  padding: 5px;
+
+  font-family: arial,sans-serif!important;
+}
+
+.teaser-title {
+  padding: 5px;
+  font-size: 20px;
+}
+
+.teaser-container {
+  max-width: 100%;
+}

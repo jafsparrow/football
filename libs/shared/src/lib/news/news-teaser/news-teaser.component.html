@@ -1,0 +1,23 @@
+
+
+<mat-card class="teaser-container">
+    <div *ngIf="news as newslist; else loading">
+        <mat-card-header>
+          <mat-card-title class="teaser-title">
+              {{teaserTitle}}
+              test to delete later
+
+          </mat-card-title>
+        </mat-card-header>
+        <div fxLayout="row wrap" fxLayout.xs="column"  fxLayoutAlign="start none"  [@listAnimation]="newslist.length">
+          <div *ngFor="let newsItem of newslist" class="news-summary-card-container" fxFlex="33%" fxFlex.lg="25">
+            <football-news-summary-view [news]="newsItem"></football-news-summary-view>
+          </div>
+
+        </div>
+    </div>
+
+
+    <ng-template #loading>Loading the news</ng-template>
+
+</mat-card>

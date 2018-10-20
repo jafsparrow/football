@@ -1,0 +1,34 @@
+<div class="section-header">
+  Events
+  <button mat-icon-button routerLink="/events">
+    <mat-icon class="mat-18">trending_flat</mat-icon>
+  </button>
+
+</div>
+<football-events-teaser [events]="events"></football-events-teaser>
+
+
+<div class="section-header">
+      Announcements
+    </div>
+
+    <div class="section-header">
+      News
+      <button mat-icon-button routerLink="/news">
+        <mat-icon class="mat-18">trending_flat</mat-icon>
+      </button>
+    </div>
+    <mat-card>
+        <div class="news-short-view mat-typography" *ngFor="let news of news">
+          <mat-card style="padding: 10px;">
+              <mat-card-header>
+                <mat-card-title>{{news.title}}</mat-card-title>
+                <mat-card-subtitle>{{news.summary}}</mat-card-subtitle>
+                <img mat-card-avatar src="https://via.placeholder.com/100x100">
+
+              </mat-card-header>
+          </mat-card>
+        </div>
+    </mat-card>
+
+    <!-- <football-news-teaser  [news]="news"></football-news-teaser> -->

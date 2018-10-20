@@ -7,7 +7,7 @@
     </mat-card-title>
     <mat-card-subtitle>
       <span> {{news.author? news.author.name : "News Author Name"}} </span>
-      <span class="news-publish-date">: {{news.publishedDate? news.publishedDate : news.createdDate | date}}</span>
+      <span class="news-publish-date">: {{news.publishedDate? (news.publishedDate.toDate() | date) : 'Published Date'}}</span>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-chip-list >
