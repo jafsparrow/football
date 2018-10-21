@@ -11,7 +11,6 @@ export class NewsTeaserTwoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.news)
   }
 
 }

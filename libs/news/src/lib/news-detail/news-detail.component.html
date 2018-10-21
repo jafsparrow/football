@@ -7,7 +7,7 @@
     </mat-card-title>
     <mat-card-subtitle>
       <span> {{news.author? news.author.name : "News Author Name"}} </span>
-      <span class="news-publish-date">: {{news.publishedDate? (news.publishedDate.toDate() | date) : 'Published Date'}}</span>
+      <!-- <span class="news-publish-date">: {{news.publishedDate? (news.publishedDate.toDate() | date) : 'Published Date'}}</span> -->
     </mat-card-subtitle>
   </mat-card-header>
   <mat-chip-list >
@@ -18,7 +18,7 @@
   <img *ngIf="news.image" mat-card-image src="{{news.image}}" alt="{{news.title}}" class="news-image">
   <mat-card-content>
     <mat-chip-list>
-      <mat-chip *ngFor="let club of news.tagged_clubs" (click)="navigateToClubDetails(club)">{{club.name}}</mat-chip>
+      <mat-chip *ngFor="let club of news.taggedClubs" (click)="navigateToClubDetails(club)">{{club.name}}</mat-chip>
     </mat-chip-list>
   </mat-card-content>
   <mat-card-content>
@@ -26,8 +26,8 @@
       <div class="news-summary-text">
         <div *ngIf="news.content" [innerHTML]="news.content">
         </div>
-        <div *ngIf="news.article" [innerHTML]="news.article">
-        </div>
+        <!-- <div *ngIf="news?.article" [innerHTML]="news?.article">
+        </div> -->
       </div>
     </div>
   </mat-card-content>
