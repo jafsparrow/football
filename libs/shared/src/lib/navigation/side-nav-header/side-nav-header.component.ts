@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'football-side-nav-header',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-nav-header.component.css']
 })
 export class SideNavHeaderComponent implements OnInit {
-
-  constructor() { }
+  user: any;
+  constructor(private _auth: AuthenticationService) {
+    this.user = null;
+  }
 
   ngOnInit() {
+    this._auth.user$
+        .subscribe(user => this.user = user)
+
   }
 
 }

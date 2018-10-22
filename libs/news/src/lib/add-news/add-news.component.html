@@ -2,7 +2,7 @@
   <div id="text">News is being added. please wait..!</div>
 </div>
 
-<mat-horizontal-stepper [linear]="isLinear" #stepper (animationDone)="randomClickEvent()">
+<mat-horizontal-stepper  #stepper (animationDone)="randomClickEvent()">
   <mat-step [stepControl]="articleAddFrom">
     <mat-card *ngIf="!submitting" class="form-container">
 
@@ -51,7 +51,7 @@
           #clubSearchInput
           ngModel>
       </mat-form-field>
-      {{club}}
+      <!-- {{club}} -->
     <div *ngIf="(clubSearchResults$ | async) as clubSearchResult; else loading">
 
       <div class="club-search-info" fxLayout="row" *ngFor="let club of clubSearchResult">

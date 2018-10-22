@@ -12,7 +12,7 @@ export class SideNavigationComponent implements OnInit {
     {name: 'News', route: '/News', icon: 'hotel'},
 
   ];
-  @Output() menuClicked = new EventEmitter();
+  @Output() linkItemClick = new EventEmitter();
 
   constructor() { }
 
@@ -20,7 +20,7 @@ export class SideNavigationComponent implements OnInit {
   }
 
   onToggleClose() {
-    this.menuClicked.emit('selected');
+    this.linkItemClick.emit('selected');
   }
 
 }

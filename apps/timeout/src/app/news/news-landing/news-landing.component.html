@@ -1,0 +1,28 @@
+<div class="section-header">
+  Liverpool News
+  <button mat-icon-button routerLink="list/favclub">
+    <mat-icon class="mat-18">trending_flat</mat-icon>
+  </button>
+
+</div>
+
+
+
+<news-teaser-two [news]="news"></news-teaser-two>
+<router-outlet></router-outlet>
+
+<div class="section-header">
+    Tagged Club News
+    <button mat-icon-button routerLink="list/tagclubs">
+      <mat-icon class="mat-18">trending_flat</mat-icon>
+    </button>
+
+  </div>
+
+  <div class="section-header">
+    Recent News
+    <button mat-icon-button routerLink="list/all">
+      <mat-icon class="mat-18">trending_flat</mat-icon>
+    </button>
+
+  </div>

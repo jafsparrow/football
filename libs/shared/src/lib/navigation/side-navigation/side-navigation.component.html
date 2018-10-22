@@ -2,9 +2,9 @@
     <mat-list-item *ngFor="let link of navConfig" (click)="onToggleClose()"
         [routerLink]="link.route">
       <button mat-icon-button>
-        <mat-icon>{{link.icon ? link.icon : 'more'}}</mat-icon>
+        <mat-icon class="link-icon">{{link.icon ? link.icon : 'more'}}</mat-icon>
       </button>
-      {{ link.name }}
+      <span class="link-item">{{ link.name }}</span>
     </mat-list-item>
   </mat-nav-list>
 

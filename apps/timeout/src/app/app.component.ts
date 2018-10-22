@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'timeout';
+  title = 'Timeout';
   sideNavOptions: SideNavOption[] = [
     {
       name: 'Home', route: 'home',

@@ -1,4 +1,5 @@
 export class News {
+  id?: string;
   title: string;
   summary: String;
   content: string;

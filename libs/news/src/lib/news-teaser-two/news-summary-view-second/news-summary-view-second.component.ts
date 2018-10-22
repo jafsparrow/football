@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { News } from '../../news-list/news-list.component';
+import { News } from '../../modals/news';
 
 @Component({
   selector: 'news-summary-view-second',

@@ -21,6 +21,8 @@ import { NewsViewComponent } from './news-view/news-view.component';
 import { NewsActionsComponent } from './news-actions/news-actions.component';
 import { NewsTeaserTwoComponent } from './news-teaser-two/news-teaser-two.component';
 import { NewsSummaryViewSecondComponent } from './news-teaser-two/news-summary-view-second/news-summary-view-second.component';
+import { NewsListViewTwoComponent } from './news-list-view-two/news-list-view-two.component';
+import { SingleNewsSummaryViewComponent } from './single-news-summary-view/single-news-summary-view.component';
 
 
 export const newsRoutes: Route[] = [
@@ -49,8 +51,8 @@ export const newsRoutes: Route[] = [
           FlexLayoutModule,
           AngularEditorModule,
         ],
-        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent],
-        exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent],
+        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent, NewsListViewTwoComponent, SingleNewsSummaryViewComponent],
+        exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent, NewsListViewTwoComponent, SingleNewsSummaryViewComponent],
         providers: [NewsService, ClubDetailsService]
       })
       export class NewsModule { }
