@@ -7,3 +7,7 @@
   padding: 10px;
   letter-spacing: 5px;
 }
+
+.loading-indicator {
+  margin: auto auto;
+}

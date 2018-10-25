@@ -1,5 +1,15 @@
 <div class="section-header">
-    More News
+  More News
 </div>
 
-<news-list-view-two></news-list-view-two>
+<news-list-view-two *ngIf="(news$ | async) as news; else loading" [newsToDisplay]="news"></news-list-view-two>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner class="loading-indicator" diameter="60" strockWidth="5"></mat-spinner>
+
+  </div>
+</ng-template>
+<!-- <div *ngFor="let news of (taggedClubsNews | async)">
+  {{ news.title }}
+</div> -->

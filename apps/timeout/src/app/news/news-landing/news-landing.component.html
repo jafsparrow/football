@@ -1,28 +1,30 @@
-<div class="section-header">
-  Liverpool News
-  <button mat-icon-button routerLink="list/favclub">
-    <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
-
-</div>
-
-
-
-<news-teaser-two [news]="news"></news-teaser-two>
-<router-outlet></router-outlet>
-
-<div class="section-header">
-    Tagged Club News
-    <button mat-icon-button routerLink="list/tagclubs">
+<div *ngIf="user">
+  <div class="section-header">
+    Liverpool News
+    <button mat-icon-button routerLink="list/favclub">
       <mat-icon class="mat-18">trending_flat</mat-icon>
     </button>
 
   </div>
+
+
+
+  <news-teaser-two [news]="mainClubNews$ | async"></news-teaser-two>
 
   <div class="section-header">
-    Recent News
-    <button mat-icon-button routerLink="list/all">
+    Tagged Club News
+    <button mat-icon-button routerLink="list/tagged">
       <mat-icon class="mat-18">trending_flat</mat-icon>
     </button>
 
   </div>
+  <news-teaser-two [news]="taggedClubNews$ | async"></news-teaser-two>
+</div>
+
+<div class="section-header">
+  Recent News
+  <button mat-icon-button routerLink="list/all">
+    <mat-icon class="mat-18">trending_flat</mat-icon>
+  </button>
+</div>
+<news-teaser-two [news]="recentNews$ | async"></news-teaser-two>

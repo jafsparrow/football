@@ -1,4 +1,7 @@
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -6,37 +9,33 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { User } from '../modal/user';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  user: BehaviorSubject<any> = new BehaviorSubject(null)
+  user: BehaviorSubject<any> = new BehaviorSubject(null);
   user$: Observable<any>;
 
-
-  email = "jafar@test.com";
-  password = "jafrose";
+  email = 'jafar@test.com';
+  password = 'jafrose';
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
     console.log('auth service is constructed');
-    this.user$ = this.afAuth.authState.pipe
-      (switchMap(user => {
-        if(user) {
-          return this.afs.doc<any>(`users/${user.uid}`).valueChanges()
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
-
-      }));
-
-
-
-
+      })
+    );
   }
 
   login(): Promise<any> {
-    return this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
+    return this.afAuth.auth.signInWithEmailAndPassword(
+      this.email,
+      this.password
+    );
   }
 
   logout() {
@@ -48,51 +47,51 @@ export class AuthenticationService {
     return this.oAuthLogin(provider);
   }
   private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-      });
+    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+      this.updateUserData(credential.user);
+    });
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
     console.log('google response', user);
 
     userRef
-        .valueChanges()
-        .pipe(
-          take(1)
-        )
-        .subscribe( res => {
-          const data = {
-            displayName: user.displayName,
-            photoUrl: user.photoURL
-          };
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe(res => {
+        const data = {
+          displayName: user.displayName,
+          photoUrl: user.photoURL
+        };
 
-          if(!res) {
-            console.log('User registering for first time');
-            data['uid'] = user.uid;
-            data['email'] = user.email;
-            data['registrationStep'] = 1;
-          }
-          console.log(user);
-          console.log(data);
-          return userRef.set(data, { merge: true });
-
-        });
-
-
+        if (!res) {
+          console.log('User registering for first time');
+          data['uid'] = user.uid;
+          data['email'] = user.email;
+          data['registrationStep'] = 1;
+        }
+        console.log(user);
+        console.log(data);
+        return userRef.set(data, { merge: true });
+      });
   }
 
   // This will look into the permission document of the user and returns the role assigned and club
-  canLogin(user, siteType) {
-    if(siteType === 'admin') {
-      if(user && user.permission) {
+  canLogin(user, siteType: string) {
+    if (siteType.toLowerCase() === 'admin') {
+      if (user && user.permission) {
         // console.log(user.permission)
-        if(user.permission.role === 'admin' || user.permission.role === 'editor') return true;
+        if (
+          user.permission.role === 'admin' ||
+          user.permission.role === 'editor'
+        )
+          return true;
         return false;
-      }else {
+      } else {
         return false;
       }
     }
@@ -105,32 +104,34 @@ export class AuthenticationService {
     return this.checkAuthorization(user, allowed);
   }
   ///// Role-based Authorization //////
-canRead(user: User): boolean {
-  const allowed = ['admin', 'editor', 'subscriber'];
-  return this.checkAuthorization(user, allowed);
-}
-canEdit(user: User): boolean {
-  const allowed = ['admin', 'editor'];
-  return this.checkAuthorization(user, allowed);
-}
-canDelete(user: User): boolean {
-  const allowed = ['admin'];
-  return this.checkAuthorization(user, allowed);
-}
-// determines if user has matching role
-private checkAuthorization(user: User, allowedRoles: string[]): boolean {
-  if (!user) {return false; }
-  // for (const role of allowedRoles) {
-  //   if ( user.roles[role] ) {
-  //     return true;
-  //   }
-  // }
-
-  for(const role of allowedRoles) {
-    if( user.permission && user.permission.role === role) {
-      return true;
-    }
+  canRead(user: User): boolean {
+    const allowed = ['admin', 'editor', 'subscriber'];
+    return this.checkAuthorization(user, allowed);
   }
-  return false;
-}
+  canEdit(user: User): boolean {
+    const allowed = ['admin', 'editor'];
+    return this.checkAuthorization(user, allowed);
+  }
+  canDelete(user: User): boolean {
+    const allowed = ['admin'];
+    return this.checkAuthorization(user, allowed);
+  }
+  // determines if user has matching role
+  private checkAuthorization(user: User, allowedRoles: string[]): boolean {
+    if (!user) {
+      return false;
+    }
+    // for (const role of allowedRoles) {
+    //   if ( user.roles[role] ) {
+    //     return true;
+    //   }
+    // }
+
+    for (const role of allowedRoles) {
+      if (user.permission && user.permission.role === role) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

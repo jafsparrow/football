@@ -1,8 +1,10 @@
+import { AuthenticationService } from '@football/shared';
 import { NewsService } from './../services/news.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { News } from '../modals/news';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'news-view',
@@ -14,35 +16,26 @@ export class NewsViewComponent implements OnInit {
   tagged_clubs = [];
   activeRoute: any;
   newsId: any;
-  news: News;
+  news$: any;
 
-  constructor(public newsService: NewsService,
-              public activatedRoute: ActivatedRoute) {
-                this.isLoading = true;
-              }
+  @Input() siteType = 'timeout';
+
+  constructor(
+    public newsService: NewsService,
+    public activatedRoute: ActivatedRoute,
+    private _auth: AuthenticationService
+  ) {
+    this.isLoading = true;
+  }
 
   ngOnInit() {
-    this.activatedRoute.params
-    .pipe(
+    this.news$ = this.activatedRoute.params.pipe(
       switchMap(params => {
         const id = params['id'];
         return this.newsService.getDetailedNews(id);
-        // console.log(news$);
-        // return Observable.of(1);
       })
-    )
-    .subscribe(res => {
-      console.log(res);
-      this.news = res;
-      console.log('this is after subscribing inside details');
-      // if (this.news.tagged_clubs) {
-      //   this.getClubDetails(this.news.tagged_clubs);
-      // }
-      this.isLoading = false;
-
-
-    });
-
+    );
   }
 
+  ngOnDetroy() {}
 }

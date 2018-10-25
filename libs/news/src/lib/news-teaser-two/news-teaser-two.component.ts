@@ -7,10 +7,10 @@ import { News } from '../modals/news';
   styleUrls: ['./news-teaser-two.component.css']
 })
 export class NewsTeaserTwoComponent implements OnInit {
-  @Input() news: News[]
-  constructor() { }
+  @Input() news: News[];
+  constructor() {}
 
   ngOnInit() {
+    console.log(this.news);
   }
-
 }

@@ -1,4 +1,4 @@
-import { ClubManagementGuard } from '@football/shared';
+import { ClubManagementGuard, SharedModule } from '@football/shared';
 import { AuthGuard } from '@football/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +24,6 @@ import { NewsSummaryViewSecondComponent } from './news-teaser-two/news-summary-v
 import { NewsListViewTwoComponent } from './news-list-view-two/news-list-view-two.component';
 import { SingleNewsSummaryViewComponent } from './single-news-summary-view/single-news-summary-view.component';
 
-
 export const newsRoutes: Route[] = [
   {
     path: '',
@@ -37,22 +36,42 @@ export const newsRoutes: Route[] = [
   },
   {
     path: 'view/:id',
-    component:NewsViewComponent
+    component: NewsViewComponent
   }
 ];
-      @NgModule({
-        imports: [
-          CommonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          RouterModule.forChild(newsRoutes),
-          MaterialLibraryModule,
-          AngularFireStorageModule,
-          FlexLayoutModule,
-          AngularEditorModule,
-        ],
-        declarations: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, AddNewsComponent, NewsViewComponent, NewsActionsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent, NewsListViewTwoComponent, SingleNewsSummaryViewComponent],
-        exports: [NewsListComponent, NewsDetailComponent, ClubTagsComponent, NewsTeaserTwoComponent, NewsSummaryViewSecondComponent, NewsListViewTwoComponent, SingleNewsSummaryViewComponent],
-        providers: [NewsService, ClubDetailsService]
-      })
-      export class NewsModule { }
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(newsRoutes),
+    MaterialLibraryModule,
+    AngularFireStorageModule,
+    FlexLayoutModule,
+    AngularEditorModule,
+    SharedModule
+  ],
+  declarations: [
+    NewsListComponent,
+    NewsDetailComponent,
+    ClubTagsComponent,
+    AddNewsComponent,
+    NewsViewComponent,
+    NewsActionsComponent,
+    NewsTeaserTwoComponent,
+    NewsSummaryViewSecondComponent,
+    NewsListViewTwoComponent,
+    SingleNewsSummaryViewComponent
+  ],
+  exports: [
+    NewsListComponent,
+    NewsDetailComponent,
+    ClubTagsComponent,
+    NewsTeaserTwoComponent,
+    NewsSummaryViewSecondComponent,
+    NewsListViewTwoComponent,
+    SingleNewsSummaryViewComponent
+  ],
+  providers: [NewsService, ClubDetailsService]
+})
+export class NewsModule {}

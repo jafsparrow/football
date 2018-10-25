@@ -1,25 +1,20 @@
-<div class="single-news-view-container">
+<div class="single-news-view-container" [routerLink]="['/news/view', news.id]">
   <mat-card class="single-news-view" [ngStyle]="{'border-left': '2px solid '+ randomTagColor()}">
 
-      <div class="news-content">
-          <div class="header-area" fxLayout="row">
-            <div class="date-container" fxFlex="45px">
-              <span class="day">14</span>
-              <span class="month">July</span>
-            </div>
-            <div class="news-title" fxFlex>Title of the news
-              <!-- <div>
-                <span class="club-name" [ngStyle]="{'background-color':  randomTagColor()}">
-                    Liverpool
-                  </span>
-                </div> -->
-            </div>
+    <div class="news-content">
+      <div class="header-area" fxLayout="row">
+        <div class="date-container" fxFlex="45px">
+          <span class="day">14</span>
+          <span class="month">July</span>
+        </div>
+        <div class="news-title" fxFlex> {{ news?.title | truncate : 100}}
+        </div>
 
-          </div>
-          <div class="news-summary">
-            summary of the news
-          </div>
       </div>
+      <div class="news-summary">
+        {{ news?.summary }}
+      </div>
+    </div>
 
   </mat-card>
 </div>

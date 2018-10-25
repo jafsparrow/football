@@ -1,12 +1,12 @@
-<mat-card class="indicator-container" *ngIf="isLoading">
-    <mat-spinner class="loading-indicator"></mat-spinner>
-</mat-card>
-
-
-<div *ngIf="!isLoading">
-  <news-actions></news-actions>
+<div *ngIf="(news$ |async) as news; else loading">
+  <news-actions *ngIf="siteType === 'admin'"></news-actions>
   <news-detail [news]="news"></news-detail>
 
 </div>
 
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner class="loading-indicator" diameter="60" strockWidth="5"></mat-spinner>
 
+  </div>
+</ng-template>

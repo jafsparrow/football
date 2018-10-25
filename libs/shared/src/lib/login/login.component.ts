@@ -1,7 +1,6 @@
 import { AuthenticationService } from './../services/authentication.service';
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, NgZone } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -18,45 +17,74 @@ export class LoginComponent implements OnInit, OnChanges {
 
   isLoading = false;
   isError = false;
-  items: Observable<any[]>;
 
-  constructor(db: AngularFirestore,
-              private auth: AuthenticationService,
-              private router: Router) {
-    console.log('login component is constructed')
-    this.items = db.collection('news').valueChanges();
+  user: any;
 
-
+  constructor(
+    db: AngularFirestore,
+    private auth: AuthenticationService,
+    private router: Router,
+    private zone:NgZone // using this to route after the login promise to make angular known abou this
+  ) {
+    this.user = null;
   }
 
   ngOnChanges(changes) {
-    console.log('Changed', changes.loginRole.currentValue, changes.loginRole.previousValue);
+    console.log(
+      'Changed',
+      changes.loginRole.currentValue,
+      changes.loginRole.previousValue
+    );
   }
 
   ngOnInit() {
     console.log('Init', this.loginRole);
-      this.auth.user$.subscribe(
-      user => {
-      if(user) {
-        if(this.auth.canLogin(user, 'admin')) {
-          this.router.navigate([this.redirectURL]);
-        }else {
-          this.auth.logout();
-          console.log('you do not have permission to login to admin site')
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.user = user;
+        // check if the login site is admin or timeout normal user
+        if (this.loginRole.toLowerCase() === 'admin') {
+          if (this.auth.canLogin(user, 'admin')) {
+            this.router.navigate([this.redirectURL]);
+          } else {
+            this.auth.logout();
+            console.log('you do not have permission to login to admin site');
+          }
         }
       }
-    }
-    )
+    });
   }
 
-login() {
-  this.auth.googleLogin();
-}
+  login() {
+    this.auth.googleLogin().then(res => {
+      if(this.checkLoginEligibility(this.user, this.loginRole)) {
+        // when triggerd navigation inside other api, ie; promise, angular wouln't know as its not in angular zon
+        // so letting angular know the route below.
+        this.zone.run(() => this.router.navigate([this.redirectURL]));
+      } else {
+        this.auth.logout()
+            .then( () => console.log('you do not have permission to login to admin site'));
 
-signUp() {
-  // this.auth.
-}
+      }
+    });
+  }
 
+  // checking if the login site is admin, if so only admin authenticated user should get in, to make the login component more generic.
+  checkLoginEligibility(user, siteType) {
+    if (this.loginRole.toLowerCase() === 'admin') {
+      if (this.auth.canLogin(user, 'admin')) {
+          return true;
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+
+  }
+  signUp() {
+    // this.auth.
+  }
 }
 //   login(loginForm: FormGroup) {
 //     this.isLoading = true;
@@ -83,7 +111,6 @@ signUp() {
 //     // if the user do not have the given role, logout the user and show error message.
 //   }
 // }
-
 
 /**
  * Login component should do following.

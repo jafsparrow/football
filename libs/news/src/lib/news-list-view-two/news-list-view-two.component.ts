@@ -8,14 +8,12 @@ import { News } from '../modals/news';
 })
 export class NewsListViewTwoComponent implements OnInit {
   testItem = [];
-  @Input() newsToDisply: News[];
+  @Input() newsToDisplay: News[];
   constructor() {
-    for(let i=0; i <100;  i++) {
+    for (let i = 0; i < 100; i++) {
       this.testItem.push(i);
     }
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

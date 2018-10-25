@@ -1,75 +1,103 @@
 import { MainClub } from './../modals/news';
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestoreCollection,
+  AngularFirestore
+} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { map } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { FileUpload } from '../modals/upload-file';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { News } from '../modals/news';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-
   news: AngularFirestoreCollection<any>;
   private basePath = '/news/images';
 
-
-  constructor(private db: AngularFirestore,
+  constructor(
+    private db: AngularFirestore,
     // private clubDetailService: ClubDetailsService
     private firebaseStorage: AngularFireStorage
-    ) {
-    this.news = this.db.collection('news', ref => ref.where('is_active', '==', true)
-                                                      .where('status', '==', 'published'));
-   }
-
+  ) {
+    this.news = this.db.collection('news', ref =>
+      ref.where('is_active', '==', true).where('status', '==', 'published')
+    );
+  }
 
   // read news list. implement 10 pagination.
-  getNews() {
-    return this.news.snapshotChanges()
+  getNews(limitNumber = 100) {
+    // return this.news.snapshotChanges().pipe(
+    //   map(res => {
+    //     return res.map(item => {
+    //       const data = item.payload.doc.data();
+    //       const id = item.payload.doc.id;
+    //       return { id, ...data };
+    //     });
+    //   })
+    // );
+
+    return this.db
+      .collection('news', ref => {
+        let query:
+          | firebase.firestore.CollectionReference
+          | firebase.firestore.Query = ref;
+        query = query.where('status', '==', 'published');
+        query = query.limit(limitNumber);
+        return query;
+      })
+      .snapshotChanges()
       .pipe(
-         map(res => {
+        map(res => {
           return res.map(item => {
             const data = item.payload.doc.data();
             const id = item.payload.doc.id;
             return { id, ...data };
           });
         })
-        )
-      }
+      );
+  }
   // read individual news.
 
   getDetailedNews(key: string): Observable<News> {
     // TODO - in the getNews() map function, save the news array as local vaiable,
     // then when going for detailed view check if the key is existing in this array. if not fires the query.
-    return <Observable<News>>this.db.collection('news').doc(key).valueChanges();
+    return <Observable<News>>this.db
+      .collection('news')
+      .doc(key)
+      .valueChanges();
   }
 
   // read news for club admin.
   // clubadmin has two users. editor and admin both will have query updated.
   getNewsForAdmin(user) {
     let allNews$: AngularFirestoreCollection<any> = null;
+
     switch (user.permission.role) {
       case 'admin':
-        allNews$ = this.db.collection('news', ref=> ref.where('mainClub.id', '==', user.mainClub.id));
+        allNews$ = this.db.collection('news', ref =>
+          ref.where('mainClub.id', '==', user.mainClub.id)
+        );
         break;
       case 'editor':
-       allNews$ = this.db.collection('news', ref=> ref.where('mainClub.id', '==', user.mainClub.id)
-                  .where('author.uid', '==', user.uid))
+        allNews$ = this.db.collection('news', ref =>
+          ref
+            .where('mainClub.id', '==', user.mainClub.id)
+            .where('author.uid', '==', user.uid)
+        );
         break;
     }
-    return allNews$.snapshotChanges()
-              .pipe(
-                map(res => {
-                return res.map(item => {
-                  const data = item.payload.doc.data();
-                  const id = item.payload.doc.id;
-                  return { id, ...data };
-                });
-              })
-              )
-
+    return allNews$.snapshotChanges().pipe(
+      map(res => {
+        return res.map(item => {
+          const data = item.payload.doc.data();
+          const id = item.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
   }
   // create a new news.
   createNews(news: any) {
@@ -79,42 +107,120 @@ export class NewsService {
     // news.createdDate = new Date();
     // news.status = 'published';
     console.log(news);
-    return this.news.add(news)
-      .then( res =>  {
-        console.log(res.id);
-        return res;
-      });
+    return this.news.add(news).then(res => {
+      console.log(res.id);
+      return res;
+    });
   }
 
   uploadNewsImage(upload: any) {
-  const storageRef = this.firebaseStorage.ref(`${this.basePath}/${upload.name}`);
-  // const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
+    const storageRef = this.firebaseStorage.ref(
+      `${this.basePath}/${upload.name}`
+    );
+    // const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
 
-  const task = storageRef.put(upload);
-
-  return task;
-
+    const task = storageRef.put(upload);
+    return task;
 
     // return uploadTask.then(res => {
     //   console.log('upload completed');
     //   return res;
     //   })
     // .catch(err => console.log(err));
-
   }
-  updateNews() {
+  updateNews() {}
 
-  }
-
-  deleteNews() {
-
-  }
+  deleteNews() {}
 
   updateNewsAfterImageLoad(key: string, downloadLink: string) {
-    this.news.doc(key).update({image: downloadLink})
+    this.news
+      .doc(key)
+      .update({ image: downloadLink })
       .then(res => {
         console.log('image donwload link has been updated');
       });
   }
 
+  getTaggedClubNews(user) {
+    // const taggedClubs = ['HYU2JPaH9ys1nKQOHKKE', 'VtT99aikQMEv3vh1VkGq'];
+    let taggedClubs = [];
+    if (user.taggedClubs) {
+      taggedClubs = Object.keys(user.taggedClubs);
+    }
+
+    console.log(taggedClubs);
+    const calls = [];
+    for (const fav of taggedClubs) {
+      calls.push(this.getNewForClub(fav));
+    }
+    return forkJoin(calls).pipe(
+      map(arrays => [].concat.apply([], arrays)),
+      map(news => {
+        return news.filter((obj, pos, arr) => {
+          return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+      })
+    );
+  }
+
+  private getNewForClub(club_ID: string) {
+    const club_search = `taggedClubs.${club_ID}.id`;
+    console.log(club_search);
+    return this.db
+      .collection('news', ref => ref.where(club_search, '==', club_ID))
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        }),
+        take(1)
+      );
+  }
+
+  getClubNews(clubId: string, limitNumber = 100) {
+    console.log('inside the clude new where');
+    return (
+      this.db
+        .collection(
+          'news',
+          ref => {
+            let query:
+              | firebase.firestore.CollectionReference
+              | firebase.firestore.Query = ref;
+            if (true) {
+              query = query.where('mainClub.id', '==', clubId);
+              query = query.limit(limitNumber);
+            }
+            return query;
+          }
+
+          // ref.where('mainClub.id', '==', clubId)
+        )
+        // const query:
+        //   | firebase.firestore.CollectionReference
+        //   | firebase.firestore.Query = ref;
+
+        // if (limitNumber) {
+        //   query = query.limit(limitNumber);
+        // }
+        // console.log(query);
+        // return ref;
+
+        .snapshotChanges()
+        .pipe(
+          map(res => {
+            console.log(res);
+            return res.map(item => {
+              const data = item.payload.doc.data();
+              const id = item.payload.doc.id;
+              return { id, ...data };
+            });
+          })
+        )
+    );
+  }
 }

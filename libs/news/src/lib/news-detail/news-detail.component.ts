@@ -8,7 +8,7 @@ import { isNgTemplate } from '@angular/compiler';
   styleUrls: ['./news-detail.component.css']
 })
 export class NewsDetailComponent implements OnInit {
-  @Input() news: News
+  @Input() news: News;
   news1 = {
     author: 'Jafar Chembatty',
     title: 'hello title of the news',
@@ -18,21 +18,21 @@ export class NewsDetailComponent implements OnInit {
     createdDate: new Date(),
     content: 'hello content teams',
     article: 'some valya sambhavam'
-  }
+  };
 
   get relatedGames() {
-    if(this.news.relatedSports && (Object.keys(this.news.relatedSports)).length > 0) {
-
+    if (
+      this.news.relatedSports &&
+      Object.keys(this.news.relatedSports).length > 0
+    ) {
       return Object.keys(this.news.relatedSports);
     }
     return [];
-
   }
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    console.log(this.news)
+    // console.log(this.news)
   }
-
 }

@@ -1,10 +1,11 @@
-<mat-card class="club-news-item" [routerLink]="['view', news.id]" >
-    <div class="news-image-container">
-      <img src="{{news?.image}}" alt="" class="news-image">
-    </div>
-    <div class="news-text-container">
-      <span class="news-tags"  [ngStyle]="{'background-color': randomTagColor()}">{{news.mainClub.name}}</span>
-      <div class="news-title">{{news.title}}</div>
+<mat-card class="club-news-item" [routerLink]="['view', news.id]">
+  <div class="news-image-container">
+    <img src="{{news?.image}}" alt="" class="news-image">
+  </div>
+  <div class="news-text-container">
+    <span class="news-tags" [ngStyle]="{'background-color': randomTagColor()}">{{news.mainClub?.name ?
+      news.mainClub?.name : 'Default club'}}</span>
+    <div class="news-title">{{news.title | truncate : 100 : true }}</div>
 
-    </div>
-  </mat-card>
+  </div>
+</mat-card>

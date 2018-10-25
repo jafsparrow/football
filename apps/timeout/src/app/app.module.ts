@@ -21,6 +21,7 @@ import { EventsModule } from '@football/events';
 import { NewsLandingComponent } from './news/news-landing/news-landing.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
+import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-view.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
     NewsLandingComponent,
     NewsListComponent,
     TimeoutLoginComponent,
+    NewsDetailViewComponent,
   ],
   imports: [
     BrowserModule,
