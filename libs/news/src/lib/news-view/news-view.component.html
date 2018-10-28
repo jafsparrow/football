@@ -1,5 +1,5 @@
 <div *ngIf="(news$ |async) as news; else loading">
-  <news-actions *ngIf="siteType === 'admin'"></news-actions>
+  <news-actions *ngIf="siteType === 'admin'" [news]="news"></news-actions>
   <news-detail [news]="news"></news-detail>
 
 </div>

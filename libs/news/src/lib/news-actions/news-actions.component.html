@@ -1,7 +1,7 @@
-<mat-card>
-  <button mat-flat-button color="primary">Edit <mat-icon class="mat-18">edit</mat-icon></button>
-  <button mat-flat-button color="warn">Submit <mat-icon class="mat-18">submit</mat-icon></button>
-  <button mat-flat-button color="accent">Publish <mat-icon class="mat-18">publish</mat-icon></button>
-  <button mat-flat-button>Delete <mat-icon class="mat-18">delete</mat-icon></button>
+<mat-card *ngIf="user">
+  <button mat-flat-button color="primary" (click)="editNews()" *ngIf="canEdit()">Edit <mat-icon class="mat-18">edit</mat-icon></button>
+  <button mat-flat-button color="warn" (click)="submitNews()" *ngIf="canSubmit()">Submit <mat-icon class="mat-18">submit</mat-icon></button>
+  <button mat-flat-button color="accent" (click)="publishNews()" *ngIf="canPublish()">Publish <mat-icon class="mat-18">publish</mat-icon></button>
+  <button mat-flat-button (click)="deleteNews()">Delete <mat-icon class="mat-18">delete</mat-icon></button>
 
 </mat-card>

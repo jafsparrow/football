@@ -18,7 +18,7 @@ export class NewsViewComponent implements OnInit {
   newsId: any;
   news$: any;
 
-  @Input() siteType = 'timeout';
+  @Input() siteType = 'admin';
 
   constructor(
     public newsService: NewsService,

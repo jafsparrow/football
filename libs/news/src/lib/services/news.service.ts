@@ -67,14 +67,20 @@ export class NewsService {
     return <Observable<News>>this.db
       .collection('news')
       .doc(key)
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          const data = res.payload.data();
+          const id = res.payload.id;
+          return { id, ...data };
+        })
+      );
   }
 
   // read news for club admin.
   // clubadmin has two users. editor and admin both will have query updated.
   getNewsForAdmin(user) {
     let allNews$: AngularFirestoreCollection<any> = null;
-
     switch (user.permission.role) {
       case 'admin':
         allNews$ = this.db.collection('news', ref =>
@@ -222,5 +228,12 @@ export class NewsService {
           })
         )
     );
+  }
+
+  updateNewsStatus(news, status) {
+    return this.db
+      .collection('news')
+      .doc(news.id)
+      .update({ status: status });
   }
 }
