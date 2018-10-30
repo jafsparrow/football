@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'football-login',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnChanges {
-  @Input() loginRole: String = 'user';
+  @Input() loginRole: String = 'admin';
   @Input() redirectURL;
 
   isLoading = false;
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit, OnChanges {
     db: AngularFirestore,
     private auth: AuthenticationService,
     private router: Router,
-    private zone:NgZone // using this to route after the login promise to make angular known abou this
+    private zone: NgZone // using this to route after the login promise to make angular known abou this
   ) {
     this.user = null;
   }
@@ -57,15 +58,19 @@ export class LoginComponent implements OnInit, OnChanges {
 
   login() {
     this.auth.googleLogin().then(res => {
-      if(this.checkLoginEligibility(this.user, this.loginRole)) {
-        // when triggerd navigation inside other api, ie; promise, angular wouln't know as its not in angular zon
-        // so letting angular know the route below.
-        this.zone.run(() => this.router.navigate([this.redirectURL]));
-      } else {
-        this.auth.logout()
-            .then( () => console.log('you do not have permission to login to admin site'));
-
-      }
+      this.auth.user$.pipe(take(1)).subscribe(user => {
+        if (this.checkLoginEligibility(user, this.loginRole)) {
+          // when triggerd navigation inside other api, ie; promise, angular wouln't know as its not in angular zon
+          // so letting angular know the route below.
+          this.zone.run(() => this.router.navigate([this.redirectURL]));
+        } else {
+          this.auth
+            .logout()
+            .then(() =>
+              console.log('you do not have permission to login to admin site')
+            );
+        }
+      });
     });
   }
 
@@ -73,14 +78,13 @@ export class LoginComponent implements OnInit, OnChanges {
   checkLoginEligibility(user, siteType) {
     if (this.loginRole.toLowerCase() === 'admin') {
       if (this.auth.canLogin(user, 'admin')) {
-          return true;
+        return true;
       } else {
         return false;
       }
     }
 
     return true;
-
   }
   signUp() {
     // this.auth.

@@ -1,5 +1,5 @@
-import { AuthenticationService } from '@football/shared';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { AuthenticationService, AuthorizationService } from '@football/shared';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { News } from '../modals/news';
 import { NewsService } from '../services/news.service';
@@ -9,47 +9,99 @@ import { NewsService } from '../services/news.service';
   templateUrl: './news-actions.component.html',
   styleUrls: ['./news-actions.component.css']
 })
-export class NewsActionsComponent implements OnInit, OnDestroy {
+export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() news: News;
   user: any;
 
   canAccessAdmin = false;
   userSubscription: Subscription;
+
+  canSubmit: boolean;
+  canEdit: boolean;
+  canPublish: boolean;
+  canDelete: boolean;
+
   constructor(
     private _auth: AuthenticationService,
-    public newsService: NewsService
-  ) {}
+    public newsService: NewsService,
+    public authorizeService: AuthorizationService
+  ) {
+    this.canSubmit = false;
+    this.canEdit = false;
+    this.canPublish = false;
+    this.canDelete = false;
+  }
 
   ngOnInit() {
     this.userSubscription = this._auth.user$.subscribe(user => {
       this.user = user;
       if (this._auth.canLogin(user, 'admin')) this.canAccessAdmin = true;
+
+      this.canEdit = this.authorizeService.canEditContent(this.news, user);
+      this.canSubmit = this.authorizeService.canSubmitContent(this.news, user);
+      this.canPublish = this.authorizeService.canPublishContent(
+        this.news,
+        user
+      );
+      this.canDelete = this.authorizeService.canDeleteContent(this.news, user);
+
+      console.log({
+        edit: this.canEdit,
+        submit: this.canSubmit,
+        publish: this.canPublish,
+        delete: this.canDelete
+      });
+
+      console.log(this.news);
     });
+  }
+  ngOnChanges() {
+    if (this.user) {
+      this.canEdit = this.authorizeService.canEditContent(this.news, this.user);
+      this.canSubmit = this.authorizeService.canSubmitContent(
+        this.news,
+        this.user
+      );
+      this.canPublish = this.authorizeService.canPublishContent(
+        this.news,
+        this.user
+      );
+      this.canDelete = this.authorizeService.canDeleteContent(
+        this.news,
+        this.user
+      );
+    }
   }
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
   }
 
-  editNews() {}
-  submitNews() {
-    if (!this.isUserAuthorizedForNewsAction) {
-      console.log('not authorized to do this.');
-      return;
+  editNews() {
+    if (this.authorizeService.canEditContent(this.news, this.user)) {
+      // navigate to edit page.
     }
-    if (this.news.status !== 'draft') return;
-
-    this.newsService
-      .updateNewsStatus(this.news, 'submitted')
-      .then(res => console.log(res));
   }
-  publishNews() {
-    if (!this.isUserAuthorizedForNewsAction) return;
-    if (!this.canPublish) return;
+  submitNews() {
+    if (this.canSubmit) {
+      this.newsService
+        .updateNewsStatus(this.news, 'submitted')
+        .then(res => console.log(res))
+        .catch(error => console.log(error));
+    } else {
+      console.log('user is not allowed to submit the news');
+    }
+  }
 
-    this.newsService
-      .updateNewsStatus(this.news, 'published')
-      .then(res => console.log(res));
+  publishNews() {
+    if (this.canPublish) {
+      this.newsService
+        .updateNewsStatus(this.news, 'published')
+        .then(res => console.log(res))
+        .catch(error => console.log(error));
+    } else {
+      console.log('something wrong happened while publishing item');
+    }
   }
   deleteNews() {}
 
@@ -75,38 +127,39 @@ export class NewsActionsComponent implements OnInit, OnDestroy {
 
     return false;
   }
-  canPublish(): boolean {
-    const status = this.news.status;
-    const permissionRole = this.user.permission.role;
 
-    if (permissionRole === 'admin' && status === 'submitted') return true;
-    return false;
-  }
+  // canPublish(): boolean {
+  //   const status = this.news.status;
+  //   const permissionRole = this.user.permission.role;
 
-  canDelete(): boolean {
-    const status = this.news.status;
-    const permissionRole = this.user.permission.role;
+  //   if (permissionRole === 'admin' && status === 'submitted') return true;
+  //   return false;
+  // }
 
-    if (permissionRole === 'admin') {
-      return true;
-    }
+  // canDelete(): boolean {
+  //   const status = this.news.status;
+  //   const permissionRole = this.user.permission.role;
 
-    if (
-      permissionRole === 'editor' &&
-      (status === 'submitted' || status === 'draft')
-    ) {
-      return true;
-    }
-    return false;
-  }
+  //   if (permissionRole === 'admin') {
+  //     return true;
+  //   }
 
-  canEdit() {
-    if (this.news.status === 'draft') return true;
-    return false;
-  }
+  //   if (
+  //     permissionRole === 'editor' &&
+  //     (status === 'submitted' || status === 'draft')
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  canSubmit() {
-    if (this.news.status === 'draft') return true;
-    return false;
-  }
+  // canEdit() {
+  //   if (this.news.status === 'draft') return true;
+  //   return false;
+  // }
+
+  // canSubmit() {
+  //   if (this.news.status === 'draft') return true;
+  //   return false;
+  // }
 }

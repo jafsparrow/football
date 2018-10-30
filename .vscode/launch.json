@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Chrome",
+      "port": 4200,
+      "webRoot": "${workspaceFolder}"
+    },
+    {
       "name": "Angular debugging session",
       "type": "chrome",
       "request": "launch",

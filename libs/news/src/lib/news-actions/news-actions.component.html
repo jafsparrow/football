@@ -1,7 +1,15 @@
 <mat-card *ngIf="user">
-  <button mat-flat-button color="primary" (click)="editNews()" *ngIf="canEdit()">Edit <mat-icon class="mat-18">edit</mat-icon></button>
-  <button mat-flat-button color="warn" (click)="submitNews()" *ngIf="canSubmit()">Submit <mat-icon class="mat-18">submit</mat-icon></button>
-  <button mat-flat-button color="accent" (click)="publishNews()" *ngIf="canPublish()">Publish <mat-icon class="mat-18">publish</mat-icon></button>
-  <button mat-flat-button (click)="deleteNews()">Delete <mat-icon class="mat-18">delete</mat-icon></button>
+
+  <p><strong>Current Status: </strong>{{news.status}}</p>
+  <button mat-flat-button color="primary" (click)="editNews()" [disabled]="!canEdit">Edit <mat-icon class="mat-18">edit</mat-icon></button>
+  <button mat-flat-button color="warn" (click)="submitNews()" [disabled]="!canSubmit">Submit <mat-icon class="mat-18">submit</mat-icon></button>
+  <button mat-flat-button color="accent" (click)="publishNews()" [disabled]="!canPublish">Publish <mat-icon class="mat-18">publish</mat-icon></button>
+  <button mat-flat-button (click)="deleteNews()" [disabled]="!canDelete">Delete <mat-icon class="mat-18">delete</mat-icon></button>
 
 </mat-card>
+<!--
+<mat-card>
+  <ng-template #noPermission>
+    no permission for this clubs news
+  </ng-template>
+</mat-card> -->
