@@ -31,6 +31,7 @@ export class NewsViewComponent implements OnInit {
   ngOnInit() {
     this.news$ = this.activatedRoute.params.pipe(
       switchMap(params => {
+        console.log(params);
         const id = params['id'];
         return this.newsService.getDetailedNews(id);
       })

@@ -1,6 +1,6 @@
 <mat-card class="news-detail-card">
   <mat-card-header>
-    <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg)','background-position': 'center','background-size': 'cover', 'max-height': '150px'}">
+    <div mat-card-avatar [ngStyle]="{ 'background-image': news.author.photoUrl ? 'url(' + news.author.photoUrl + ')' : 'url(https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg)','background-position': 'center','background-size': 'cover', 'max-height': '150px'}">
     </div>
     <mat-card-title class="news-title">
       {{news.title}}
@@ -10,7 +10,7 @@
       <!-- <span class="news-publish-date">: {{news.publishedDate? (news.publishedDate.toDate() | date) : 'Published Date'}}</span> -->
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-chip-list >
+  <mat-chip-list>
     <mat-chip *ngFor="let game of relatedGames">
       {{game}}
     </mat-chip>

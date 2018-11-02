@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { SideNavOption } from '../../modal/side-nav. modal';
+import { SideNavOption } from '../../modal/side-nav.modal';
 
 @Component({
   selector: 'football-side-navigation',
@@ -7,20 +7,18 @@ import { SideNavOption } from '../../modal/side-nav. modal';
   styleUrls: ['./side-navigation.component.css']
 })
 export class SideNavigationComponent implements OnInit {
-  @Input() navConfig: Array<SideNavOption> = [
-    {name: 'Club', route: '/club', icon: 'menu'},
-    {name: 'News', route: '/News', icon: 'hotel'},
-
+  @Input()
+  navConfig: Array<SideNavOption> = [
+    { name: 'Club', route: '/club', icon: 'menu' },
+    { name: 'News', route: '/News', icon: 'hotel' }
   ];
   @Output() linkItemClick = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onToggleClose() {
     this.linkItemClick.emit('selected');
   }
-
 }

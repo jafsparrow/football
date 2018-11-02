@@ -1,16 +1,20 @@
 <div id="overlay" [ngStyle]="{'display':submitting ? 'block' : 'none' }">
-  <div id="text">News is being added. please wait..!</div>
+  <div id="text">News details are being saved. please wait..!</div>
 </div>
 
-<mat-horizontal-stepper  #stepper (animationDone)="randomClickEvent()">
+<div class="warning-message">
+
+</div>
+
+<mat-horizontal-stepper #stepper (animationDone)="randomClickEvent()">
   <mat-step [stepControl]="articleAddFrom">
     <mat-card *ngIf="!submitting" class="form-container">
 
 
 
 
-    <form [formGroup]="articleAddFrom"  class="form-container">
-      <ng-template matStepLabel>Create the article</ng-template>
+      <form [formGroup]="articleAddFrom" class="form-container">
+        <ng-template matStepLabel>Create the article</ng-template>
         <mat-form-field>
           <input matInput placeholder="News Title" formControlName="title">
         </mat-form-field>
@@ -18,8 +22,9 @@
           <textarea matInput name="" id="" rows="3" formControlName="summary" placeholder="Add news summary"
             matTextareaAutosize></textarea>
         </mat-form-field>
-        <mat-card-subtitle>Add Related Image</mat-card-subtitle>
-        <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)">
+        <button mat-raised-button color="accent" (click)="testMe(file.click())">Attach Image</button>
+        <input placeholder="Add Image" type="file" text="Add new Image" (change)="fileSelection($event)" #file style="display: none;">
+        <br>
         <img [src]="imageUrl"> <br />
 
         <angular-editor [config]="editorConfig" formControlName="content"></angular-editor>
@@ -29,58 +34,57 @@
     </mat-card>
   </mat-step>
   <mat-step>
-      <ng-template matStepLabel>Add tags and clubs</ng-template>
-      <mat-card>
-        <p>Related sports.</p>
+    <ng-template matStepLabel>Add tags and clubs</ng-template>
+    <mat-card>
+      <p>Related sports.</p>
 
-        <mat-checkbox *ngFor="let sport of sportsType" class="related-sport-check" [name]="sport"
-            (change)="sportSelectionChange($event)" labelPosition="before"
-            class="related-sport-check">
-          {{sport}}
-        </mat-checkbox>
+      <mat-checkbox *ngFor="let sport of sportsType" class="related-sport-check" [name]="sport" (change)="sportSelectionChange($event)"
+        labelPosition="before" class="related-sport-check">
+        {{sport}}
+      </mat-checkbox>
 
       <hr>
       <h4>search clubs to tag in the news</h4>
       <mat-chip-list class="tagged-clubs-list">
-          <mat-chip *ngFor="let club of taggedClubs">{{club.name}}
-            <span (click)="clubTagToggle(false, club)" class="tag-cancel-cross"> X </span>
-          </mat-chip>
+        <mat-chip *ngFor="let club of taggedClubs">{{club.name}}
+          <span (click)="clubTagToggle(false, club)" class="tag-cancel-cross"> X </span>
+        </mat-chip>
       </mat-chip-list>
       <mat-form-field class="full-width">
         <input matInput placeholder="Search for the clubs to tag" (keyup)="searchTerm$.next($event.target.value)"
-          #clubSearchInput
-          ngModel>
+          #clubSearchInput ngModel>
       </mat-form-field>
       <!-- {{club}} -->
-    <div *ngIf="(clubSearchResults$ | async) as clubSearchResult; else loading">
+      <div *ngIf="(clubSearchResults$ | async) as clubSearchResult; else loading">
 
-      <div class="club-search-info" fxLayout="row" *ngFor="let club of clubSearchResult">
+        <div class="club-search-info" fxLayout="row" *ngFor="let club of clubSearchResult">
           <div class="logo-area" fxFlex="15">
-            <img src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1" alt="">
+            <img src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+              alt="">
           </div>
           <div class="club-info-area" fxFlex="75">
 
-              {{club.name}} :
-              IX-22334
-              <div>
-                Kunnumpuram
-              </div>
+            {{club.name}} :
+            IX-22334
+            <div>
+              Kunnumpuram
+            </div>
 
           </div>
           <div class="action-button-area" fxFlex="15">
-              <button mat-icon-button>
-                <mat-slide-toggle (change)="clubTagToggle($event, club)">
+            <button mat-icon-button>
+              <mat-slide-toggle (change)="clubTagToggle($event, club)">
               </mat-slide-toggle>
-              </button>
+            </button>
           </div>
         </div>
 
 
       </div>
-          <ng-template #loading>
-            <div *ngIf="clubSearchInput.touched"> flblajf d </div>
-            loading ....
-          </ng-template>
+      <ng-template #loading>
+        <div *ngIf="clubSearchInput.touched"> flblajf d </div>
+        loading ....
+      </ng-template>
 
       <div *ngFor="">
         {{club.id}}
@@ -89,19 +93,24 @@
       </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext >Next</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
     </mat-card>
   </mat-step>
   <mat-step>
     <mat-card>
-        <ng-template matStepLabel>Save the news</ng-template>
-        Please review the article and save.
-        <news-detail [news]="newsObject"></news-detail>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <!-- need to display update button if the mode is edit -->
-          <button mat-raised-button type="submit" (click)="submitNews()" [disabled]="!articleAddFrom.valid" color="primary">Submit</button>
-        </div>
+      <ng-template matStepLabel>Save the news</ng-template>
+      Please review the article and save.
+      <news-detail [news]="newsObject"></news-detail>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <!-- need to display update button if the mode is edit -->
+        <button *ngIf="!isEditing" mat-raised-button type="submit" (click)="submitNews()" [disabled]="!articleAddFrom.valid"
+          color="primary">Submit</button>
+
+        <button *ngIf="isEditing" mat-raised-button type="submit" (click)="updateNews()" [disabled]="!articleAddFrom.valid"
+          color="primary">Update</button>
+
+      </div>
     </mat-card>
   </mat-step>

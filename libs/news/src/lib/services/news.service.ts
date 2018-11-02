@@ -134,7 +134,12 @@ export class NewsService {
     //   })
     // .catch(err => console.log(err));
   }
-  updateNews() {}
+  updateNews(news, id = '') {
+    return this.db
+      .collection('news')
+      .doc(id)
+      .update(news);
+  }
 
   deleteNews() {}
 

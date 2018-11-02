@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { News } from '../modals/news';
 import { NewsService } from '../services/news.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'news-actions',
@@ -24,7 +25,8 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private _auth: AuthenticationService,
     public newsService: NewsService,
-    public authorizeService: AuthorizationService
+    public authorizeService: AuthorizationService,
+    private _router: Router
   ) {
     this.canSubmit = false;
     this.canEdit = false;
@@ -80,6 +82,7 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
   editNews() {
     if (this.authorizeService.canEditContent(this.news, this.user)) {
       // navigate to edit page.
+      this._router.navigate(['home/news/add', { id: this.news.id }]);
     }
   }
   submitNews() {
