@@ -1,3 +1,5 @@
+import { ClubsModule } from '@football/clubs';
+import { ReactiveFormsModule } from '@angular/forms';
 import { routes } from './routes';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewsViewComponent } from './../../../../libs/news/src/lib/news-view/news-view.component';
@@ -22,6 +24,8 @@ import { NewsLandingComponent } from './news/news-landing/news-landing.component
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-view.component';
+import { ClubRequestComponent } from './club-request/club-request.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -34,20 +38,24 @@ import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-vie
     NewsListComponent,
     TimeoutLoginComponent,
     NewsDetailViewComponent,
+    ClubRequestComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     NxModule.forRoot(),
-    RouterModule.forRoot(routes, {initialNavigation: 'enabled'}),
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     NewsModule,
     SharedModule,
+    ClubsModule,
     MaterialLibraryModule,
     FlexLayoutModule,
-    EventsModule
+    EventsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

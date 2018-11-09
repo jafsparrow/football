@@ -2,8 +2,8 @@ export interface EventItem {
   title: string;
   date?: Date;
   summary?: string;
-  type: string[];
+  type?: string[];
   gameType?: string[];
-  description: string;
+  description?: string;
   contact?: {};
 }

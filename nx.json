@@ -28,6 +28,9 @@
     },
     "timeout-e2e": {
       "tags": []
+    },
+    "clubs": {
+      "tags": []
     }
   }
 }

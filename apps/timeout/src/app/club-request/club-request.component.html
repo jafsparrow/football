@@ -1,0 +1,77 @@
+<mat-card>
+
+  <p>Please fill up the below form. Add all the required details and send us the details. All the updates regarding
+    this will communicated to you on the given number.</p>
+  <hr>
+  <mat-spinner *ngIf="submitting"></mat-spinner>
+  <form class="form-container" [formGroup]="clubRequestForm" (ngSubmit)="onSubmit()" *ngIf="!submitting">
+
+    <p>Club Basic Information</p>
+    <mat-form-field>
+      <input matInput placeholder="club name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="club short name" formControlName="shortName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Tier">
+        <mat-option value="first">first</mat-option>
+        <mat-option value="second">second</mat-option>
+        <mat-option value="third">third</mat-option>
+        <mat-option value="fouth">fourth</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <p>Person of contact for verification</p>
+    <mat-form-field>
+      <input matInput placeholder="contact number" formControlName="contact">
+    </mat-form-field>
+
+    <p>Address Details</p>
+
+    <div class="address-container" formGroupName="address">
+      <mat-form-field>
+        <input matInput placeholder="line1" formControlName="line1">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="line2" formControlName="line2">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="pin code" formControlName="pin">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="state" disabled="true">
+          <mat-option value="kerala">kerala</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="District" formControlName="district">
+          <mat-option value="first">Malappuram</mat-option>
+          <mat-option value="second">Calicut</mat-option>
+          <mat-option value="third">Trissur</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Local Body Type" formControlName="localBodyType">
+          <mat-option value="first">municipality</mat-option>
+          <mat-option value="second">corporation</mat-option>
+          <mat-option value="third">grama panchayath</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Local Body" formControlName="localBody">
+          <mat-option value="first">Vengara</mat-option>
+          <mat-option value="second">Kannamangalam</mat-option>
+          <mat-option value="third">oorakam</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <button type="submit" color="primary" [disabled]="!clubRequestForm.valid" mat-button>send details</button>
+  </form>
+</mat-card>

@@ -24,6 +24,9 @@
       ],
       "@football/shared": [
         "libs/shared/src/index.ts"
+      ],
+      "@football/clubs": [
+        "libs/clubs/src/index.ts"
       ]
     }
   },

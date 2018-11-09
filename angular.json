@@ -330,6 +330,34 @@
           }
         }
       }
+    },
+    "clubs": {
+      "root": "libs/clubs",
+      "sourceRoot": "libs/clubs/src",
+      "projectType": "library",
+      "prefix": "football",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/clubs/src/test.ts",
+            "tsConfig": "libs/clubs/tsconfig.spec.json",
+            "karmaConfig": "libs/clubs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/clubs/tsconfig.lib.json",
+              "libs/clubs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

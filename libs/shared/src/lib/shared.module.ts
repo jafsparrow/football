@@ -2,7 +2,7 @@ import { AuthenticationService } from './services/authentication.service';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MaterialLibraryModule } from './material-library.module';
 
@@ -17,12 +17,14 @@ import { RouterModule } from '@angular/router';
 import { NewsTeaserComponent } from './news/news-teaser/news-teaser.component';
 import { NewsSummaryViewComponent } from './news/news-summary-view/news-summary-view.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialLibraryModule,
     FlexLayoutModule,
     AngularFirestoreModule,
@@ -35,7 +37,8 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     SideNavHeaderComponent,
     NewsTeaserComponent,
     NewsSummaryViewComponent,
-    TruncatePipe
+    TruncatePipe,
+    UserProfileComponent
   ],
   providers: [],
   exports: [
@@ -45,7 +48,8 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     SideNavHeaderComponent,
     NewsTeaserComponent,
     NewsSummaryViewComponent,
-    TruncatePipe
+    TruncatePipe,
+    UserProfileComponent
   ]
 })
 export class SharedModule {}
