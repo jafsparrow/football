@@ -12,6 +12,7 @@ import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Route[] = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'events', component: EventsComponent },
   { path: 'announcements', component: AnnouncementComponent },
@@ -26,5 +27,5 @@ export const routes: Route[] = [
   },
   { path: 'club', component: ClubRequestComponent, canActivate: [AuthGuard] },
   { path: 'login', component: TimeoutLoginComponent },
-  { path: 'user', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ];

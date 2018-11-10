@@ -7,21 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Timeout';
+  title = 'Timeout Sports';
   sideNavOptions: SideNavOption[] = [
     {
-      name: 'Home', route: 'home',
+      name: 'Home',
+      route: 'home'
     },
     {
-      name: 'News', route: 'news',
+      name: 'News',
+      route: 'news'
     },
     {
-
-      name: 'Events', route: 'events'
+      name: 'Events',
+      route: 'events'
     },
     {
-
-      name: 'announcements', route: 'announcements'
+      name: 'announcements',
+      route: 'announcements'
     }
-  ]
+  ];
 }

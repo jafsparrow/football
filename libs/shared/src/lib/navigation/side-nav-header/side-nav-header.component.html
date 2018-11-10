@@ -5,6 +5,6 @@
     </div>
   </div>
   <div class="side-nav-user-name">
-    {{user? user.displayName : 'You are not logged in'}}
+    {{user? ((user?.fullName !=='') ? user.fullName : user.displayName) : 'You are not logged in'}}
   </div>
 </div>

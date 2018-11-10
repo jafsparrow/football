@@ -75,6 +75,31 @@ export class ClubService {
         })
       );
   }
+
+  searchClubsByName(name, limit = 5) {
+    return this.db
+      .collection('clubs', ref => {
+        let query:
+          | firebase.firestore.CollectionReference
+          | firebase.firestore.Query = ref;
+
+        if (limit) {
+          query = query.limit(limit);
+        }
+
+        return query;
+      })
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
   findClubsByShortCode(clubCode) {
     return this.db
       .collection('clubs', ref => ref.where('clubShortCode', '==', clubCode))

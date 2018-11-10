@@ -1,5 +1,5 @@
 .user-profile-container {
-  width: 600px;
+  max-width: 650px;
   margin: 0px auto;
 }
 
@@ -48,4 +48,16 @@
 .tagged-clubs-list {
   padding: 5px;
   margin: 10px;
+}
+
+.user-fav-club-container {
+  background-color: #eeeeee;
+  margin-bottom: 5px;
+  padding: 15px;
+}
+
+.fav-club-name {
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 5px;
 }

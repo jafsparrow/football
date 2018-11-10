@@ -3,7 +3,7 @@ mat-form-field {
 }
 
 .mat-card {
-  width: 70%;
+  max-width: 650px;
   margin: 0px auto;
 }
 

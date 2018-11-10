@@ -1,3 +1,4 @@
+import { UserProfileService } from './../services/user-profile.service';
 import { LocationService } from './../services/location.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -17,9 +18,11 @@ import { tap, switchMap } from 'rxjs/operators';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
+  bldGroups = bloodGroups;
   profileForm: FormGroup;
 
   user$: Observable<any>;
+  uid = null;
 
   localBodyForClubSearch$: Observable<any>;
   localBodyForTaggingClubs$: Observable<any>;
@@ -30,20 +33,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   districtFilterForTaggingClubs$: BehaviorSubject<string | null>;
   bodyTypeFilterForTaggingClubs$: BehaviorSubject<string | null>;
   taggedClubs = [];
+  mainClub = {};
 
   searchTerm: any;
   searchCriteria = {
     district: null,
     localBody: null,
-    cubName: null
+    clubName: null
   };
 
   clubSearchResults$: Observable<any[]>;
+  favClubSearchResults$: Observable<any[]>;
+  isfavClubSearch = false;
+  isTagClubSearch = false;
   constructor(
     public clubService: ClubService,
     public auth: AuthenticationService,
     public fb: FormBuilder,
-    public locationService: LocationService
+    public locationService: LocationService,
+    public profileService: UserProfileService
   ) {
     this.profileForm = this.fb.group({
       fullName: [''],
@@ -53,7 +61,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         line1: ['', [Validators.required]],
         line2: [''],
         district: ['', [Validators.required]],
-        localBodyType: ['', [Validators.required]],
         localBody: ['', [Validators.required]]
       })
     });
@@ -65,13 +72,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.districtFilterForTaggingClubs$ = new BehaviorSubject(null);
     this.bodyTypeFilterForTaggingClubs$ = new BehaviorSubject(null);
   }
-
   ngOnInit() {
     this.user$ = this.auth.user$.pipe(
-      tap(user => this.profileForm.patchValue(user))
+      tap(user => {
+        this.profileForm.patchValue(user);
+        this.uid = user.uid;
+        const taggedClubsObject = user.taggedClubs;
+        Object.keys(taggedClubsObject).forEach(key => {
+          this.taggedClubs.push(taggedClubsObject[key]);
+        });
+      })
     );
 
     this.clubSearchResults$ = null;
+    this.favClubSearchResults$ = null;
 
     this.localBodyForClubSearch$ = combineLatest(
       this.districtFilterForClubSearch$,
@@ -114,46 +128,53 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   clubNameSearchForTag(value) {
-    setTimeout(() => {
-      console.log(value);
-      if (value === '') {
-        this.searchCriteria['name'] = value;
-      }
-    }, 1000);
+    this.searchCriteria['clubName'] = value;
   }
 
   updateUserProfile() {
-    console.log(this.profileForm.value);
-  }
+    const updatedProfile = this.profileForm.value;
+    updatedProfile['mainClub'] = this.mainClub;
+    const taggedClubObject = {};
 
-  ngOnDestroy() {
-    // this.districtFilterForClubSearch$.unsubscribe();
-    // this.bodyTypeFilterForClubSearch$.unsubscribe();
-    // this.districtFilterForTaggingClubs$.unsubscribe();
-    // this.bodyTypeFilterForTaggingClubs$.unsubscribe();
+    this.taggedClubs.forEach(item => {
+      taggedClubObject[item.id] = item;
+    });
+    updatedProfile['taggedClubs'] = taggedClubObject;
+    // console.log(updatedProfile);
+    this.taggedClubs = [];
+    // to remove the fav club search and tag club search result from page, emit curresponding observalbes with null value
+    this.clubSearchResults$ = of(null);
+    this.favClubSearchResults$ = of(null);
+    this.profileService
+      .updatedUserProfile(updatedProfile, this.uid)
+      .then(() => console.log('profile has been updated.'))
+      .catch(err => console.log('something wrong while updating user profile'));
   }
 
   searchClubs() {
-    console.log(this.searchCriteria);
+    this.isTagClubSearch = true;
     if (
-      this.searchCriteria.cubName == null &&
+      this.searchCriteria.clubName == null &&
       this.searchCriteria.district == null &&
       this.searchCriteria.localBody == null
     )
       return of(null);
-    this.clubSearchResults$ = this.clubService.searchClubsOnParams(
-      this.searchCriteria.cubName,
-      this.searchCriteria.district,
-      this.searchCriteria.localBody
-    );
+    this.clubSearchResults$ = this.clubService
+      .searchClubsOnParams(
+        this.searchCriteria.clubName,
+        this.searchCriteria.district,
+        this.searchCriteria.localBody
+      )
+      .pipe(tap(clubs => (this.isTagClubSearch = false)));
   }
   clubTagToggle($event, club) {
-    console.log($event, club);
+    // const taggingClub = { id: club.id, name: club.name };
     if ($event) {
-      this.taggedClubs.push(club);
+      if (this.taggedClubs.length < 5) {
+        this.taggedClubs.push(club);
+      }
     } else {
       const index = this.taggedClubs.indexOf(club);
-
       if (index !== -1) {
         this.taggedClubs.splice(index, 1);
       }
@@ -161,7 +182,28 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   updateClubSearchTerm(term) {
-    console.log('dropdown change' + term);
     this.searchTerm = term;
   }
+
+  searchClub(clubName) {
+    this.isfavClubSearch = true;
+    if (clubName !== '') {
+      this.favClubSearchResults$ = this.clubService
+        .searchClubsByName(name, 3)
+        .pipe(tap(clubs => (this.isfavClubSearch = false)));
+    }
+  }
+
+  updateFavClub(club) {
+    this.mainClub = { id: club.id, name: club.name };
+  }
+
+  ngOnDestroy() {
+    this.districtFilterForClubSearch$.unsubscribe();
+    this.bodyTypeFilterForClubSearch$.unsubscribe();
+    this.districtFilterForTaggingClubs$.unsubscribe();
+    this.bodyTypeFilterForTaggingClubs$.unsubscribe();
+  }
 }
+
+export const bloodGroups = ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'];

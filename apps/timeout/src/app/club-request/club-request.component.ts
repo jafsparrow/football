@@ -1,8 +1,9 @@
 import { ClubsService } from './../services/clubs.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@football/shared';
-import { take } from 'rxjs/operators';
+import { AuthenticationService, LocationService } from '@football/shared';
+import { take, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'football-club-request',
@@ -13,10 +14,17 @@ export class ClubRequestComponent implements OnInit {
   clubRequestForm: FormGroup;
   loggedInUser;
   submitting = false;
+  submitted = false;
+
+  districtFilter$: BehaviorSubject<string | null>;
+  bodyTypeFilter$: BehaviorSubject<string | null>;
+  localBodys$: Observable<any[]>;
+
   constructor(
     private _fb: FormBuilder,
     public clubService: ClubsService,
-    private _auth: AuthenticationService
+    private _auth: AuthenticationService,
+    public locationService: LocationService
   ) {}
 
   ngOnInit() {
@@ -37,6 +45,17 @@ export class ClubRequestComponent implements OnInit {
     this._auth.user$
       .pipe(take(1))
       .subscribe(user => (this.loggedInUser = user));
+
+    this.districtFilter$ = new BehaviorSubject(null);
+    this.bodyTypeFilter$ = new BehaviorSubject(null);
+    this.localBodys$ = combineLatest(
+      this.districtFilter$,
+      this.bodyTypeFilter$
+    ).pipe(
+      switchMap(([district, bodyType]) => {
+        return this.locationService.searchLocalBodies(district, bodyType);
+      })
+    );
   }
 
   onSubmit() {
@@ -49,6 +68,18 @@ export class ClubRequestComponent implements OnInit {
         displayName: this.loggedInUser.displayName,
         photoUrl: this.loggedInUser.photoUrl
       })
-      .then(res => (this.submitting = false));
+      .then(res => {
+        this.submitting = false;
+        this.submitted = true;
+      });
+  }
+
+  distChange(value) {
+    this.bodyTypeFilter$.next(null);
+    this.districtFilter$.next(value);
+  }
+
+  bodyTypeChange(value) {
+    this.bodyTypeFilter$.next(value);
   }
 }
