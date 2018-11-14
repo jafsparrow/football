@@ -1,3 +1,4 @@
+import { ClubInfoComponent } from './club-info/club-info.component';
 import { AuthGuard } from '@football/shared';
 import { ClubRequestComponent } from './club-request/club-request.component';
 import { NewsLandingComponent } from './news/news-landing/news-landing.component';
@@ -12,10 +13,11 @@ import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Route[] = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'events', component: EventsComponent },
   { path: 'announcements', component: AnnouncementComponent },
+  { path: 'test', component: NewsLandingComponent },
   {
     path: 'news',
     component: NewsComponent,
@@ -26,6 +28,7 @@ export const routes: Route[] = [
     ]
   },
   { path: 'club', component: ClubRequestComponent, canActivate: [AuthGuard] },
+  { path: 'clubinfo/:id', component: ClubInfoComponent },
   { path: 'login', component: TimeoutLoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ];

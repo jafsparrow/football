@@ -2,7 +2,6 @@ import { ClubsModule } from '@football/clubs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { routes } from './routes';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NewsViewComponent } from './../../../../libs/news/src/lib/news-view/news-view.component';
 
 import { SharedModule, MaterialLibraryModule } from '@football/shared';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,6 +25,7 @@ import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-view.component';
 import { ClubRequestComponent } from './club-request/club-request.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ClubInfoComponent } from './club-info/club-info.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import { ProfileComponent } from './profile/profile.component';
     TimeoutLoginComponent,
     NewsDetailViewComponent,
     ClubRequestComponent,
-    ProfileComponent
+    ProfileComponent,
+    ClubInfoComponent
   ],
   imports: [
     BrowserModule,

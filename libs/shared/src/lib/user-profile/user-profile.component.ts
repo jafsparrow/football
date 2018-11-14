@@ -55,7 +55,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ) {
     this.profileForm = this.fb.group({
       fullName: [''],
-      phone: ['', [Validators.required]],
+      phone: [
+        '',
+        [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]
+      ],
       bloodGroup: ['', [Validators.required]],
       address: this.fb.group({
         line1: ['', [Validators.required]],
@@ -151,6 +154,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .catch(err => console.log('something wrong while updating user profile'));
   }
 
+  get phone() {
+    return this.profileForm.get('phone');
+  }
   searchClubs() {
     this.isTagClubSearch = true;
     if (

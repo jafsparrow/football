@@ -1,0 +1,31 @@
+.club-info-container {
+  height: 100%;
+  margin: 5px auto;
+  max-width: 650px;
+  padding: 0px;
+}
+
+/* club continer copy if moving to a component */
+.club-icon {
+  width: 80px;
+  height: auto;
+}
+
+.club-name {
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.header-container {
+  background-color: #eee;
+}
+
+.section-2 {
+  position: relative;
+  text-align: center;
+}
+.address-section {
+}

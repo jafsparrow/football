@@ -1,0 +1,33 @@
+.event-container {
+  height: 100%;
+}
+
+.event-header-section {
+  background-color: aqua;
+}
+
+.header-container {
+  /* display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+  */
+  height: 100%;
+  color: white;
+}
+
+.event-date {
+  font-size: 50px;
+  font-weight: 800;
+  border: 2px solid white;
+  padding: 15px;
+}
+
+.event-title {
+  margin-top: 30px;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+.event-content-section {
+}

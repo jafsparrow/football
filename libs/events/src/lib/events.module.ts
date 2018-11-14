@@ -1,3 +1,4 @@
+import { EventUiModule } from './../../../event-ui/src/lib/event-ui.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialLibraryModule } from '@football/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -8,9 +9,14 @@ import { EventsSummaryComponent } from './events-summary/events-summary.componen
 import { EventsTeaserComponent } from './events-teaser/events-teaser.component';
 import { EventsAddComponent } from './events-add/events-add.component';
 import { RouterModule, Route } from '@angular/router';
+import { EventsListComponent } from './events-list/events-list.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EventDetailViewComponent } from './event-detail-view/event-detail-view.component';
 
 export const eventsRoutes: Route[] = [
-  { path: '', component: EventsAddComponent }
+  { path: '', component: EventsListComponent },
+  { path: 'edit', component: EventsAddComponent },
+  { path: 'detail/:id', component: EventDetailViewComponent }
 ];
 @NgModule({
   imports: [
@@ -18,12 +24,17 @@ export const eventsRoutes: Route[] = [
     FlexLayoutModule,
     MaterialLibraryModule,
     RouterModule.forChild(eventsRoutes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularEditorModule,
+    EventUiModule,
+    FlexLayoutModule
   ],
   declarations: [
     EventsSummaryComponent,
     EventsTeaserComponent,
-    EventsAddComponent
+    EventsAddComponent,
+    EventsListComponent,
+    EventDetailViewComponent
   ],
   exports: [EventsSummaryComponent, EventsTeaserComponent, EventsAddComponent]
 })

@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'events',
-        canActivate: [ClubManagementGuard],
+        // canActivate: [ClubManagementGuard],
         loadChildren: '@football/events#EventsModule'
       },
       {

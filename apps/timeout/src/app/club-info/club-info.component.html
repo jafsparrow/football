@@ -1,0 +1,44 @@
+<mat-card class="club-info-container">
+  <div class="top-section">
+    <div class="header-container" fxLayout="row" fxLayout.lt-sm="column">
+      <div class="section-1-container" fxFlex="40%">
+        <div class="section-1" fxLayout="column" fxLayoutAlign="center center">
+          <img
+            class="club-icon"
+            src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+          />
+          <div class="club-name">{{ club?.name }}</div>
+        </div>
+      </div>
+
+      <div class="section-2" fxFlex>
+        <mat-icon class="mat-18">phone</mat-icon>
+        <span id="phone"> +91 948394933</span>
+        <div class="address-section">anfield, second strett 25454</div>
+        <div><strong>Local Body: </strong>vengara</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="club-feeds">
+    <mat-tab-group>
+      <mat-tab label="News">
+        <ng-template matTabContent>
+          <div class="news-tab">
+            <mat-progress-bar
+              mode="indeterminate"
+              *ngIf="isNewsLoading"
+            ></mat-progress-bar>
+            <news-teaser-two [news]="clubNews$ | async"></news-teaser-two>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Events">
+        <ng-template matTabContent>
+          The Second Content
+          <football-events-teaser [events]="events"></football-events-teaser>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>

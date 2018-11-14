@@ -2,16 +2,14 @@
   <button mat-icon-button (click)="openSideNav()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="app-title">
-    {{appTitle}}
-  </span>
+  <span class="app-title"> {{ appTitle }} </span>
   <span class="flex-full-width"></span>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
 
   <mat-menu #menu="matMenu">
-    <div *ngIf="user; else notLoggedIn">
+    <div *ngIf="user; else: notLoggedIn">
       <button mat-menu-item routerLink="/profile">
         <mat-icon>account_circle</mat-icon>
         <span>Profile</span>
@@ -19,6 +17,10 @@
       <button mat-menu-item>
         <mat-icon>settings</mat-icon>
         <span>Settings</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/clubinfo', user?.mainClub?.id]">
+        <mat-icon>favorite</mat-icon>
+        <span>My Club</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-menu-item routerLink="/club">
@@ -32,16 +34,10 @@
       </button>
     </div>
     <ng-template #notLoggedIn>
-      <button mat-menu-item>
-        <mat-icon>fiber_new</mat-icon>
-        <span>Register a club</span>
-      </button>
-      <mat-divider></mat-divider>
       <button mat-menu-item (click)="login()">
         <mat-icon>person</mat-icon>
         <span>Login</span>
       </button>
     </ng-template>
   </mat-menu>
-
 </mat-toolbar>

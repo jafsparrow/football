@@ -45,6 +45,19 @@ export class ClubService {
     );
   }
 
+  findClubById(clubId) {
+    return this.db
+      .collection('clubs')
+      .doc(clubId)
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          const data = res.payload.data();
+          const id = res.payload.id;
+          return { id, ...data };
+        })
+      );
+  }
   searchClubsOnParams(name, district, localBody) {
     return this.db
       .collection('clubs', ref => {

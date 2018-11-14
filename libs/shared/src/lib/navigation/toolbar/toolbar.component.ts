@@ -11,31 +11,23 @@ export class ToolbarComponent implements OnInit {
   @Input() appTitle = 'Welcome';
   @Output() menuClicked = new EventEmitter();
   user: any;
-  constructor(
-          private _auth: AuthenticationService,
-          private _router: Router
-          ) {
-                this.user = null;
-            }
-
-  ngOnInit() {
-    this._auth.user$
-              .subscribe(user => {
-                this.user = user;
-              });
+  constructor(private _auth: AuthenticationService, private _router: Router) {
+    this.user = null;
   }
 
-  openSideNav(){
+  ngOnInit() {
+    this._auth.user$.subscribe(user => {
+      this.user = user;
+    });
+  }
+
+  openSideNav() {
     this.menuClicked.emit('opened');
   }
   login() {
-
     this._router.navigate(['login']);
   }
   logout() {
-    this._auth.logout()
-          .then(res => this._router.navigate(['/login']));
-
+    this._auth.logout().then(res => this._router.navigate(['/login']));
   }
-
 }

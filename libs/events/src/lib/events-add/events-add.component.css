@@ -1,3 +1,17 @@
 .events-form {
   width: 100%;
 }
+
+.related-sports-container {
+  margin: 10px;
+  padding-bottom: 30px;
+}
+.related-sport-check {
+  margin: 10px;
+  padding: 5px;
+  background-color: #eee;
+}
+
+.full-width {
+  width: 100%;
+}

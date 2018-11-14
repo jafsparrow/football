@@ -107,16 +107,6 @@ export class AddNewsComponent implements OnInit {
           console.log('something wrong in gettting news');
         }
       });
-
-    // subscribe(params => {
-    //   console.log(params);
-    //   const id = params['id'];
-
-    //   if (id) {
-    //     const newsEditValue = {};
-    //     this.articleAddFrom.patchValue(newsEditValue);
-    //   }
-    // });
     // get all the club details in id and value.
     this.clubDetailService.getAllclubs().subscribe(res => {
       // console.log(res);

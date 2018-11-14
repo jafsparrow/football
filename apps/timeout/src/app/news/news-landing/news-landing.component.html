@@ -1,30 +1,33 @@
 <div *ngIf="user">
-  <div class="section-header">
-    Liverpool News
-    <button mat-icon-button routerLink="list/favclub">
-      <mat-icon class="mat-18">trending_flat</mat-icon>
-    </button>
+  <div *ngIf="(mainClubNews$ | async) as mainClubNews">
+    <div class="section-header">
+      Liverpool News
+      <button mat-icon-button routerLink="list/favclub">
+        <mat-icon class="mat-18">trending_flat</mat-icon>
+      </button>
+    </div>
 
+    <news-teaser-two [news]="mainClubNews"></news-teaser-two>
   </div>
 
+  <div *ngIf="(taggedClubNews$ | async) as taggedClubNews">
+    <div class="section-header">
+      Tagged Club News
+      <button mat-icon-button routerLink="list/tagged">
+        <mat-icon class="mat-18">trending_flat</mat-icon>
+      </button>
+    </div>
+    <news-teaser-two [news]="taggedClubNews"></news-teaser-two>
+  </div>
+</div>
 
-
-  <news-teaser-two [news]="mainClubNews$ | async"></news-teaser-two>
-
+<div *ngIf="(recentNews$ | async) as news">
   <div class="section-header">
-    Tagged Club News
-    <button mat-icon-button routerLink="list/tagged">
+    Recent News
+    <button mat-icon-button routerLink="list/all">
       <mat-icon class="mat-18">trending_flat</mat-icon>
     </button>
-
   </div>
-  <news-teaser-two [news]="taggedClubNews$ | async"></news-teaser-two>
-</div>
 
-<div class="section-header">
-  Recent News
-  <button mat-icon-button routerLink="list/all">
-    <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
+  <news-teaser-two [news]="news"></news-teaser-two>
 </div>
-<news-teaser-two [news]="recentNews$ | async"></news-teaser-two>

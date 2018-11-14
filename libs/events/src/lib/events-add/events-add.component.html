@@ -1,23 +1,86 @@
-<p>
-  events-add works!
-</p>
-
-<div>
-  <button>Events Add</button>
-  <button>Events Add</button>
-  <button>Events Add</button>
-</div>
-
 <mat-card>
-  <form class="events-form" [formGroup]="eventsForm">
-    <!-- <mat-form-field class="input-item">
-      <input matInput placeholder="Email" formControlname="title">
-      <mat-error *ngIf="title.hasError('email') && !title.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="title.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field> -->
+  <h4>Please fill up the following details</h4>
+  <form [formGroup]="eventForm">
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Tell us something about the event"
+        formControlName="title"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-hint>when is it happening</mat-hint>
+      <input
+        matInput
+        [matDatepicker]="eventDatepicker"
+        placeholder="Event date"
+        formControlName="date"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="eventDatepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #eventDatepicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-hint
+        >Date of expiry of this event so that it won't be visible
+        after</mat-hint
+      >
+      <input
+        matInput
+        [matDatepicker]="expirypicker"
+        placeholder="Choose an expiry date"
+        formControlName="expiryDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="expirypicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #expirypicker></mat-datepicker>
+    </mat-form-field>
+    <div class="related-sports-container">
+      <p>Related sports.</p>
+      <mat-checkbox
+        *ngFor="let sport of sportsType"
+        class="related-sport-check"
+        [name]="sport"
+        [checked]="isSportsSelected(sport)"
+        (change)="sportSelectionChange($event)"
+        labelPosition="before"
+        class="related-sport-check"
+      >
+        {{ sport }}
+      </mat-checkbox>
+    </div>
+
+    Tell more about the event
+    <angular-editor
+      [config]="editorConfig"
+      formControlName="content"
+    ></angular-editor>
+    <button
+      *ngIf="!isEditing"
+      mat-raised-button
+      type="submit"
+      (click)="submitEvent()"
+      [disabled]="!eventForm.valid"
+      color="primary"
+    >
+      Submit
+    </button>
+
+    <button
+      *ngIf="isEditing"
+      mat-raised-button
+      type="submit"
+      (click)="updateEvent()"
+      [disabled]="!eventForm.valid"
+      color="primary"
+    >
+      Update
+    </button>
   </form>
 </mat-card>

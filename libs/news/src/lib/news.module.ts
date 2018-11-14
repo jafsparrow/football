@@ -25,10 +25,10 @@ import { NewsListViewTwoComponent } from './news-list-view-two/news-list-view-tw
 import { SingleNewsSummaryViewComponent } from './single-news-summary-view/single-news-summary-view.component';
 
 export const newsRoutes: Route[] = [
-  {
-    path: '',
-    component: NewsListComponent
-  },
+  // {
+  //   path: '',
+  //   component: NewsListComponent
+  // },
   {
     path: 'add',
     component: AddNewsComponent,

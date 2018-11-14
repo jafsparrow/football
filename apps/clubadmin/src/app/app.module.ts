@@ -15,10 +15,13 @@ import { AngularFireModule } from '@angular/fire';
 import { HomeComponent } from './home/home.component';
 import { RoutingModule } from './routing.module';
 
-import {testing } from '@football/events';
+import { testing } from '@football/events';
 
-import { SharedModule, AuthenticationService, MaterialLibraryModule} from '@football/shared';
-import { NewsModule } from '@football/news';
+import {
+  SharedModule,
+  AuthenticationService,
+  MaterialLibraryModule
+} from '@football/shared';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewsComponent } from './news/news.component';
@@ -28,7 +31,6 @@ import { NewsAddComponent } from './news/news-add/news-add.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 
 import { HttpClientModule } from '@angular/common/http';
-
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     EventsComponent,
     ClubInfoComponent,
     NewsAddComponent,
-    NewsListComponent,
+    NewsListComponent
   ],
   imports: [
     BrowserModule,
@@ -59,4 +61,4 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

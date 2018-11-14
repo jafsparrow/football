@@ -49,7 +49,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NewsTeaserComponent,
     NewsSummaryViewComponent,
     TruncatePipe,
-    UserProfileComponent
+    UserProfileComponent,
+    FlexLayoutModule
   ]
 })
 export class SharedModule {}

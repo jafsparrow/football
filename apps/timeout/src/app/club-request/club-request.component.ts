@@ -31,7 +31,10 @@ export class ClubRequestComponent implements OnInit {
     this.clubRequestForm = this._fb.group({
       name: ['', [Validators.required]],
       shortName: ['', [Validators.required]],
-      contact: ['', [Validators.required, Validators.minLength(8)]],
+      contact: [
+        '',
+        [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]
+      ],
       address: this._fb.group({
         line1: ['', [Validators.required]],
         line2: '',
@@ -58,6 +61,9 @@ export class ClubRequestComponent implements OnInit {
     );
   }
 
+  get contactNumber() {
+    return this.clubRequestForm.get('contact');
+  }
   onSubmit() {
     const newClubDetails = this.clubRequestForm.value;
     console.log(this.clubRequestForm.value);

@@ -1,31 +1,51 @@
-<mat-card class="user-profile-container" *ngIf="(user$ | async) as user; else loading">
+<mat-card
+  class="user-profile-container"
+  *ngIf="(user$ | async) as user; else: loading"
+>
   <form [formGroup]="profileForm" (ngsubmit)="updateUserProfile()">
     <mat-vertical-stepper linear="false" #stepper>
       <mat-step>
         <ng-template matStepLabel>update your basic infor</ng-template>
         <mat-form-field class="full-width">
-          <input matInput placeholder="full name" formControlName="fullName" [value]="user?.fullName ? user.fullName : user?.displayName">
+          <input
+            matInput
+            placeholder="full name"
+            formControlName="fullName"
+            [value]="user?.fullName ? user.fullName : user?.displayName"
+          />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Mobile Number" formControlName="phone">
+          <input matInput placeholder="Mobile Number" formControlName="phone" />
+          <mat-hint>Enter a valid phone number</mat-hint>
+          <mat-error *ngIf="phone.errors?.pattern">
+            Please enter a valid phone number
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Blood group" formControlName="bloodGroup">
-            <mat-option *ngFor="let group of bldGroups" [value]="group">{{group}}</mat-option>
+            <mat-option *ngFor="let group of bldGroups" [value]="group">{{
+              group
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
+        <div><button mat-button matStepperNext>Next</button></div>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Fill out your address</ng-template>
         <div formGroupName="address">
           <mat-form-field>
-            <input matInput placeholder="address line 1" formControlName="line1">
+            <input
+              matInput
+              placeholder="address line 1"
+              formControlName="line1"
+            />
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="address line 2" formControlName="line2">
+            <input
+              matInput
+              placeholder="address line 2"
+              formControlName="line2"
+            />
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="state" disabled="true">
@@ -35,22 +55,35 @@
 
           <div>
             <mat-form-field>
-              <mat-select placeholder="District" formControlName="district" (selectionChange)="addressDistrictChange($event.value)">
+              <mat-select
+                placeholder="District"
+                formControlName="district"
+                (selectionChange)="addressDistrictChange($event.value)"
+              >
                 <mat-option value="Malappuram">Malappuram</mat-option>
                 <mat-option value="Calicut">Calicut</mat-option>
                 <mat-option value="Trissur">Trissur</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <mat-select placeholder="Local Body Type" (selectionChange)="addressBodyTypeChange($event.value)">
+              <mat-select
+                placeholder="Local Body Type"
+                (selectionChange)="addressBodyTypeChange($event.value)"
+              >
                 <mat-option value="municipality">municipality</mat-option>
                 <mat-option value="corporation">corporation</mat-option>
                 <mat-option value="gramapanchayath">gramapanchayath</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="(localBodyForClubSearch$ | async) as localbodies">
+            <mat-form-field
+              *ngIf="(localBodyForClubSearch$ | async) as localbodies"
+            >
               <mat-select placeholder="Local Body" formControlName="localBody">
-                <mat-option *ngFor="let localbody of localbodies" value="localbody.name">{{localbody.name}}</mat-option>
+                <mat-option
+                  *ngFor="let localbody of localbodies"
+                  value="localbody.name"
+                  >{{ localbody.name }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
@@ -61,33 +94,67 @@
         </div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Update your club and you can also tag other clubs</ng-template>
+        <ng-template matStepLabel
+          >Update your club and you can also tag other clubs</ng-template
+        >
         <div fxLayout="row">
           <mat-form-field fxFlex>
-            <input class="full-width" matInput placeholder="enter your fav club name" #clubName>
+            <input
+              class="full-width"
+              matInput
+              placeholder="enter your fav club name"
+              #clubName
+            />
           </mat-form-field>
           <div>
-            <button type="button" (click)="searchClub(clubName.value)" mat-raised-button>Search</button>
+            <button
+              type="button"
+              (click)="searchClub(clubName.value)"
+              mat-raised-button
+            >
+              Search
+            </button>
           </div>
         </div>
         <div class="user-fav-club-container ">
-          Your current favourite club is : <span class="fav-club-name">{{user.mainClub?.name ? user.mainClub.name :
-            'You have
-            not updated your fav club'}}</span>
+          Your current favourite club is :
+          <span class="fav-club-name">{{
+            user.mainClub?.name
+              ? user.mainClub.name
+              : 'You have
+            not updated your fav club'
+          }}</span>
           <div *ngIf="mainClub.name">
-            Selected Club is : <span class="fav-club-name">{{mainClub.name}}</span>
+            Selected Club is :
+            <span class="fav-club-name">{{ mainClub.name }}</span>
           </div>
         </div>
-        <div *ngIf="(favClubSearchResults$ | async) as favclubsearchResults; else favClubLoading">
-          <div class="club-search-info" fxLayout="row" *ngFor="let club of favclubsearchResults">
+        <div
+          *ngIf="
+            (favClubSearchResults$ | async) as favclubsearchResults;
+            else: favClubLoading
+          "
+        >
+          <div
+            class="club-search-info"
+            fxLayout="row"
+            *ngFor="let club of favclubsearchResults"
+          >
             <div class="logo-area" fxFlex="15">
-              <img src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
-                alt="">
+              <img
+                src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+                alt=""
+              />
             </div>
             <div class="club-info-area" fxFlex="75">
-              {{club.name}} : {{club?.cludId ? club.cludId : 'no club id generated'}}
+              {{ club.name }} :
+              {{ club?.cludId ? club.cludId : 'no club id generated' }}
               <div>
-                {{ club.address?.place ? club.address.place : 'location is not updated'}}
+                {{
+                  club.address?.place
+                    ? club.address.place
+                    : 'location is not updated'
+                }}
               </div>
             </div>
             <div class="action-button-area" fxFlex="15">
@@ -105,53 +172,90 @@
         <h4>Search for the clubs you wish to tag to your profile</h4>
         <div>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Enter the club name to searc" (keyup)="clubNameSearchForTag($event.target.value)">
+            <input
+              matInput
+              placeholder="Enter the club name to searc"
+              (keyup)="clubNameSearchForTag($event.target.value)"
+            />
           </mat-form-field>
           <mat-form-field>
-            <mat-select placeholder="District" (selectionChange)="tagClubdistrictChange($event.value)">
+            <mat-select
+              placeholder="District"
+              (selectionChange)="tagClubdistrictChange($event.value)"
+            >
               <mat-option value="Malappuram">Malappuram</mat-option>
               <mat-option value="Calicut">Calicut</mat-option>
               <mat-option value="Trissur">Trissur</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field>
-            <mat-select placeholder="Local Body Type" (selectionChange)="tagClublocalBodyTypeChange($event.value)">
+            <mat-select
+              placeholder="Local Body Type"
+              (selectionChange)="tagClublocalBodyTypeChange($event.value)"
+            >
               <mat-option value="municipality">municipality</mat-option>
               <mat-option value="corporation">corporation</mat-option>
               <mat-option value="gramapanchayath">grama panchayath</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="(localBodyForTaggingClubs$ | async) as bodies">
-            <mat-select placeholder="Local Body" (selectionChange)="updateClubSearchTerm($event.value)">
-              <mat-option *ngFor="let body of bodies" [value]="body.name">{{body.name}}</mat-option>
+            <mat-select
+              placeholder="Local Body"
+              (selectionChange)="updateClubSearchTerm($event.value)"
+            >
+              <mat-option *ngFor="let body of bodies" [value]="body.name">{{
+                body.name
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
-          <button mat-raised-button (click)="searchClubs()">Search
-            Clubs</button>
+          <button mat-raised-button (click)="searchClubs()">
+            Search Clubs
+          </button>
         </div>
         <div *ngIf="taggedClubs.length > 4">
           You can only tag maxium 5 clubs
         </div>
         <mat-chip-list class="tagged-clubs-list">
-          <mat-chip *ngFor="let club of taggedClubs">{{club.name}}
-            <span (click)="clubTagToggle(false, club)" class="tag-cancel-cross"> X </span>
+          <mat-chip *ngFor="let club of taggedClubs"
+            >{{ club.name }}
+            <span (click)="clubTagToggle(false, club)" class="tag-cancel-cross">
+              X
+            </span>
           </mat-chip>
         </mat-chip-list>
-        <div *ngIf="(clubSearchResults$ | async) as clubSearchResult; else taggedLoading">
-          <div class="club-search-info" fxLayout="row" *ngFor="let club of clubSearchResult">
+        <div
+          *ngIf="
+            (clubSearchResults$ | async) as clubSearchResult;
+            else: taggedLoading
+          "
+        >
+          <div
+            class="club-search-info"
+            fxLayout="row"
+            *ngFor="let club of clubSearchResult"
+          >
             <div class="logo-area" fxFlex="15">
-              <img src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
-                alt="">
+              <img
+                src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+                alt=""
+              />
             </div>
             <div class="club-info-area" fxFlex="75">
-              {{club.name}} : {{club?.cludId ? club.cludId : 'no club id generated'}}
+              {{ club.name }} :
+              {{ club?.cludId ? club.cludId : 'no club id generated' }}
               <div>
-                {{ club.address?.place ? club.address.place : 'location is not updated'}}
+                {{
+                  club.address?.place
+                    ? club.address.place
+                    : 'location is not updated'
+                }}
               </div>
             </div>
             <div class="action-button-area" fxFlex="15">
               <button mat-icon-button>
-                <mat-slide-toggle (change)="clubTagToggle($event.checked, club)">
+                <mat-slide-toggle
+                  (change)="clubTagToggle($event.checked, club)"
+                >
                 </mat-slide-toggle>
               </button>
             </div>
@@ -172,13 +276,19 @@
         You are now done. Please click on Update
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button type="submit" (click)="updateUserProfile()" [disabled]="!profileForm.valid">update</button>
+          <button
+            mat-button
+            type="submit"
+            (click)="updateUserProfile()"
+            [disabled]="!profileForm.valid"
+          >
+            update
+          </button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
   </form>
 </mat-card>
 <ng-template #loading>
-
   <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
 </ng-template>

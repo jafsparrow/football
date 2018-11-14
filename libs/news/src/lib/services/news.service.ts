@@ -193,46 +193,27 @@ export class NewsService {
   }
 
   getClubNews(clubId: string, limitNumber = 100) {
-    console.log('inside the clude new where');
-    return (
-      this.db
-        .collection(
-          'news',
-          ref => {
-            let query:
-              | firebase.firestore.CollectionReference
-              | firebase.firestore.Query = ref;
-            if (true) {
-              query = query.where('mainClub.id', '==', clubId);
-              query = query.limit(limitNumber);
-            }
-            return query;
-          }
-
-          // ref.where('mainClub.id', '==', clubId)
-        )
-        // const query:
-        //   | firebase.firestore.CollectionReference
-        //   | firebase.firestore.Query = ref;
-
-        // if (limitNumber) {
-        //   query = query.limit(limitNumber);
-        // }
-        // console.log(query);
-        // return ref;
-
-        .snapshotChanges()
-        .pipe(
-          map(res => {
-            console.log(res);
-            return res.map(item => {
-              const data = item.payload.doc.data();
-              const id = item.payload.doc.id;
-              return { id, ...data };
-            });
-          })
-        )
-    );
+    return this.db
+      .collection('news', ref => {
+        let query:
+          | firebase.firestore.CollectionReference
+          | firebase.firestore.Query = ref;
+        query = query.where('mainClub.id', '==', clubId);
+        if (limitNumber) {
+          query = query.limit(limitNumber);
+        }
+        return query;
+      })
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   updateNewsStatus(news, status) {

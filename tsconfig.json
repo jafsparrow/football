@@ -27,6 +27,9 @@
       ],
       "@football/clubs": [
         "libs/clubs/src/index.ts"
+      ],
+      "@football/event-ui": [
+        "libs/event-ui/src/index.ts"
       ]
     }
   },

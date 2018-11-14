@@ -1,17 +1,10 @@
-<!-- <p>
-  home works!
-</p>
-<div class="full-width">
-
-  <news-detail></news-detail>
-
-  <news-list class="full-width"></news-list>
-</div>
-<button (click)="signOut()">logout</button> -->
 <mat-sidenav-container class="main-container">
   <mat-sidenav #sidenav mode="over">
     <football-side-nav-header></football-side-nav-header>
-    <football-side-navigation (linkItemClick)="sidenav.toggle()" [navConfig]="sideNavOptions"></football-side-navigation>
+    <football-side-navigation
+      (linkItemClick)="sidenav.toggle()"
+      [navConfig]="sideNavOptions"
+    ></football-side-navigation>
   </mat-sidenav>
 
   <mat-sidenav-content>

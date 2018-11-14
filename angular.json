@@ -358,6 +358,34 @@
           }
         }
       }
+    },
+    "event-ui": {
+      "root": "libs/event-ui",
+      "sourceRoot": "libs/event-ui/src",
+      "projectType": "library",
+      "prefix": "football",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/event-ui/src/test.ts",
+            "tsConfig": "libs/event-ui/tsconfig.spec.json",
+            "karmaConfig": "libs/event-ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/event-ui/tsconfig.lib.json",
+              "libs/event-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

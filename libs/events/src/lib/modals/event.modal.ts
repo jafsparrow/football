@@ -6,4 +6,10 @@ export interface EventItem {
   gameType?: string[];
   description?: string;
   contact?: {};
+  mainClub?: ClubInfo;
+}
+
+export class ClubInfo {
+  name: string;
+  id: string;
 }
