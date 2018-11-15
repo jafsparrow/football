@@ -3,8 +3,6 @@ import { AuthGuard } from '@football/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialLibraryModule } from '@football/shared';
-
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { NgModule } from '@angular/core';
@@ -23,6 +21,7 @@ import { NewsTeaserTwoComponent } from './news-teaser-two/news-teaser-two.compon
 import { NewsSummaryViewSecondComponent } from './news-teaser-two/news-summary-view-second/news-summary-view-second.component';
 import { NewsListViewTwoComponent } from './news-list-view-two/news-list-view-two.component';
 import { SingleNewsSummaryViewComponent } from './single-news-summary-view/single-news-summary-view.component';
+import { NewsUiModule } from '@football/news-ui';
 
 export const newsRoutes: Route[] = [
   // {
@@ -45,11 +44,11 @@ export const newsRoutes: Route[] = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(newsRoutes),
-    MaterialLibraryModule,
     AngularFireStorageModule,
     FlexLayoutModule,
     AngularEditorModule,
-    SharedModule
+    SharedModule,
+    NewsUiModule
   ],
   declarations: [
     NewsListComponent,

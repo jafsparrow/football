@@ -1,0 +1,30 @@
+<mat-card *ngIf="user">
+  <p><strong>Current Status: </strong>{{ event.status }}</p>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="editEvent()"
+    [disabled]="!canEdit"
+  >
+    Edit <mat-icon class="mat-18">edit</mat-icon>
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    (click)="submitEvent()"
+    [disabled]="!canSubmit"
+  >
+    Submit <mat-icon class="mat-18">submit</mat-icon>
+  </button>
+  <button
+    mat-flat-button
+    color="accent"
+    (click)="publishEvent()"
+    [disabled]="!canPublish"
+  >
+    Publish <mat-icon class="mat-18">publish</mat-icon>
+  </button>
+  <button mat-flat-button (click)="deleteEvent()" [disabled]="!canDelete">
+    Delete <mat-icon class="mat-18">delete</mat-icon>
+  </button>
+</mat-card>

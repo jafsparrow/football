@@ -13,8 +13,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
-import { NewsModule, NewsDetailComponent } from '@football/news';
+import { environment, evnType } from '../environments/environment';
 import { NewsComponent } from './news/news.component';
 import { EventsComponent } from './events/events.component';
 import { AnnouncementComponent } from './announcement/announcement.component';
@@ -26,6 +25,8 @@ import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-vie
 import { ClubRequestComponent } from './club-request/club-request.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ClubInfoComponent } from './club-info/club-info.component';
+import { NewsUiModule } from '@football/news-ui';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -35,12 +36,12 @@ import { ClubInfoComponent } from './club-info/club-info.component';
     EventsComponent,
     AnnouncementComponent,
     NewsLandingComponent,
-    NewsListComponent,
     TimeoutLoginComponent,
     NewsDetailViewComponent,
     ClubRequestComponent,
     ProfileComponent,
-    ClubInfoComponent
+    ClubInfoComponent,
+    NewsListComponent
   ],
   imports: [
     BrowserModule,
@@ -48,15 +49,16 @@ import { ClubInfoComponent } from './club-info/club-info.component';
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    NewsModule,
+    AngularFireStorageModule,
     SharedModule,
     ClubsModule,
     MaterialLibraryModule,
     FlexLayoutModule,
     EventsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NewsUiModule
   ],
-  providers: [],
+  providers: [{ provide: 'siteType', useValue: evnType }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

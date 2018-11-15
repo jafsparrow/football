@@ -1,0 +1,25 @@
+.news-detail-card {
+  max-width: 600px;
+  margin: 5px auto;
+}
+
+.news-title {
+  font-weight: bold;
+}
+
+.indicator-container {
+  padding: 100px;
+}
+
+.loading-indicator {
+  height: 60px;
+  width: auto;
+  margin: auto auto;
+}
+
+.news-image {
+  max-height: 300px;
+  /* width: 100%; */
+  /* object-fit: cover */
+  background-size: cover;
+}

@@ -1,10 +1,10 @@
-import { AuthenticationService } from '@football/shared';
 import { NewsService } from './../services/news.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { News } from '../modals/news';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from '@football/shared';
 
 @Component({
   selector: 'news-view',
@@ -17,15 +17,17 @@ export class NewsViewComponent implements OnInit {
   activeRoute: any;
   newsId: any;
   news$: any;
-
-  @Input() siteType = 'admin';
-
+  isAdminSite = false;
   constructor(
     public newsService: NewsService,
     public activatedRoute: ActivatedRoute,
-    private _auth: AuthenticationService
+    private _auth: AuthenticationService,
+    @Inject('siteType') siteType
   ) {
     this.isLoading = true;
+    if (siteType === 'admin') {
+      this.isAdminSite = true;
+    }
   }
 
   ngOnInit() {

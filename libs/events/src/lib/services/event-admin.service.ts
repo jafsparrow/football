@@ -4,6 +4,7 @@ import {
 } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,20 @@ export class EventAdminService {
   constructor(private db: AngularFirestore) {}
 
   getEvents() {}
+
+  getDetailedEvent(key) {
+    return <Observable<any>>this.db
+      .collection('events')
+      .doc(key)
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          const data = res.payload.data();
+          const id = res.payload.id;
+          return { id, ...data };
+        })
+      );
+  }
   // clubadmin has two users. editor and admin both will have query updated.
   getEventsForAdmin(user) {
     let allEvents$: AngularFirestoreCollection<any> = null;
@@ -56,6 +71,13 @@ export class EventAdminService {
       .collection('events')
       .doc(id)
       .update(event);
+  }
+
+  updateEventStatus(event, status) {
+    return this.db
+      .collection('events')
+      .doc(event.id)
+      .update({ status: status });
   }
 
   mapToArray(items) {

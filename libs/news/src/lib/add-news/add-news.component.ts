@@ -16,7 +16,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'add-news',
+  selector: 'news-add',
   templateUrl: './add-news.component.html',
   styleUrls: ['./add-news.component.css']
 })

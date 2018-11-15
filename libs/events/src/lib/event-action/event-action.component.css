@@ -1,0 +1,9 @@
+mat-card {
+  max-width: 600px;
+  margin: 0px auto;
+  text-align: center;
+}
+
+mat-card > button {
+  margin: 2px;
+}

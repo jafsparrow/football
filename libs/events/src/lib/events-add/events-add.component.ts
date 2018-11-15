@@ -38,12 +38,14 @@ export class EventsAddComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('event add is loaded');
+
     this.activatedRoute.params
       .pipe(
         switchMap(params => {
           const id = params['id'];
+          console.log(id);
           if (id) {
-            console.log(id);
             this.isEditing = true;
             this.createdEventKey = id;
 
@@ -54,7 +56,6 @@ export class EventsAddComponent implements OnInit {
       )
       .subscribe(event => {
         if (event) {
-          console.log(event);
           if (event.date) {
             const eventDate = event.date.toDate();
             event.date = eventDate;
@@ -63,6 +64,7 @@ export class EventsAddComponent implements OnInit {
             const expiryDate = event.expiryDate.toDate();
             event.expiryDate = expiryDate;
           }
+
           this.eventForm.patchValue(event);
           if (event.relatedSports) {
             this.selectedSports = event.relatedSports;

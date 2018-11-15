@@ -1,4 +1,3 @@
-import { News } from '@football/news';
 import { Injectable } from '@angular/core';
 import { User } from '../modal/user';
 
@@ -56,7 +55,7 @@ export class AuthorizationService {
     return false;
   }
 
-  private checkContentAuthorization(content: News | any, user) {
+  private checkContentAuthorization(content: any | any, user) {
     const contentMainClubId = content.mainClub.id;
     const contentAuthorId = content.author.uid;
     const userPermittedClubId = user.permission.clubId;

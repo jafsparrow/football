@@ -1,12 +1,17 @@
-<div *ngIf="(news$ |async) as news; else loading">
-  <news-actions *ngIf="siteType === 'admin'" [news]="news"></news-actions>
-  <news-detail [news]="news"></news-detail>
-
+<div *ngIf="(news$ | async) as news; else: loading">
+  <news-actions *ngIf="isAdminSite" [news]="news"></news-actions>
+  <!--
+    <news-detail [news]="news"></news-detail> this component will be removed later as moving to news-ui module
+  -->
+  <football-news-detail-view [news]="news"></football-news-detail-view>
 </div>
 
 <ng-template #loading>
   <div class="loading-container">
-    <mat-spinner class="loading-indicator" diameter="60" strockWidth="5"></mat-spinner>
-
+    <mat-spinner
+      class="loading-indicator"
+      diameter="60"
+      strockWidth="5"
+    ></mat-spinner>
   </div>
 </ng-template>

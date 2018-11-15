@@ -1,10 +1,9 @@
-import { MainClub } from './../../../../../../libs/news/src/lib/modals/news';
 import { AuthenticationService } from '@football/shared';
 import { Component, OnInit } from '@angular/core';
 import { switchMap, take } from 'rxjs/operators';
-import { NewsService } from '@football/news';
 import { Subscription, forkJoin } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { NewsService } from '@football/news';
 
 @Component({
   selector: 'football-news-list',

@@ -1,7 +1,8 @@
+import { NewsCommonService } from './../../../../../../libs/shared/src/lib/services/news-common.service';
 import { switchMap, share } from 'rxjs/operators';
-import { AuthenticationService } from '@football/shared';
+import { AuthenticationService, News } from '@football/shared';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { sampleMockNews, NewsService, News } from '@football/news';
+import { sampleMockNews, NewsService } from '@football/news';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +22,7 @@ export class NewsLandingComponent implements OnInit, OnDestroy {
 
   constructor(
     private _auth: AuthenticationService,
-    private _newsService: NewsService
+    public newsService: NewsCommonService
   ) {
     this.user = null;
   }
@@ -38,7 +39,7 @@ export class NewsLandingComponent implements OnInit, OnDestroy {
     this.mainClubNews$ = userObservalbe.pipe(
       switchMap(user => {
         if (user) {
-          return this._newsService.getClubNews(user.mainClub.id, 6);
+          return this.newsService.getClubNews(user.mainClub.id, 6);
         } else {
           return user;
         }
@@ -48,14 +49,14 @@ export class NewsLandingComponent implements OnInit, OnDestroy {
     this.taggedClubNews$ = userObservalbe.pipe(
       switchMap(user => {
         if (user) {
-          return this._newsService.getTaggedClubNews(user);
+          return this.newsService.getTaggedClubNews(user);
         } else {
           return user;
         }
       })
     );
 
-    this.recentNews$ = this._newsService.getNews(10);
+    this.recentNews$ = this.newsService.getNews(10);
   }
 
   ngOnDestroy(): void {

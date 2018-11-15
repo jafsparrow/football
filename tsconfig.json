@@ -30,6 +30,9 @@
       ],
       "@football/event-ui": [
         "libs/event-ui/src/index.ts"
+      ],
+      "@football/news-ui": [
+        "libs/news-ui/src/index.ts"
       ]
     }
   },

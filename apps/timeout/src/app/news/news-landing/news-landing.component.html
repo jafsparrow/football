@@ -7,7 +7,11 @@
       </button>
     </div>
 
-    <news-teaser-two [news]="mainClubNews"></news-teaser-two>
+    <!-- <news-teaser-two [news]="mainClubNews"></news-teaser-two> -->
+
+    <football-news-summary-view-teaser
+      [news]="mainClubNews"
+    ></football-news-summary-view-teaser>
   </div>
 
   <div *ngIf="(taggedClubNews$ | async) as taggedClubNews">
@@ -17,8 +21,10 @@
         <mat-icon class="mat-18">trending_flat</mat-icon>
       </button>
     </div>
-    <news-teaser-two [news]="taggedClubNews"></news-teaser-two>
   </div>
+  <football-news-summary-view-teaser
+    [news]="taggedClubNews"
+  ></football-news-summary-view-teaser>
 </div>
 
 <div *ngIf="(recentNews$ | async) as news">
@@ -29,5 +35,7 @@
     </button>
   </div>
 
-  <news-teaser-two [news]="news"></news-teaser-two>
+  <football-news-summary-view-teaser
+    [news]="news"
+  ></football-news-summary-view-teaser>
 </div>

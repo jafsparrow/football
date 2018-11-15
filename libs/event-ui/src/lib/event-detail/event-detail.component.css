@@ -17,15 +17,15 @@
   color: white;
 }
 
-.event-date {
-  font-size: 50px;
-  font-weight: 800;
+.header-data {
+  padding: 30px;
+  margin: 20px;
   border: 2px solid white;
-  padding: 15px;
+}
+.event-date {
 }
 
 .event-title {
-  margin-top: 30px;
   font-size: 30px;
   text-transform: uppercase;
 }

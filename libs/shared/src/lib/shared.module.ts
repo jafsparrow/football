@@ -18,6 +18,7 @@ import { NewsTeaserComponent } from './news/news-teaser/news-teaser.component';
 import { NewsSummaryViewComponent } from './news/news-summary-view/news-summary-view.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NewsCommonService } from './services/news-common.service';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     TruncatePipe,
     UserProfileComponent
   ],
-  providers: [],
+  providers: [NewsCommonService],
   exports: [
     LoginComponent,
     ToolbarComponent,
@@ -50,7 +51,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NewsSummaryViewComponent,
     TruncatePipe,
     UserProfileComponent,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MaterialLibraryModule
   ]
 })
 export class SharedModule {}

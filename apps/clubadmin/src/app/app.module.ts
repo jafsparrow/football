@@ -32,6 +32,8 @@ import { NewsListComponent } from './news/news-list/news-list.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { evnType } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,10 @@ import { HttpClientModule } from '@angular/common/http';
 
     HttpClientModule
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    { provide: 'siteType', useValue: evnType }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

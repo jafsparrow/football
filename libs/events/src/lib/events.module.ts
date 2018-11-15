@@ -12,6 +12,7 @@ import { RouterModule, Route } from '@angular/router';
 import { EventsListComponent } from './events-list/events-list.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { EventDetailViewComponent } from './event-detail-view/event-detail-view.component';
+import { EventActionComponent } from './event-action/event-action.component';
 
 export const eventsRoutes: Route[] = [
   { path: '', component: EventsListComponent },
@@ -34,7 +35,8 @@ export const eventsRoutes: Route[] = [
     EventsTeaserComponent,
     EventsAddComponent,
     EventsListComponent,
-    EventDetailViewComponent
+    EventDetailViewComponent,
+    EventActionComponent
   ],
   exports: [EventsSummaryComponent, EventsTeaserComponent, EventsAddComponent]
 })

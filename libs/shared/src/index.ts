@@ -9,3 +9,5 @@ export * from './lib/guards/auth.guard';
 export * from './lib/guards/club-admin-only.guard';
 export * from './lib/guards/club-management.guard';
 export * from './lib/modal/side-nav.modal';
+export * from './lib/modal/news';
+export * from './lib/services/news-common.service';
