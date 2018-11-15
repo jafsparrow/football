@@ -10,20 +10,21 @@ import { Route } from '@angular/router';
 import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
+import { NewsFullViewComponent } from './news/news-detail-view/news-detail-view.component';
 
 export const routes: Route[] = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'events', component: EventsComponent },
   { path: 'announcements', component: AnnouncementComponent },
-  { path: 'test', component: NewsLandingComponent },
   {
     path: 'news',
     component: NewsComponent,
     children: [
       { path: '', component: NewsLandingComponent },
       // { path: 'view/:id', component: NewsViewComponent },
-      { path: 'list/:type', component: NewsListComponent }
+      { path: 'list/:type', component: NewsListComponent },
+      { path: 'detail/:id', component: NewsFullViewComponent }
     ]
   },
   { path: 'club', component: ClubRequestComponent, canActivate: [AuthGuard] },

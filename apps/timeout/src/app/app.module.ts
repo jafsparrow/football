@@ -21,12 +21,13 @@ import { EventsModule } from '@football/events';
 import { NewsLandingComponent } from './news/news-landing/news-landing.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
-import { NewsDetailViewComponent } from './news/news-detail-view/news-detail-view.component';
 import { ClubRequestComponent } from './club-request/club-request.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ClubInfoComponent } from './club-info/club-info.component';
 import { NewsUiModule } from '@football/news-ui';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { NewsFullViewComponent } from './news/news-detail-view/news-detail-view.component';
+import { EventUiModule } from '@football/event-ui';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     AnnouncementComponent,
     NewsLandingComponent,
     TimeoutLoginComponent,
-    NewsDetailViewComponent,
+    NewsFullViewComponent,
     ClubRequestComponent,
     ProfileComponent,
     ClubInfoComponent,
@@ -54,9 +55,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     ClubsModule,
     MaterialLibraryModule,
     FlexLayoutModule,
-    EventsModule,
     ReactiveFormsModule,
-    NewsUiModule
+    NewsUiModule,
+    EventUiModule
   ],
   providers: [{ provide: 'siteType', useValue: evnType }],
   bootstrap: [AppComponent]

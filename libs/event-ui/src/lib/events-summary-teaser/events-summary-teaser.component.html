@@ -1,0 +1,7 @@
+<mat-card fxLayout="row wrap" fxLayout.lt-md="column" class="event-container">
+  <div fxFlex="50" class="event-item-container" *ngFor="let event of events">
+    <football-events-summary-view
+      [event]="event"
+    ></football-events-summary-view>
+  </div>
+</mat-card>

@@ -1,1 +1,13 @@
-news detail view
+<div *ngIf="(news$ | async) as news; else: loading">
+  <football-news-detail-view [news]="news$ | async"></football-news-detail-view>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner
+      class="loading-indicator"
+      diameter="60"
+      strockWidth="5"
+    ></mat-spinner>
+  </div>
+</ng-template>

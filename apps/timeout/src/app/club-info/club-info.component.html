@@ -35,7 +35,9 @@
       <mat-tab label="Events">
         <ng-template matTabContent>
           The Second Content
-          <football-events-teaser [events]="events"></football-events-teaser>
+          <football-events-summary-teaser
+            [events]="events"
+          ></football-events-summary-teaser>
         </ng-template>
       </mat-tab>
     </mat-tab-group>

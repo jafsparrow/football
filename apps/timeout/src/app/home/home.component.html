@@ -4,7 +4,12 @@
     <mat-icon class="mat-18">trending_flat</mat-icon>
   </button>
 </div>
-<football-events-teaser [events]="events"></football-events-teaser>
+
+<!--
+  <football-events-teaser [events]="events$ | async"></football-events-teaser>
+-->
+<football-events-summary-teaser [events]="events$ | async">
+</football-events-summary-teaser>
 <div class="section-header">Announcements</div>
 <div class="section-header">
   News
@@ -24,5 +29,3 @@
     </mat-card>
   </div>
 </mat-card>
-
-<!-- <football-news-teaser  [news]="news"></football-news-teaser> -->
