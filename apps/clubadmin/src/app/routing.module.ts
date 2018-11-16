@@ -8,29 +8,25 @@ import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-// import { newsRoutes } from '@football/news'
-import { EventsComponent } from './events/events.component';
 import { ClubManagementGuard, AuthGuard } from '@football/shared';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'login',
     component: LoginComponent
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     children: [
       {
         path: 'news',
-        // component: NewsComponent,
         loadChildren: '@football/news#NewsModule'
-        // children: [
-        //   {
-        //     path: 'list',
-        //     component: NewsListComponent
-        //   }
-        // ]
       },
       {
         path: 'events',

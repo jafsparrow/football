@@ -1,10 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { SideNavOption } from '../../modal/side-nav.modal';
 
 @Component({
   selector: 'football-side-navigation',
   templateUrl: './side-navigation.component.html',
-  styleUrls: ['./side-navigation.component.css']
+  styleUrls: ['./side-navigation.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SideNavigationComponent implements OnInit {
   @Input()

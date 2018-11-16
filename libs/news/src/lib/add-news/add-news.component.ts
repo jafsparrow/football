@@ -65,6 +65,7 @@ export class AddNewsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private auth: AuthenticationService
   ) {
+    console.log('news add component');
     this.articleAddFrom = this.buildForm();
     this.clubSearchResults$ = this.clubDetailService.searchClubs(
       this.searchTerm$

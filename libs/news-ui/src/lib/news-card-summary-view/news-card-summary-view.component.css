@@ -1,6 +1,6 @@
 .club-news-item {
   padding: 0px;
-  cursor: pointer;
+  position: relative;
 }
 
 .news-image-container {
@@ -20,7 +20,7 @@
 }
 .news-tags {
   padding: 2px 5px;
-
+  cursor: pointer;
   display: inline-block;
   margin-bottom: 10px;
   /* background-color: #eeeeee; */
@@ -35,4 +35,16 @@
   font-size: 14px;
   letter-spacing: 2px;
   font-weight: 200;
+}
+
+.view-more-button {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  opacity: 0.5;
+  transition: opacity 1s;
+}
+
+.view-more-button:hover {
+  opacity: 1;
 }

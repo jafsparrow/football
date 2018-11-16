@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from '@football/news';
-
+import { NewsCommonService } from '@football/shared';
 @Component({
   selector: 'football-club-info',
   templateUrl: './club-info.component.html',
@@ -17,7 +16,7 @@ export class ClubInfoComponent implements OnInit {
 
   id = '';
   clubNews$: Observable<any[]>;
-  constructor(public _newsService: NewsService) {}
+  constructor(public _newsService: NewsCommonService) {}
 
   ngOnInit() {
     this._newsService.getNews().subscribe(res => console.log(res));

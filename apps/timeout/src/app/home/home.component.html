@@ -8,9 +8,16 @@
 <!--
   <football-events-teaser [events]="events$ | async"></football-events-teaser>
 -->
-<football-events-summary-teaser [events]="events$ | async">
+<football-events-summary-teaser
+  *ngIf="(events$ | async) as events; else: eventLoading"
+  [events]="events"
+>
 </football-events-summary-teaser>
-<div class="section-header">Announcements</div>
+<ng-template #eventLoading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  <br />
+</ng-template>
+<!-- <div class="section-header">Announcements</div> -->
 <div class="section-header">
   News
   <button mat-icon-button routerLink="/news">
@@ -18,14 +25,25 @@
   </button>
 </div>
 
-<mat-card>
-  <div class="news-short-view mat-typography" *ngFor="let news of news">
-    <mat-card style="padding: 10px;">
-      <mat-card-header>
-        <mat-card-title>{{ news.title }}</mat-card-title>
-        <mat-card-subtitle>{{ news.summary }}</mat-card-subtitle>
-        <img mat-card-avatar src="https://via.placeholder.com/100x100" />
-      </mat-card-header>
-    </mat-card>
-  </div>
-</mat-card>
+<div *ngIf="(news$ | async) as news; else: newsLoading">
+  <football-news-summary-view-teaser [news]="news">
+  </football-news-summary-view-teaser>
+</div>
+
+<ng-template #newsLoading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>
+
+<!--
+  <mat-card *ngIf="(news$ | async) as news; else: newsLoading">
+    <div class="news-short-view mat-typography" *ngFor="let news of news">
+      <mat-card style="padding: 10px;">
+        <mat-card-header>
+          <mat-card-title>{{ news.title }}</mat-card-title>
+          <mat-card-subtitle>{{ news.summary }}</mat-card-subtitle>
+          <img mat-card-avatar src="https://via.placeholder.com/100x100" />
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </mat-card>
+-->

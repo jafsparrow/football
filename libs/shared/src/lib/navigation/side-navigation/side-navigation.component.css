@@ -4,7 +4,7 @@
 
 .link-item {
   font-size: 14px;
-  color: rgba(0,0,0,.55);
+  color: rgba(0, 0, 0, 0.55);
   line-height: 20px;
   font-weight: 500;
 }
@@ -12,5 +12,10 @@
 .link-icon {
   font-size: 14px;
   /* color: rgba(0,0,0,.55); */
-  color:  #3F51B5;
+  color: #3f51b5;
+}
+
+.active {
+  background-color: #ff4081;
+  color: white;
 }

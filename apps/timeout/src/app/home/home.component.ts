@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
   news: Array<any>;
   events$: Observable<any[]>;
+  news$: Observable<any[]>;
   isNewsLoading: boolean;
   favNews: Array<any>;
 
@@ -49,12 +50,6 @@ export class HomeComponent implements OnInit {
       })
     );
 
-    this.newsTeaser.getRecentTenNews().subscribe(res => {
-      console.log(res.length);
-      this.news = res;
-      if (res.length !== 0) {
-        this.isNewsLoading = false;
-      }
-    });
+    this.news$ = this.newsTeaser.getRecentTenNews();
   }
 }

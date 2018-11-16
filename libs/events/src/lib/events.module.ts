@@ -1,4 +1,4 @@
-import { EventUiModule } from './../../../event-ui/src/lib/event-ui.module';
+import { EventUiModule } from '@football/event-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialLibraryModule } from '@football/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -41,5 +41,3 @@ export const eventsRoutes: Route[] = [
   exports: [EventsSummaryComponent, EventsTeaserComponent, EventsAddComponent]
 })
 export class EventsModule {}
-
-export const testing = [1, 2];

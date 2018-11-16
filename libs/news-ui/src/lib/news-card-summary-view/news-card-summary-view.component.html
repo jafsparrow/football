@@ -1,4 +1,4 @@
-<mat-card class="club-news-item" [routerLink]="['detail', news.id]">
+<mat-card class="club-news-item">
   <div class="news-image-container">
     <img src="{{news?.image}}" alt="" class="news-image" />
   </div>
@@ -11,4 +11,13 @@
     >
     <div class="news-title">{{ news.title | truncate: 100:true }}</div>
   </div>
+  <button
+    mat-mini-fab
+    class="view-more-button"
+    [routerLink]="['/news/detail', news.id]"
+  >
+    <mat-icon aria-label="Example icon-button with a heart icon"
+      >arrow_forward_ios</mat-icon
+    >
+  </button>
 </mat-card>

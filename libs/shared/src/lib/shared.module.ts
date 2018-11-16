@@ -28,7 +28,7 @@ import { NewsCommonService } from './services/news-common.service';
     ReactiveFormsModule,
     MaterialLibraryModule,
     FlexLayoutModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule
   ],
   declarations: [
