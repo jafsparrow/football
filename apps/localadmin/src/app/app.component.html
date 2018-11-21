@@ -1,0 +1,15 @@
+<mat-sidenav-container class="main-container">
+  <mat-sidenav #sidenav mode="push">
+    <football-side-nav-header></football-side-nav-header>
+    <button mat-button style="height: 0px; width: 0px"></button>
+    <football-side-navigation
+      [navConfig]="sideNavOptions"
+      (linkItemClick)="sidenav.toggle()"
+    ></football-side-navigation>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <football-toolbar (menuClicked)="sidenav.toggle()"></football-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

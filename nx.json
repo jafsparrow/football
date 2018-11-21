@@ -37,6 +37,12 @@
     },
     "news-ui": {
       "tags": []
+    },
+    "localadmin": {
+      "tags": []
+    },
+    "localadmin-e2e": {
+      "tags": []
     }
   }
 }

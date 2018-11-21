@@ -1,0 +1,112 @@
+<mat-card>
+  <mat-card-title>Please review the details.</mat-card-title>
+  <mat-card-subtitle
+    >Please edit information if needed. Approve or Reject
+    accordingly.</mat-card-subtitle
+  >
+
+  <mat-form-field>
+    <input matInput placeholder="club name" [(ngModel)]="club.name" />
+  </mat-form-field>
+
+  <button (click)="showMe()">test</button>
+
+  <!-- <mat-spinner *ngIf="submitting"></mat-spinner> -->
+  <!--
+    <form
+      class="form-container"
+      [formGroup]="clubApprovalForm"
+      *ngIf="!submitting"
+    >
+      <p>Club Basic Information</p>
+      <mat-form-field>
+        <input matInput placeholder="club name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="club short name"
+          formControlName="shortName"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Tier">
+          <mat-option value="first">first</mat-option>
+          <mat-option value="second">second</mat-option>
+          <mat-option value="third">third</mat-option>
+          <mat-option value="fouth">fourth</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <p>Contact Number for verification purpose</p>
+      <mat-form-field>
+        <input matInput placeholder="contact number" formControlName="contact" />
+        <mat-hint>Enter a valid phone number</mat-hint>
+        <mat-error *ngIf="contactNumber.errors?.pattern">
+          Please enter a valid phone number
+        </mat-error>
+      </mat-form-field>
+
+      <p>Address Details</p>
+
+      <div class="address-container" formGroupName="address">
+        <mat-form-field>
+          <input matInput placeholder="line1" formControlName="line1" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="line2" formControlName="line2" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="pin code" formControlName="pin" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="state" disabled="true" value="kerala">
+            <mat-option value="kerala">kerala</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select
+            placeholder="District"
+            formControlName="district"
+            (selectionChange)="distChange($event.value)"
+          >
+            <mat-option value="Malappuram">Malappuram</mat-option>
+            <mat-option value="Calicut">Calicut</mat-option>
+            <mat-option value="Trissur">Trissur</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select
+            placeholder="Local Body Type"
+            formControlName="localBodyType"
+            (selectionChange)="bodyTypeChange($event.value)"
+          >
+            <mat-option value="municipality">municipality</mat-option>
+            <mat-option value="corporation">corporation</mat-option>
+            <mat-option value="gramapanchayath">grama panchayath</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="(localBodys$ | async) as localbodies">
+          <mat-select placeholder="Local Body" formControlName="localBody">
+            <mat-option
+              *ngFor="let localbody of localbodies"
+              value="localbody.name"
+              >{{ localbody.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button
+        type="submit"
+        color="primary"
+        [disabled]="!clubRequestForm.valid"
+        mat-button
+      >
+        send details
+      </button>
+    </form>
+  -->
+</mat-card>

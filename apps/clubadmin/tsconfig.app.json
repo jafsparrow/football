@@ -5,5 +5,11 @@
     "types": []
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"],
-  "include": ["**/*.ts"]
+  "include": [
+    "**/*.ts",
+    "../../libs/events/src/index.ts",
+    "../../libs/news/src/index.ts"
+  ]
+
+  // line number 10 and 11     "../../libs/events/src/index.ts", "../../libs/news/src/index.ts" are added since there was an issue with typescript compilation
 }

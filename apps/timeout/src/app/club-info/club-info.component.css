@@ -18,11 +18,16 @@
   margin-bottom: 30px;
 }
 
+.club-caption {
+  text-transform: uppercase;
+  margin-top: 100px;
+  padding: 30px;
+}
 .top-section {
   background-color: #eee;
+  height: 60%;
 }
 .header-container {
-  max-width: 650px;
   margin: 5px auto;
   padding: 20px;
 }

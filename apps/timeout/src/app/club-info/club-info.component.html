@@ -7,7 +7,13 @@
             class="club-icon"
             src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
           />
-          <div class="club-name">{{ club?.name }}</div>
+          <div class="club-name">
+            {{ club?.name ? club?.name : 'My Fav Club' }}
+          </div>
+          <div class="club-caption">
+            Not Just another game freaks. We are freaks with a goal and our
+            young soldiers are on the verge.
+          </div>
         </div>
       </div>
 

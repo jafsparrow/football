@@ -19,11 +19,12 @@
       "@football/news-ui": ["libs/news-ui/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"],
-  "files": [
-    "./libs/events/src/lib/events.module.ts",
-    "./libs/news/src/lib/news.module.ts"
-  ]
+  "exclude": ["node_modules", "tmp"]
+  // "files": [
+  //   "./libs/events/src/lib/events.module.ts",
+  //   "./libs/news/src/lib/news.module.ts"
+  // ]
 
-  //  the files section is added on 11 Nov 2018 because of typescript compilation which not sure why happened
+  //  the files section is added on 11 Nov 2018 because of typescript compilation which not sure why happened, this is moved to application
+  // ts.config file as "Include" part.. no errors anymore
 }

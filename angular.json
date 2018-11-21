@@ -414,6 +414,125 @@
           }
         }
       }
+    },
+    "localadmin": {
+      "root": "apps/localadmin/",
+      "sourceRoot": "apps/localadmin/src",
+      "projectType": "application",
+      "prefix": "football",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/localadmin",
+            "index": "apps/localadmin/src/index.html",
+            "main": "apps/localadmin/src/main.ts",
+            "polyfills": "apps/localadmin/src/polyfills.ts",
+            "tsConfig": "apps/localadmin/tsconfig.app.json",
+            "assets": [
+              "apps/localadmin/src/favicon.ico",
+              "apps/localadmin/src/assets"
+            ],
+            "styles": [
+              "apps/localadmin/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/localadmin/src/environments/environment.ts",
+                  "with": "apps/localadmin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "localadmin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "localadmin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "localadmin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/localadmin/src/test.ts",
+            "polyfills": "apps/localadmin/src/polyfills.ts",
+            "tsConfig": "apps/localadmin/tsconfig.spec.json",
+            "karmaConfig": "apps/localadmin/karma.conf.js",
+            "styles": [
+              "apps/localadmin/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "apps/localadmin/src/favicon.ico",
+              "apps/localadmin/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/localadmin/tsconfig.app.json",
+              "apps/localadmin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "localadmin-e2e": {
+      "root": "apps/localadmin-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/localadmin-e2e/protractor.conf.js",
+            "devServerTarget": "localadmin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "localadmin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/localadmin-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
