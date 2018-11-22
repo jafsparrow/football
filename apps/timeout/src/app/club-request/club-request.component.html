@@ -33,7 +33,7 @@
       />
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Tier">
+      <mat-select placeholder="Tier" formControlName="tier">
         <mat-option value="first">first</mat-option>
         <mat-option value="second">second</mat-option>
         <mat-option value="third">third</mat-option>
@@ -91,16 +91,24 @@
           <mat-option value="gramapanchayath">grama panchayath</mat-option>
         </mat-select>
       </mat-form-field>
+      <div *ngIf="(localBodys$ | async) as localbodies">
+        <mat-form-field>
+          <mat-select placeholder="Local Body" formControlName="localBody">
+            <mat-option
+              *ngFor="let localbody of localbodies"
+              [value]="localbody.name"
+              (onSelectionChange)="setLocalBodyCode(localbody)"
+              >{{ localbody.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field *ngIf="(localBodys$ | async) as localbodies">
-        <mat-select placeholder="Local Body" formControlName="localBody">
-          <mat-option
-            *ngFor="let localbody of localbodies"
-            value="localbody.name"
-            >{{ localbody.name }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
+        <input
+          type="text"
+          formControlName="localBodyCode"
+          style="display: none"
+        />
+      </div>
     </div>
     <button
       type="submit"

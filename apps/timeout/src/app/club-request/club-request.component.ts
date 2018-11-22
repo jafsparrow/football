@@ -31,6 +31,7 @@ export class ClubRequestComponent implements OnInit {
     this.clubRequestForm = this._fb.group({
       name: ['', [Validators.required]],
       shortName: ['', [Validators.required]],
+      tier: ['', [Validators.required]],
       contact: [
         '',
         [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]
@@ -41,7 +42,8 @@ export class ClubRequestComponent implements OnInit {
         pin: ['', [Validators.required]],
         district: ['', [Validators.required]],
         localBodyType: [],
-        localBody: ['', [Validators.required]]
+        localBody: ['', [Validators.required]],
+        localBodyCode: ''
       })
     });
 
@@ -87,5 +89,12 @@ export class ClubRequestComponent implements OnInit {
 
   bodyTypeChange(value) {
     this.bodyTypeFilter$.next(value);
+  }
+
+  setLocalBodyCode(localbody) {
+    this.clubRequestForm
+      .get('address')
+      .get('localBodyCode')
+      .setValue(localbody.localBodyCode);
   }
 }

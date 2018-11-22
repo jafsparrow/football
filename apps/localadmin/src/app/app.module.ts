@@ -12,7 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ClubRequestsComponent } from './club-requests/club-requests.component';
 import { ClubDetailComponent } from './club-detail/club-detail.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
+    ReactiveFormsModule,
     NxModule.forRoot(),
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     AngularFireModule.initializeApp(environment.firebase),
