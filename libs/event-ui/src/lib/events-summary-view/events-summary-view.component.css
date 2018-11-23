@@ -37,6 +37,7 @@
   padding-left: 15px;
   padding: 10px;
   position: relative;
+  min-height: 100px;
 }
 
 .event-title {

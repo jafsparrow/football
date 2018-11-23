@@ -26,6 +26,8 @@ import { ClubInfoComponent } from './club-info/club-info.component';
 import { NewsAddComponent } from './news/news-add/news-add.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { evnType } from '../environments/environment';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { UserManagementActionsComponent } from './user-management/user-management-actions/user-management-actions.component';
 
 @NgModule({
   imports: [
@@ -48,7 +50,9 @@ import { evnType } from '../environments/environment';
     EventsComponent,
     ClubInfoComponent,
     NewsAddComponent,
-    NewsListComponent
+    NewsListComponent,
+    UserManagementComponent,
+    UserManagementActionsComponent
   ],
 
   providers: [

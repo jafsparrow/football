@@ -1,9 +1,10 @@
-<div fxLayout="row" class="mat-elevation-z4">
+<div fxLayout="row" class="mat-elevation-z4 event-summary-container">
   <div class="time-section" fxFlex="100px" *ngIf="eventDate.available">
     <span class="day">{{ eventDate.day }}</span>
     <span class="month">{{ eventDate.month }}</span>
     <span class="year">2014</span>
   </div>
+
   <div class="event-summary-section" fxFlex>
     <span class="event-title">{{ event?.title }}</span>
     <span class="event-summary">Summary of the event..</span>

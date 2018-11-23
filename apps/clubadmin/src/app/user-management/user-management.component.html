@@ -1,0 +1,81 @@
+<mat-error *ngIf="isEditorFull"
+  >Maximum five users are allowed to be editors. Please revoke any editor to add
+  more users</mat-error
+>
+<div fxLayout="row" lt-sm.fxLayout="column">
+  <mat-card fxFlex>
+    <h5>
+      Please choose users from the list and click on the action button to give
+      editor access for the user
+    </h5>
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>User</th>
+        <td mat-cell *matCellDef="let user">{{ user.displayName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let user">
+          <div *ngIf="user.permission?.role !== 'editor'; else: alreadyEditor">
+            <button
+              mat-button
+              (click)="grantAccess(user, 'editor')"
+              color="primary"
+              [disabled]="isEditorFull || user.permission?.role == 'editor'"
+            >
+              Add as Editor
+            </button>
+          </div>
+          <ng-template #alreadyEditor> Already an editor user </ng-template>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+
+  <div class="current-users" fxFlex>
+    <mat-card>
+      <h5>
+        Here are the user who are editors. An organized club wouldn't need more
+        than five editors
+      </h5>
+
+      <table mat-table [dataSource]="editorDataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let user">{{ user.displayName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let user">
+            <button (click)="revokeAccess(user)" color="primary" mat-button>
+              Revoke access
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<mat-progress-spinner
+  *ngIf="submitting"
+  mode="indeterminate"
+  color="primary"
+  [strokeWidth]="10"
+  class="spinner"
+></mat-progress-spinner>

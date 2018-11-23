@@ -1,0 +1,17 @@
+<p>user-management-actions works!</p>
+
+<mat-card *ngIf="selectedUser">
+  <mat-card-header>
+    <mat-card-title>{{
+      selectedUser.fullName ? selectedUser.fullName : selectedUser.displayName
+    }}</mat-card-title>
+    <mat-card-subtitle>{{ selectedUser.mainClub?.name }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    Set this user with right access permission. Editor will have access to
+    create and submit News/Events.
+  </mat-card-content>
+  <mat-card-actions align="start">
+    <button mat-button (click)="grandAcces('editor')">Add as Editor</button>
+  </mat-card-actions>
+</mat-card>

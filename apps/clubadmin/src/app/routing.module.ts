@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
 import { ClubManagementGuard, AuthGuard } from '@football/shared';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 const routes: Routes = [
   // {
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'user',
+        component: UserManagementComponent
       }
     ]
   }

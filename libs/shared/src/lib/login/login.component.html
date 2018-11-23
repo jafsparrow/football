@@ -1,36 +1,42 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
-
   <mat-card>
-      <div class="login-brand-area">
-        <img src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX17572194.jpg" alt="" srcset="">
-        <p>Welcome to Timeout</p>
-      </div>
-      <mat-card-content>
-          <mat-tab-group mat-stretch-tabs class="stretched-tabs mat-elevation-z4">
-              <mat-tab label="Login">
-                <ng-template mat-tab-label>
-                <mat-icon class="tab-icon">directions_run</mat-icon>
-                  Login
-                </ng-template>
-                <div class="login_contaier">
-                  <h4>Please Login to view more relevent content</h4>
-                  <button mat-stroked-button color="accent" (click)="login()">Login with Google</button>
-                </div>
-              </mat-tab>
-              <mat-tab label="SignUp">
-                <ng-template mat-tab-label>
-                    <mat-icon class="tab-icon">account_box</mat-icon>
-                      Sign Up
-                </ng-template>
-                <div class="login_contaier">
-                    <h4>Join us if not already</h4>
-                    <button mat-stroked-button color="primary" (click)="signUp()">Sign Up with Google</button>
-                </div>
+    <div class="login-brand-area">
+      <img
+        src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX17572194.jpg"
+        alt=""
+        srcset=""
+      />
+      <p>Welcome to Timeout</p>
+    </div>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs class="stretched-tabs mat-elevation-z4">
+        <mat-tab label="Login">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">directions_run</mat-icon>
+            Login
+          </ng-template>
+          <div class="login_contaier">
+            <h4>Please Login to view more relevent content</h4>
+            <button mat-stroked-button color="accent" (click)="login()">
+              Continue with Google Login
+            </button>
+          </div>
+        </mat-tab>
+        <!--
+          <mat-tab label="SignUp">
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">account_box</mat-icon>
+                  Sign Up
+            </ng-template>
+            <div class="login_contaier">
+                <h4>Join us if not already</h4>
+                <button mat-stroked-button color="primary" (click)="signUp()">Sign Up with Google</button>
+            </div>
 
-              </mat-tab>
-            </mat-tab-group>
-      </mat-card-content>
-      <p *ngIf="isError">ther is something wrong in login</p>
+          </mat-tab>
+        -->
+      </mat-tab-group>
+    </mat-card-content>
+    <p *ngIf="isError">ther is something wrong in login</p>
   </mat-card>
 </div>
-
