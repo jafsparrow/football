@@ -27,11 +27,7 @@ export class LocalAdminService {
 
   getNewClubRequests(): any {
     return this.db
-      .collection('requests', ref =>
-        ref
-          .where('requestType', '==', 'club')
-          .where('status', '==', 'initiated')
-      )
+      .collection('requests', ref => ref.where('status', '==', 'initiated'))
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -115,6 +111,13 @@ export class LocalAdminService {
       .update({ status: 'rejected' });
   }
 
+  deleteRequests(id) {
+    return this.db
+      .collection('requests')
+      .doc(id)
+      .delete();
+  }
+
   private generateClubCode(localBodyCode) {
     // get the localBody short code.
 
@@ -140,4 +143,66 @@ export class LocalAdminService {
   //       return true;
   //     });
   // }
+
+  getClubsOnLocalBodyCode(localBodyCode) {
+    return this.db
+      .collection('clubs', ref =>
+        ref.where('address.localBodyCode', '==', localBodyCode)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+  getLocalClubs(locality) {
+    return this.db
+      .collection('clubs', ref =>
+        ref.where('address.localBody', '==', locality)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
+  getClubFollowers(clubId) {
+    // console.log(username, clubId);
+    return this.db
+      .collection('users', ref => {
+        let query:
+          | firebase.firestore.CollectionReference
+          | firebase.firestore.Query = ref;
+
+        // query = query.where('fullName', '>=', username);
+        query = query.where('mainClub.id', '==', clubId);
+        return query;
+      })
+      .valueChanges();
+  }
+
+  updateUserAccess(user, role, clubId) {
+    return this.db
+      .collection('users')
+      .doc(user.uid)
+      .update({ permission: { role: role, clubId: clubId } });
+  }
+
+  removedUserAccess(user) {
+    return this.db
+      .collection('users')
+      .doc(user.uid)
+      .update({ permission: { role: 'none' } });
+  }
 }

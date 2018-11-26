@@ -9,7 +9,7 @@ export class ClubsService {
 
   addClubRequest(club, user) {
     club['requestType'] = 'club';
-    club['status'] = 'intiated';
+    club['status'] = 'initiated';
     club['requestedUser'] = user;
     return this._db.collection('requests').add(club);
   }

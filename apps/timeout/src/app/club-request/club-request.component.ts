@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
   styleUrls: ['./club-request.component.css']
 })
 export class ClubRequestComponent implements OnInit {
+  districts = Keraladistricts;
   clubRequestForm: FormGroup;
   loggedInUser;
   submitting = false;
@@ -41,7 +42,7 @@ export class ClubRequestComponent implements OnInit {
         line2: '',
         pin: ['', [Validators.required]],
         district: ['', [Validators.required]],
-        localBodyType: [],
+        bodyType: ['Municipality'],
         localBody: ['', [Validators.required]],
         localBodyCode: ''
       })
@@ -83,7 +84,7 @@ export class ClubRequestComponent implements OnInit {
   }
 
   distChange(value) {
-    this.bodyTypeFilter$.next(null);
+    this.bodyTypeFilter$.next('Municipality');
     this.districtFilter$.next(value);
   }
 
@@ -98,3 +99,20 @@ export class ClubRequestComponent implements OnInit {
       .setValue(localbody.localBodyCode);
   }
 }
+
+export const Keraladistricts = [
+  'Thiruvananthapuram',
+  'Kollam',
+  'Pathanamthitta',
+  'Alappuzha',
+  'Kottayam',
+  'Idukki',
+  'Ernakulam',
+  'Thrissur',
+  'Palakkad',
+  'Malappuram',
+  'Kozhikkode',
+  'Wayanad',
+  'Kannur',
+  'Kasaragod'
+];

@@ -67,6 +67,14 @@ export class ClubDetailComponent implements OnInit {
       this.localAdminService.approveClub(this.club).then(res => {
         console.log(res);
         this.submitted = true;
+
+        if (res === 'success') {
+          console.log('res return as success');
+          // here is where I need to call delete the request from the request collection
+          this.localAdminService.deleteRequests(this.club.id).then(() => {
+            console.log('Processed request has been deleted from Database.');
+          });
+        }
       });
     } else {
       console.log('this club request has already been processed..');

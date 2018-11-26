@@ -74,21 +74,21 @@
           formControlName="district"
           (selectionChange)="distChange($event.value)"
         >
-          <mat-option value="Malappuram">Malappuram</mat-option>
-          <mat-option value="Calicut">Calicut</mat-option>
-          <mat-option value="Trissur">Trissur</mat-option>
+          <mat-option *ngFor="let district of districts" [value]="district">{{
+            district
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
         <mat-select
           placeholder="Local Body Type"
-          formControlName="localBodyType"
+          formControlName="bodyType"
           (selectionChange)="bodyTypeChange($event.value)"
         >
-          <mat-option value="municipality">municipality</mat-option>
-          <mat-option value="corporation">corporation</mat-option>
-          <mat-option value="gramapanchayath">grama panchayath</mat-option>
+          <mat-option value="Municipality">Municipality</mat-option>
+          <mat-option value="Corporation">Corporation</mat-option>
+          <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
         </mat-select>
       </mat-form-field>
       <div *ngIf="(localBodys$ | async) as localbodies">

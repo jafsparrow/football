@@ -13,6 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { ClubRequestsComponent } from './club-requests/club-requests.component';
 import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClubAdminManagementComponent } from './club-admin-management/club-admin-management.component';
+import { SuperAdminManagementComponent } from './super-admin-management/super-admin-management.component';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'club', component: ClubRequestsComponent },
-  { path: 'detail/:id', component: ClubDetailComponent }
+  { path: 'detail/:id', component: ClubDetailComponent },
+  { path: 'adminuser', component: ClubAdminManagementComponent },
+  { path: 'superadmin', component: SuperAdminManagementComponent }
 ];
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ const routes: Routes = [
     HomeComponent,
     LoginComponent,
     ClubRequestsComponent,
-    ClubDetailComponent
+    ClubDetailComponent,
+    ClubAdminManagementComponent,
+    SuperAdminManagementComponent
   ],
   imports: [
     BrowserModule,

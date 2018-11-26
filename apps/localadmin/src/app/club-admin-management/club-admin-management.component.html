@@ -1,0 +1,53 @@
+<p>club-admin-management works!</p>
+<div fxLayout="row" lt-sm.fxLayout="column">
+  <mat-card fxFlex="30%">
+    <h5>Please click on the club to view club followers</h5>
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Club Name</th>
+        <td mat-cell *matCellDef="let club" (click)="loadClubUsers(club)">
+          {{ club.name }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+
+  <div class="current-users" fxFlex>
+    <mat-card>
+      <h5>
+        Here are the user who are editors. An organized club wouldn't need more
+        than five editors
+      </h5>
+
+      <table mat-table [dataSource]="clubUsersDataSource">
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let user">{{ user.displayName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let user">
+            <button (click)="revokeAccess(user)" color="primary" mat-button>
+              Revoke access
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="UserdisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: UserdisplayedColumns"></tr>
+      </table>
+    </mat-card>
+  </div>
+</div>
