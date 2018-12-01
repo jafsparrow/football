@@ -20,10 +20,6 @@ export class AppComponent {
     {
       name: 'Events',
       route: 'events'
-    },
-    {
-      name: 'announcements',
-      route: 'announcements'
     }
   ];
 }

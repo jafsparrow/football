@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'localadmin';
   sideNavOptions: NavRoute[] = [
     { name: 'Dashboard', route: 'dashboard' },
-    { name: 'News', route: 'news', icon: 'more' },
+    { name: 'Club Admin Users', route: '/superadmin', icon: 'more' },
     { name: 'Events', route: 'events', icon: 'publish' }
   ];
 }

@@ -11,11 +11,22 @@ import { TimeoutLoginComponent } from './timeout-login/timeout-login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { NewsFullViewComponent } from './news/news-detail-view/news-detail-view.component';
+import { EventsListComponent } from './events/events-list/events-list.component';
+import { EventsDetailComponent } from './events/events-detail/events-detail.component';
+import { EventsLandingComponent } from './events/events-landing/events-landing.component';
 
 export const routes: Route[] = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'events', component: EventsComponent },
+  {
+    path: 'events',
+    component: EventsComponent,
+    children: [
+      { path: '', component: EventsLandingComponent },
+      { path: 'list', component: EventsListComponent },
+      { path: 'detail/:id', component: EventsDetailComponent }
+    ]
+  },
   { path: 'announcements', component: AnnouncementComponent },
   {
     path: 'news',

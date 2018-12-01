@@ -57,7 +57,7 @@
 .event-bottom-action {
   /* margin-bottom: 0px; */
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
 }
 
 .club-tags {
@@ -65,7 +65,7 @@
   text-transform: uppercase;
   font-weight: 100;
   border-radius: 10px;
-  background: #eeeeee;
-  padding: 2px;
+  background: #43d4df;
+  padding: 5px;
   margin-right: 5px;
 }

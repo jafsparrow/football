@@ -24,31 +24,41 @@ export class HomeComponent implements OnInit {
   isUserLoggedIn = true;
 
   events: EventItem[];
-
+  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: false };
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
     private eventService: EventsCommonService
   ) {
     this.isNewsLoading = true;
-
-    this.events = [
-      { title: 'hello world', summary: 'duper super duper hello world' },
-      {
-        title: 'Test event should see if it goes before one liner world',
-        summary: 'duper super duper hello world'
-      },
-      { title: 'hello world', summary: 'duper super duper hello world' },
-      { title: 'hello world', summary: 'duper super duper hello world' }
-    ];
   }
 
   ngOnInit() {
-    this.events$ = this.authSerivice.user$.pipe(
-      switchMap(user => {
-        return this.eventService.getEvents(user, 10);
-      })
-    );
+    this.eventService
+      .getRecentClubEvents('1')
+      .subscribe(res => console.log(res));
+    this.events$ = this.authSerivice.user$
+      .pipe(
+        switchMap(user => {
+          if (user) {
+            // to display a info message for the user that user,
+            // does not have fav or tagged_clubs. it will display on the page
+            this.homeMessage.isLoggedIn = true;
+            if (!user.mainClub.id) {
+              this.homeMessage.hasFavClub = false;
+            }
+            if (!user.taggedClubs) {
+              if (Object.keys(user.taggedClubs).length < 1) {
+                this.homeMessage.hasTaggedClubs = false;
+              }
+            }
+            return this.eventService.getEventsForLoggedInUser(user);
+          }
+          // if the user is not logged in, the message should say the following.
+          return this.eventService.getTopeTierClubEvents(10);
+        })
+      )
+      .pipe(tap(events => console.log(events)));
 
     this.news$ = this.newsTeaser.getRecentTenNews();
   }

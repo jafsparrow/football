@@ -1,0 +1,15 @@
+.club-name {
+  display: inline-block;
+  background-color: rgb(237, 240, 62);
+  padding: 5px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.event-section-header {
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 1em;
+  background-color: #eeeeee;
+}

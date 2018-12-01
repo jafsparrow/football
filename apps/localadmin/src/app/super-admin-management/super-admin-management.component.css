@@ -2,3 +2,12 @@
   font-size: 14px;
   width: 100%;
 }
+
+table {
+  width: 100%;
+}
+
+.club-name:hover {
+  cursor: pointer;
+  background: #eeeeee;
+}

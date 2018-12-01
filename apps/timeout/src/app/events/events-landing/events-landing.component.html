@@ -1,0 +1,31 @@
+<div fxLayout="row wrap">
+  <span class="club-name" *ngFor="let club of clubsArray">{{
+    club?.name ? club.name : 'club-name'
+  }}</span>
+</div>
+<div *ngIf="(favClubsEvents$ | async) as favevents; else: eventLoading">
+  <div class="event-section-header">{{ user?.mainClub?.name }} events.</div>
+  <football-events-summary-teaser
+    [events]="favevents"
+  ></football-events-summary-teaser>
+</div>
+
+<div *ngIf="(taggedClubsEvents$ | async) as tagevents">
+  <div class="event-section-header">Recents events from tagged clubs</div>
+
+  <football-events-summary-teaser
+    [events]="tagevents"
+  ></football-events-summary-teaser>
+</div>
+
+<div *ngIf="(topClubsEvents$ | async) as topevents">
+  <div class="event-section-header">Top club events</div>
+  <football-events-summary-teaser [events]="topevents">
+  </football-events-summary-teaser>
+</div>
+<ng-template #eventLoading>
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="primary"
+  ></mat-progress-spinner>
+</ng-template>

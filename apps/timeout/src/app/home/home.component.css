@@ -9,3 +9,10 @@
   padding: 10px;
   letter-spacing: 5px;
 }
+
+.home-message {
+  padding: 50px;
+  font-size: 16px;
+  font-weight: 300;
+  
+}

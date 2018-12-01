@@ -1,4 +1,4 @@
-import { AuthenticationService } from './../../../../../libs/shared/src/lib/services/authentication.service';
+import { AuthenticationService } from '@football/shared';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import { LocationService } from '@football/shared';
@@ -22,22 +22,24 @@ export class SuperAdminManagementComponent implements OnInit {
   bodyTypeFilter$: BehaviorSubject<string | null>;
 
   displayedColumns: string[] = ['name'];
-  dataSource: MatTableDataSource<ClubDisplay>;
   UserdisplayedColumns: string[] = ['username', 'actions'];
+  dataSource: MatTableDataSource<ClubDisplay>;
   clubUsersDataSource: MatTableDataSource<UserDispaly>;
   clubAdminDataSource: MatTableDataSource<UserDispaly>;
 
-  selectedClub$: BehaviorSubject<null | string>;
   user: any;
   clubs: any[];
   isAdminFull = false;
 
+  selectedClub$: BehaviorSubject<null | string>;
   localBodys$: Observable<any[]>;
   searchCriteria = {
     district: null,
     localBody: null,
     clubName: null
   };
+  submitting = false;
+  selectedClub = null;
   districts = Keraladistricts;
   constructor(
     public locationService: LocationService,
@@ -46,9 +48,9 @@ export class SuperAdminManagementComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // The below combineLatest is to filter localbodies based on selection.
     this.districtFilter$ = new BehaviorSubject(null);
     this.bodyTypeFilter$ = new BehaviorSubject(null);
-
     this.localBodys$ = combineLatest(
       this.districtFilter$,
       this.bodyTypeFilter$
@@ -57,9 +59,8 @@ export class SuperAdminManagementComponent implements OnInit {
         return this.locationService.searchLocalBodies(district, bodyType);
       })
     );
-
+    // a behavious subject to keep track of selected club so that users for the club can be fitlerd
     this.selectedClub$ = new BehaviorSubject(null);
-
     this.selectedClub$
       .pipe(
         switchMap(clubId => {
@@ -70,9 +71,9 @@ export class SuperAdminManagementComponent implements OnInit {
         })
       )
       .subscribe(users => {
+        console.log('user returned for club followers');
+        console.log(users);
         if (users) {
-          console.log('subscribed for user');
-          console.log(users);
           const admins = users.filter(user => {
             if (user.permission && user.permission.role) {
               return user.permission.role === 'admin';
@@ -86,6 +87,10 @@ export class SuperAdminManagementComponent implements OnInit {
           this.clubAdminDataSource = new MatTableDataSource(admins);
         }
       });
+
+    // this.dataSource = new MatTableDataSource([
+    //   { name: 'umbrealla', id: '5ZRSBNKpB1u2OJ0urK0w' }
+    // ]);
   }
 
   distChange(value) {
@@ -107,7 +112,51 @@ export class SuperAdminManagementComponent implements OnInit {
     if (localBodyCode) {
       this.localAdminService
         .getClubsOnLocalBodyCode(localBodyCode)
-        .subscribe(res => (this.dataSource = new MatTableDataSource(<any>res)));
+        .subscribe(res => {
+          this.dataSource = new MatTableDataSource(<any>res);
+          console.log(res);
+        });
+    }
+  }
+
+  loadClubUsers(club) {
+    console.log(club);
+    this.selectedClub = club;
+    this.selectedClub$.next(club.id);
+  }
+
+  revokeAccess(user) {
+    if (
+      confirm(
+        `You are about to revoke the admin access of ${
+          user.displayName
+        } , Would you like to proceed?`
+      )
+    ) {
+      this.submitting = true;
+      this.localAdminService.removedUserAccess(user).then(() => {
+        this.submitting = false;
+        console.log('user access is removed');
+      });
+    }
+  }
+  grantAccess(user, role) {
+    if (
+      confirm(
+        `You are about to give admin access to ${
+          user.displayName
+        } , Would you like to proceed?`
+      )
+    ) {
+      this.submitting = true;
+      console.log(this.selectedClub);
+      console.log(user);
+      this.localAdminService
+        .updateUserAccess(user, 'admin', this.selectedClub.id)
+        .then(() => {
+          this.submitting = false;
+          console.log('editor access updated');
+        });
     }
   }
 }

@@ -26,13 +26,14 @@ export class EventsSummaryViewComponent implements OnInit {
     month: '',
     year: ''
   };
+  relatedSports = null;
+  relatedItemsArr = [];
   @Input() event: any;
-  constructor() {
-    console.log(this.event);
-  }
+  constructor() {}
 
   ngOnInit() {
     this.setTheDates();
+    this.relatedItemsArr = this.setRelatedSports(this.event.relatedSports);
   }
 
   setTheDates() {
@@ -45,5 +46,16 @@ export class EventsSummaryViewComponent implements OnInit {
       return this.eventDate;
     }
     return 'nothing';
+  }
+  setRelatedSports(relatedSports) {
+    const relatedItemArr = [];
+    if (relatedSports) {
+      Object.keys(relatedSports).forEach(function(key) {
+        if (relatedSports[key]) {
+          relatedItemArr.push(key);
+        }
+      });
+      return relatedItemArr;
+    }
   }
 }

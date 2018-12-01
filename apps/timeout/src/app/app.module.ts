@@ -28,6 +28,9 @@ import { NewsUiModule } from '@football/news-ui';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { NewsFullViewComponent } from './news/news-detail-view/news-detail-view.component';
 import { EventUiModule } from '@football/event-ui';
+import { EventsLandingComponent } from './events/events-landing/events-landing.component';
+import { EventsListComponent } from './events/events-list/events-list.component';
+import { EventsDetailComponent } from './events/events-detail/events-detail.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { EventUiModule } from '@football/event-ui';
     ClubRequestComponent,
     ProfileComponent,
     ClubInfoComponent,
-    NewsListComponent
+    NewsListComponent,
+    EventsLandingComponent,
+    EventsListComponent,
+    EventsDetailComponent
   ],
   imports: [
     BrowserModule,

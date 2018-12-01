@@ -1,7 +1,19 @@
-<mat-card fxLayout="row wrap" fxLayout.lt-md="column" class="event-container">
-  <div fxFlex="50" class="event-item-container" *ngFor="let event of events">
-    <football-events-summary-view
-      [event]="event"
-    ></football-events-summary-view>
+<mat-card class="event-container">
+  <div
+    *ngIf="events.length > 0; else: noEvents"
+    fxLayout="row wrap"
+    fxLayout.lt-md="column"
+  >
+    <div *ngFor="let event of events" class="event-item-container" fxFlex="50">
+      <football-events-summary-view
+        [event]="event"
+      ></football-events-summary-view>
+    </div>
   </div>
 </mat-card>
+<ng-template #noEvents>
+  <div>
+    Looks like there are no recent events to show. Why don't you browse your
+    favorite clubs and see what new there.
+  </div>
+</ng-template>

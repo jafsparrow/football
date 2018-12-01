@@ -6,13 +6,14 @@
   </div>
 
   <div class="event-summary-section" fxFlex>
-    <span class="event-title">{{ event?.title }}</span>
-    <span class="event-summary">Summary of the event..</span>
+    <span class="event-title" [routerLink]="['/events/detail', event.id]">{{
+      event?.title
+    }}</span>
 
     <div class="event-bottom-action">
-      <span class="club-tags">Liverpool</span>
-      <span class="club-tags">Liverpool</span>
-      <span class="club-tags">Liverpool</span>
+      <span class="club-tags" *ngFor="let item of relatedItemsArr">{{
+        item
+      }}</span>
     </div>
   </div>
 </div>

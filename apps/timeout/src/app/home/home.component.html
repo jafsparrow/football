@@ -1,3 +1,21 @@
+<div class="home-message">
+  <div *ngIf="homeMessage.isLoggedIn; else: notLoggedIn">
+    <div *ngIf="!homeMessage.hasFavClub">
+      It seems like you have not selected you fav club. Please update from user
+      profile. If you don't find your favorite club, please add your clubs by
+      clicking <span><a>Register a Club</a></span>
+    </div>
+    <div *ngIf="!homeMessage.hasTaggedClubs">
+      Did you know that you can tag clubs so that event and news from those
+      clubs can reach you sooner. Please add clubs to your tagged clubs.
+    </div>
+  </div>
+  <ng-template #notLoggedIn
+    >It looks you are not logged In, Did you know that you can view your
+    selected clubs news and events can reach you soon if you log in</ng-template
+  >
+</div>
+
 <div class="section-header">
   Events
   <button mat-icon-button routerLink="/events">
@@ -5,9 +23,6 @@
   </button>
 </div>
 
-<!--
-  <football-events-teaser [events]="events$ | async"></football-events-teaser>
--->
 <football-events-summary-teaser
   *ngIf="(events$ | async) as events; else: eventLoading"
   [events]="events"
@@ -17,7 +32,6 @@
   <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
   <br />
 </ng-template>
-<!-- <div class="section-header">Announcements</div> -->
 <div class="section-header">
   News
   <button mat-icon-button routerLink="/news">
@@ -33,17 +47,3 @@
 <ng-template #newsLoading>
   <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
 </ng-template>
-
-<!--
-  <mat-card *ngIf="(news$ | async) as news; else: newsLoading">
-    <div class="news-short-view mat-typography" *ngFor="let news of news">
-      <mat-card style="padding: 10px;">
-        <mat-card-header>
-          <mat-card-title>{{ news.title }}</mat-card-title>
-          <mat-card-subtitle>{{ news.summary }}</mat-card-subtitle>
-          <img mat-card-avatar src="https://via.placeholder.com/100x100" />
-        </mat-card-header>
-      </mat-card>
-    </div>
-  </mat-card>
--->
