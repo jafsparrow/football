@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class UserMangementService {
   constructor(public db: AngularFirestore) {}
 
-  getClubFollowers(clubId) {
+  getClubFollowers(clubId): Observable<any[]> {
     // console.log(username, clubId);
     return this.db
       .collection('users', ref => {

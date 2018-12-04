@@ -30,3 +30,50 @@
 }
 .address-section {
 }
+
+/* progress spinner */
+mat-progress-spinner {
+  margin: 0px auto;
+}
+/* achivement summary */
+.achievement-view {
+  border-radius: 10px;
+  background: #eee;
+  padding: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+.des {
+  font-weight: 200;
+}
+
+/* club management */
+.management-container {
+  font-size: 0.9rem;
+}
+.item-container {
+  height: 100%;
+  position: relative;
+}
+
+.mangement-item {
+  margin: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  background: #eee;
+}
+
+.label {
+  font-weight: 100;
+}
+
+.del-icon {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}

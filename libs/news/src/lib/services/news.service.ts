@@ -5,7 +5,7 @@ import {
   AngularFirestore
 } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take, tap, finalize } from 'rxjs/operators';
 import { FileUpload } from '../modals/upload-file';
 import { Observable, forkJoin } from 'rxjs';
 import { News } from '../modals/news';
@@ -124,9 +124,12 @@ export class NewsService {
       `${this.basePath}/${upload.name}`
     );
     // const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
-
+    console.log('upload image service function and the file is');
+    console.log(upload);
     const task = storageRef.put(upload);
-    return task;
+    return task.snapshotChanges().pipe(uploadTask => {
+      return storageRef.getDownloadURL();
+    });
 
     // return uploadTask.then(res => {
     //   console.log('upload completed');
@@ -141,7 +144,35 @@ export class NewsService {
       .update(news);
   }
 
-  deleteNews() {}
+  // This will delete the given news and related image from the cloud storage. alternate implemnetation of
+  // making the news active: false, can be considered later.
+  deleteNews(news) {
+    let newsImageUrl = null;
+    if (news.image) {
+      console.log('news has an image to delete');
+      newsImageUrl = news.image;
+    }
+
+    return this.db
+      .collection('news')
+      .doc(news.id)
+      .delete()
+      .then(() => {
+        if (newsImageUrl) {
+          console.log('news has deleted now checking the image to delte.e');
+          return this.deleteFromStorage(newsImageUrl);
+        }
+        console.log('this does not have an image');
+        return Promise.resolve('no image to delete');
+      });
+  }
+
+  deleteFromStorage(url) {
+    return this.firebaseStorage.storage
+      .refFromURL(url)
+      .delete()
+      .catch(err => console.log(err));
+  }
 
   updateNewsAfterImageLoad(key: string, downloadLink: string) {
     this.news

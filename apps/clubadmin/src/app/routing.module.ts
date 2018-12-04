@@ -24,7 +24,13 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+
     children: [
+      {
+        path: '',
+        redirectTo: '/club',
+        pathMatch: 'full'
+      },
       {
         path: 'news',
         loadChildren: '@football/news#NewsModule'

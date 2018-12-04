@@ -11,9 +11,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   sideNavOptions: NavRoute[] = [
-    { name: 'Dashboard', route: 'dashboard' },
-    { name: 'News', route: 'news', icon: 'more' },
-    { name: 'Events', route: 'events', icon: 'publish' }
+    { name: 'My Club Info', route: '/club' },
+    { name: 'News', route: '/news', icon: 'more' },
+    { name: 'Events', route: '/events', icon: 'publish' },
+    { name: 'User Management', route: '/user', icon: 'publish' }
   ];
   constructor(
     public auth: AuthenticationService,

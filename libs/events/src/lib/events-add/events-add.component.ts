@@ -133,7 +133,7 @@ export const editorConfiguation: AngularEditorConfig = {
   spellcheck: true,
   height: '10rem',
   minHeight: '5rem',
-  placeholder: 'Enter text here...',
+  placeholder: 'ദയവായി ഇവിടെ വിശദാംശങ്ങൾ ചേർക്കുക',
   translate: 'no',
   uploadUrl: 'v1/images', // if needed
   customClasses: [

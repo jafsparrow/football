@@ -28,6 +28,7 @@ import { NewsListComponent } from './news/news-list/news-list.component';
 import { evnType } from '../environments/environment';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserManagementActionsComponent } from './user-management/user-management-actions/user-management-actions.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { UserManagementActionsComponent } from './user-management/user-managemen
     FlexLayoutModule,
     SharedModule,
     NewsUiModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,

@@ -46,15 +46,6 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
         user
       );
       this.canDelete = this.authorizeService.canDeleteContent(this.news, user);
-
-      console.log({
-        edit: this.canEdit,
-        submit: this.canSubmit,
-        publish: this.canPublish,
-        delete: this.canDelete
-      });
-
-      console.log(this.news);
     });
   }
   ngOnChanges() {
@@ -75,16 +66,6 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.userSubscription.unsubscribe();
-  }
-
-  editNews() {
-    if (this.authorizeService.canEditContent(this.news, this.user)) {
-      // navigate to edit page.
-      this._router.navigate(['home/news/add', { id: this.news.id }]);
-    }
-  }
   submitNews() {
     if (this.canSubmit) {
       this.newsService
@@ -95,7 +76,12 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
       console.log('user is not allowed to submit the news');
     }
   }
-
+  editNews() {
+    if (this.authorizeService.canEditContent(this.news, this.user)) {
+      // navigate to edit page.
+      this._router.navigate(['/news/add', { id: this.news.id }]);
+    }
+  }
   publishNews() {
     if (this.canPublish) {
       this.newsService
@@ -106,7 +92,11 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
       console.log('something wrong happened while publishing item');
     }
   }
-  deleteNews() {}
+  deleteNews() {
+    this.newsService.deleteNews(this.news).then(res => {
+      this._router.navigate(['news']);
+    });
+  }
 
   isUserAuthorizedForNewsAction() {
     const status = this.news.status;
@@ -130,39 +120,42 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
 
     return false;
   }
-
-  // canPublish(): boolean {
-  //   const status = this.news.status;
-  //   const permissionRole = this.user.permission.role;
-
-  //   if (permissionRole === 'admin' && status === 'submitted') return true;
-  //   return false;
-  // }
-
-  // canDelete(): boolean {
-  //   const status = this.news.status;
-  //   const permissionRole = this.user.permission.role;
-
-  //   if (permissionRole === 'admin') {
-  //     return true;
-  //   }
-
-  //   if (
-  //     permissionRole === 'editor' &&
-  //     (status === 'submitted' || status === 'draft')
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // canEdit() {
-  //   if (this.news.status === 'draft') return true;
-  //   return false;
-  // }
-
-  // canSubmit() {
-  //   if (this.news.status === 'draft') return true;
-  //   return false;
-  // }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
 }
+
+// canPublish(): boolean {
+//   const status = this.news.status;
+//   const permissionRole = this.user.permission.role;
+
+//   if (permissionRole === 'admin' && status === 'submitted') return true;
+//   return false;
+// }
+
+// canDelete(): boolean {
+//   const status = this.news.status;
+//   const permissionRole = this.user.permission.role;
+
+//   if (permissionRole === 'admin') {
+//     return true;
+//   }
+
+//   if (
+//     permissionRole === 'editor' &&
+//     (status === 'submitted' || status === 'draft')
+//   ) {
+//     return true;
+//   }
+//   return false;
+// }
+
+// canEdit() {
+//   if (this.news.status === 'draft') return true;
+//   return false;
+// }
+
+// canSubmit() {
+//   if (this.news.status === 'draft') return true;
+//   return false;
+// }

@@ -13,7 +13,7 @@ import { ClubDetailsService } from '../services/club-details.service';
 import { FileUpload } from '../modals/upload-file';
 import { Subject, Observable, of } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'news-add',
@@ -109,50 +109,16 @@ export class AddNewsComponent implements OnInit {
         }
       });
     // get all the club details in id and value.
-    this.clubDetailService.getAllclubs().subscribe(res => {
-      // console.log(res);
-      // this.clubList = res;
-    });
+    this.clubDetailService.getAllclubs().subscribe(res => {});
   }
 
   buildForm() {
     return this.formBuilder.group({
-      title: ['Sample title for the news', Validators.required],
-      summary: [
-        'Summary of the news article which is needed to show in teaser type components',
-        [Validators.required, Validators.minLength(50)]
-      ],
-      content: [
-        'html content which later will be replaced with editor item',
-        Validators.required
-      ]
+      title: ['', Validators.required],
+      summary: ['', [Validators.required, Validators.minLength(50)]],
+      content: ['', Validators.required]
     });
   }
-
-  submitNews() {
-    this.submitting = true;
-    // console.log(this.articleAddFrom);
-    // const formValue = this.articleAddFrom.value;
-    // // adding the related sports to the form value.
-    // formValue['relatedSports'] = this.selectedSports;
-    // formValue['taggedClubs'] = this.taggedClubs;
-    const newsItem = this.newsObject;
-    newsItem['image'] = '';
-    newsItem['status'] = 'published';
-
-    this.newService.createNews(newsItem).then(res => {
-      if (res) {
-        // save the news id in a local variable.
-        this.createdNewsKey = res.id;
-        if (this.selectedFiles && this.selectedFiles.length === 1) {
-          this.uploadImage();
-        }
-        this.submitting = false;
-        this.route.navigate(['news/list']);
-      }
-    });
-  }
-
   fileSelection($event) {
     console.log($event.target.files);
     this.selectedFiles = ($event.target as HTMLInputElement).files;
@@ -166,25 +132,6 @@ export class AddNewsComponent implements OnInit {
       };
     }
   }
-
-  uploadImage() {
-    const file = this.selectedFiles;
-    if (file && file.length === 1) {
-      const currentUpload: FileUpload = new FileUpload(file.item(0));
-      this.newService.uploadNewsImage(file.item(0)).then(res => {
-        const downloadUrl = res.downloadURL;
-        console.log(downloadUrl);
-        // update the news with the new download URL
-        this.newService.updateNewsAfterImageLoad(
-          this.createdNewsKey,
-          downloadUrl
-        );
-      });
-    } else {
-      console.error('No file found!');
-    }
-  }
-
   sportSelectionChange($event) {
     this.selectedSports[$event.source.name] = $event.checked;
     console.log(this.selectedSports);
@@ -213,20 +160,64 @@ export class AddNewsComponent implements OnInit {
       }
     }
   }
-
-  updateNews() {
+  submitNews() {
     this.submitting = true;
-    this.newService
-      .updateNews(this.newsObject, this.createdNewsKey)
-      .then(() => {
+    // console.log(this.articleAddFrom);
+    // const formValue = this.articleAddFrom.value;
+    // // adding the related sports to the form value.
+    // formValue['relatedSports'] = this.selectedSports;
+    // formValue['taggedClubs'] = this.taggedClubs;
+    const newsItem = this.newsObject;
+    newsItem['image'] = '';
+    newsItem['status'] = 'published';
+
+    this.newService.createNews(newsItem).then(res => {
+      if (res) {
+        // save the news id in a local variable.
+        this.createdNewsKey = res.id;
         if (this.selectedFiles && this.selectedFiles.length === 1) {
           this.uploadImage();
         }
         this.submitting = false;
-        this.route.navigate(['home/news/view', this.createdNewsKey]);
+        this.route.navigate(['/news/view', this.createdNewsKey]);
+      }
+    });
+  }
+  updateNews() {
+    this.submitting = true;
+    // string down the image property from newsOjbect.
+    //  as this is not needed while updating.
+
+    delete this.newsObject['image'];
+    this.newService
+      .updateNews(this.newsObject, this.createdNewsKey)
+      .then(() => {
+        if (this.selectedFiles && this.selectedFiles.length === 1) {
+          console.log('there are files.');
+          this.uploadImage();
+        }
+        this.submitting = false;
+        this.route.navigate(['/news/view', this.createdNewsKey]);
       });
   }
-
+  uploadImage() {
+    const file = this.selectedFiles;
+    if (file && file.length === 1) {
+      console.log('upload image fucntion.');
+      console.log(file.item(0));
+      const currentUpload: FileUpload = new FileUpload(file.item(0));
+      this.newService.uploadNewsImage(file.item(0)).subscribe(downLoadUrl => {
+        console.log(downLoadUrl);
+        // update the news with the new download URL
+        this.newService.updateNewsAfterImageLoad(
+          this.createdNewsKey,
+          downLoadUrl
+        );
+      });
+    } else {
+      console.error('No file found!');
+    }
+  }
   testMe($event) {
     console.log($event);
   }

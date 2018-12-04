@@ -79,7 +79,13 @@ export class EventAdminService {
       .doc(event.id)
       .update({ status: status });
   }
-
+  deleteEvent(event) {
+    console.log(event);
+    return this.db
+      .collection('events')
+      .doc(event.id)
+      .delete();
+  }
   mapToArray(items) {
     return items.map(item => {
       const data = item.payload.doc.data();

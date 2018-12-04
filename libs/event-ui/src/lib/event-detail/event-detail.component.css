@@ -29,6 +29,7 @@
 
 /* new disply features */
 mat-card {
-  max-width: 670px;
-  margin: 0px auto;
+  /* max-width: 670px;
+  margin: 0px auto; */
+  margin-top: 5px;
 }

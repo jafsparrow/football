@@ -6,3 +6,8 @@ mat-sidenav-container,
 mat-sidenav {
   height: 100%;
 }
+
+.home-router {
+  max-width: 1000px;
+  margin: 0px auto;
+}

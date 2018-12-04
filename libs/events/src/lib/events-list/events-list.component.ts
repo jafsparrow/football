@@ -12,7 +12,7 @@ import { EventItem } from '../modals/event.modal';
   styleUrls: ['./events-list.component.css']
 })
 export class EventsListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'status', 'action'];
+  displayedColumns: string[] = ['id', 'title', 'status'];
   dataSource: MatTableDataSource<EventItem>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

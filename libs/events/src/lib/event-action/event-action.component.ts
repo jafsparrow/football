@@ -109,7 +109,12 @@ export class EventActionComponent implements OnInit, OnChanges, OnDestroy {
       console.log('something wrong happened while publishing item');
     }
   }
-  deleteEvent() {}
+  deleteEvent() {
+    this.eventService
+      .deleteEvent(this.event)
+      .then(() => console.log('event got deleted'))
+      .catch(err => console.log(err));
+  }
 
   // isUserAuthorizedForNewsAction() {
   //   const status = this.news.status;

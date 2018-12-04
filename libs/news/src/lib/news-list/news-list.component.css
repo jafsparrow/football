@@ -1,3 +1,10 @@
-table, mat-form-field {
+table,
+mat-form-field {
   width: 100%;
+}
+
+.fab-button {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
 }

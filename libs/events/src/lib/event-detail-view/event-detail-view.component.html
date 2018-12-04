@@ -1,6 +1,6 @@
 <div *ngIf="(event$ | async) as event; else: loading" class="container">
-  <football-event-detail [event]="event"></football-event-detail>
   <football-event-action [event]="event"></football-event-action>
+  <football-event-detail [event]="event"></football-event-detail>
 </div>
 
 <ng-template #loading>

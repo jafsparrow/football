@@ -1,43 +1,212 @@
-<mat-card class="club-info-container">
-  <div class="header-container" fxLayout="row" fxLayout.lt-sm="column">
-    <div class="section-1-container" fxFlex="40%">
-      <div class="section-1" fxLayout="column" fxLayoutAlign="center center">
-        <img
-          class="club-icon"
-          src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
-        />
-        <div class="club-name">Liverpool</div>
+<mat-card>
+  <mat-tab-group>
+    <mat-tab label="Club Basic Info">
+      <p>Club Basic Information</p>
+      <form
+        class="form-container"
+        [formGroup]="clubBasicForm"
+        (ngSubmit)="onBasicFormSubmit()"
+        *ngIf="!submitting && !clubInfoLoading; else: clubLoading"
+      >
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="club name" formControlName="name" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="club short name"
+            formControlName="shortName"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="contact number"
+            formControlName="contact"
+          />
+          <mat-hint>ഇത് പ്രാഥമിക കോൺടാക്റ്റ് നമ്പരാണ്</mat-hint>
+          <mat-error *ngIf="contactNumber.errors?.pattern">
+            Please enter a valid phone number
+          </mat-error>
+        </mat-form-field>
+
+        <p>Address Details</p>
+
+        <div class="address-container" formGroupName="address">
+          <mat-form-field>
+            <input matInput placeholder="line1" formControlName="line1" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="line2" formControlName="line2" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="pin code" formControlName="pin" />
+          </mat-form-field>
+        </div>
+        <button
+          type="submit"
+          color="primary"
+          [disabled]="!clubBasicForm.valid"
+          mat-button
+        >
+          Update
+        </button>
+      </form>
+      <ng-template #clubLoading>
+        <mat-progress-spinner
+          mode="indeterminate"
+          color="accent"
+          [strokeWidth]="10"
+        ></mat-progress-spinner>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Achievements">
+      <form
+        [formGroup]="clubAchivementForm"
+        (ngSubmit)="addClubSubItem('achievements', clubAchivementForm.value)"
+      >
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="ഇവന്റ് " formControlName="title" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-hint>Date</mat-hint>
+          <input
+            matInput
+            [matDatepicker]="date"
+            placeholder="തീയതി"
+            formControlName="date"
+          />
+          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker #date></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field style="width: 80%">
+          <textarea
+            matInput
+            placeholder="ദയവായി വിശദാംശങ്ങൾ ചേർക്കുക"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="!clubAchivementForm.valid">
+          Add Achievement
+        </button>
+      </form>
+
+      <div class="achievement-view" *ngFor="let item of achievements">
+        <div class="header">
+          {{ item.title }} :: <span>{{ item.date.toDate() | date }}</span>
+        </div>
+        <div class="des">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
+          consectetur voluptate non consequatur odit libero provident voluptates
+          ratione quaerat. Ullam soluta deserunt
+        </div>
+
+        <button
+          mat-icon-button
+          class="del-icon"
+          (click)="deleteFromClubSubItem('achievements', item)"
+        >
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Managements">
+      <form
+        [formGroup]="clubManagementForm"
+        (ngSubmit)="addClubSubItem('management', clubManagementForm.value)"
+      >
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="പേര്" formControlName="name" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="ക്ലബ്ബ് ഡ്യൂട്ടി"
+            formControlName="role"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="കോൺടാക്റ്റ് നമ്പർ"
+            formControlName="contact"
+          />
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="!clubManagementForm.valid">
+          Add Role
+        </button>
+      </form>
+      <div class="management-container" fxLayout="row wrap">
+        <div
+          class="item-container"
+          *ngFor="let item of managements"
+          fxFlex="25%"
+          fxFlex.lt-md="50%"
+        >
+          <div class="mangement-item">
+            <div class="role line-display">
+              <span class="label">Name: </span>{{ item.name }}
+            </div>
+            <div class="role">
+              <span class="label">Role: </span>{{ item.role }}
+            </div>
+            <div class="contact">
+              <span class="label">Contact:</span> {{ item.contact }}
+            </div>
+          </div>
+          <button
+            mat-icon-button
+            (click)="deleteFromClubSubItem('management', item)"
+            class="del-icon"
+          >
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+<!--
+  <mat-card class="club-info-container">
+    <div class="header-container" fxLayout="row" fxLayout.lt-sm="column">
+      <div class="section-1-container" fxFlex="40%">
+        <div class="section-1" fxLayout="column" fxLayoutAlign="center center">
+          <img
+            class="club-icon"
+            src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+          />
+          <div class="club-name">Liverpool</div>
+        </div>
+      </div>
+
+      <div class="section-2" fxFlex>
+        <h4>+91 948394933</h4>
+        <div class="address-section">anfield, second strett 25454</div>
       </div>
     </div>
 
-    <div class="section-2" fxFlex>
-      <h4>+91 948394933</h4>
-      <div class="address-section">anfield, second strett 25454</div>
+    <div class="club-feeds">
+      <mat-tab-group>
+        <mat-tab label="News">
+          <ng-template matTabContent>
+            The First Content
+
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Events">
+          <ng-template matTabContent> The Second Content </ng-template>
+        </mat-tab>
+        <mat-tab label="Matches">
+          <ng-template matTabContent> The Second Content </ng-template>
+        </mat-tab>
+        <mat-tab label="Other Info">
+          <ng-template matTabContent> The Second Content </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </div>
-  </div>
-
-  <div class="club-feeds">
-    <mat-tab-group>
-      <mat-tab label="News">
-        <ng-template matTabContent>
-          The First Content
-
-          <!--
-            <football-news-summary-view-teaser
-              [news]="clubNews$ | async"
-            ></football-news-summary-view-teaser>
-          -->
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="Events">
-        <ng-template matTabContent> The Second Content </ng-template>
-      </mat-tab>
-      <mat-tab label="Matches">
-        <ng-template matTabContent> The Second Content </ng-template>
-      </mat-tab>
-      <mat-tab label="Other Info">
-        <ng-template matTabContent> The Second Content </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-</mat-card>
+  </mat-card>
+-->

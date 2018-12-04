@@ -15,10 +15,9 @@ export class NewsCommonService {
   news: AngularFirestoreCollection<any>;
 
   constructor(
-    private db: AngularFirestore,
-    // private clubDetailService: ClubDetailsService
-    private firebaseStorage: AngularFireStorage
-  ) {}
+    private db: AngularFirestore
+  ) // private clubDetailService: ClubDetailsService
+  {}
 
   // read news list. implement 10 pagination.
   getNews(limitNumber = 100) {
