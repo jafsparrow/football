@@ -94,14 +94,6 @@ export class NewsListComponent implements OnInit {
     private newsService: NewsService,
     private auth: AuthenticationService
   ) {
-    // this.newsService.getNews()
-    //   .subscribe(news => {
-    //     this.dataSource = new MatTableDataSource(news);
-
-    //     this.dataSource.sort = this.sort;
-    //     this.dataSource.paginator = this.paginator;
-    //   });
-
     this.auth.user$
       .pipe(
         switchMap(user => {
@@ -109,17 +101,14 @@ export class NewsListComponent implements OnInit {
         })
       )
       .subscribe(news => {
+        console.log(news);
         this.dataSource = new MatTableDataSource(news);
 
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
-
-    //
   }
-  ngOnInit() {
-    // console.log(this.dataSource);
-  }
+  ngOnInit() {}
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

@@ -22,6 +22,7 @@ import { switchMap, finalize } from 'rxjs/operators';
 })
 export class AddNewsComponent implements OnInit {
   editorConfig = editorConfiguation;
+  user;
   submitting = false;
   isEditing = false;
   selectedFiles: FileList | null;
@@ -39,8 +40,8 @@ export class AddNewsComponent implements OnInit {
   ];
   selectedSports = {}; // this holds the user selected sports for the news
   clubSearchResults$: Observable<Array<any>>; // this refers to the search result array for clubs based on user typed input
-  taggedClubs: ClubMeta[] = []; // array of objects which has club name and club unique id.
-
+  // taggedClubs: ClubMeta[] = []; // array of objects which has club name and club unique id.
+  taggedClubObject = {};
   someClubs = [
     { name: 'new castle', id: 'eieire' },
     { name: 'manchester united', id: 'blah blah' }
@@ -53,7 +54,7 @@ export class AddNewsComponent implements OnInit {
     createdDate: new Date(),
     content: '',
     relatedSports: {},
-    taggedClubs: [],
+    taggedClubs: {},
     author: {}
   }; // this holds the data of the whole news from client before submitting to the server so that it can be shown in the preview
 
@@ -70,13 +71,9 @@ export class AddNewsComponent implements OnInit {
     this.clubSearchResults$ = this.clubDetailService.searchClubs(
       this.searchTerm$
     );
-    // sample taggedclub populaton
-    this.taggedClubs = [
-      { name: 'liverpool', id: 'eik323' },
-      { name: 'barca', id: 'eik323' }
-    ];
 
     this.auth.user$.subscribe(res => {
+      this.user = res;
       this.newsObject.author = {
         name: res.displayName,
         uid: res.uid,
@@ -108,8 +105,6 @@ export class AddNewsComponent implements OnInit {
           console.log('something wrong in gettting news');
         }
       });
-    // get all the club details in id and value.
-    this.clubDetailService.getAllclubs().subscribe(res => {});
   }
 
   buildForm() {
@@ -118,6 +113,10 @@ export class AddNewsComponent implements OnInit {
       summary: ['', [Validators.required, Validators.minLength(50)]],
       content: ['', Validators.required]
     });
+  }
+
+  get taggedClubs() {
+    return Object.keys(this.taggedClubObject);
   }
   fileSelection($event) {
     console.log($event.target.files);
@@ -142,34 +141,43 @@ export class AddNewsComponent implements OnInit {
     this.newsObject.summary = this.articleAddFrom.get('summary').value;
     this.newsObject.createdDate = new Date();
     this.newsObject.content = this.articleAddFrom.get('content').value;
-    this.newsObject.taggedClubs = this.taggedClubs;
+    this.newsObject.taggedClubs = this.taggedClubObject;
     this.newsObject.relatedSports = this.selectedSports;
     this.newsObject.image = this.imageUrl ? this.imageUrl : null;
     // console.log(this.newsObject);
   }
+  // this method adds the tagged club to array.
+  // clubTagToggle($event, club) {
+  //   if ($event.checked) {
+  //     this.taggedClubs.push(club);
+  //   } else {
+  //     const index = this.taggedClubs.indexOf(club);
+
+  //     if (index !== -1) {
+  //       this.taggedClubs.splice(index, 1);
+  //     }
+  //   }
+  // }
 
   clubTagToggle($event, club) {
-    console.log($event, club);
     if ($event.checked) {
-      this.taggedClubs.push(club);
+      this.taggedClubObject[club.id] = club;
     } else {
-      const index = this.taggedClubs.indexOf(club);
-
-      if (index !== -1) {
-        this.taggedClubs.splice(index, 1);
+      if (this.taggedClubObject[club.id]) {
+        delete this.taggedClubObject[club.id];
       }
     }
   }
   submitNews() {
     this.submitting = true;
-    // console.log(this.articleAddFrom);
-    // const formValue = this.articleAddFrom.value;
-    // // adding the related sports to the form value.
-    // formValue['relatedSports'] = this.selectedSports;
-    // formValue['taggedClubs'] = this.taggedClubs;
     const newsItem = this.newsObject;
     newsItem['image'] = '';
-    newsItem['status'] = 'published';
+    newsItem['status'] = 'draft';
+    newsItem['mainClub'] = {
+      id: this.user.permission.clubId,
+      name: this.user.permission.club,
+      tier: this.user.permission.tier ? this.user.permission.tier : 'none'
+    };
 
     this.newService.createNews(newsItem).then(res => {
       if (res) {

@@ -1,4 +1,4 @@
-import { NewsCommonService } from './../../../../../../libs/shared/src/lib/services/news-common.service';
+import { NewsCommonService } from '@football/shared';
 import { switchMap, share } from 'rxjs/operators';
 import { AuthenticationService, News } from '@football/shared';
 import { Component, OnInit, OnDestroy } from '@angular/core';

@@ -100,20 +100,29 @@ export class EventActionComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   publishEvent() {
-    if (this.canPublish) {
-      this.eventService
-        .updateEventStatus(this.event, 'published')
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
-    } else {
-      console.log('something wrong happened while publishing item');
+    if (
+      confirm('You are about publish this event. Would you like to continue..?')
+    ) {
+      if (this.canPublish) {
+        this.eventService
+          .updateEventStatus(this.event, 'published')
+          .then(res => console.log(res))
+          .catch(error => console.log(error));
+      } else {
+        console.log('something wrong happened while publishing item');
+      }
     }
   }
   deleteEvent() {
-    this.eventService
-      .deleteEvent(this.event)
-      .then(() => console.log('event got deleted'))
-      .catch(err => console.log(err));
+    if (confirm('Do you want to delete this event..? ')) {
+      this.eventService
+        .deleteEvent(this.event)
+        .then(() => {
+          console.log('event got deleted');
+          this._router.navigate(['/events']);
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   // isUserAuthorizedForNewsAction() {

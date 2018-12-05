@@ -201,7 +201,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   updateFavClub(club) {
-    this.mainClub = { id: club.id, name: club.name };
+    this.mainClub = {
+      id: club.id,
+      name: club.name,
+      tier: club.tier ? club.tier : 'none'
+    };
   }
 
   ngOnDestroy() {

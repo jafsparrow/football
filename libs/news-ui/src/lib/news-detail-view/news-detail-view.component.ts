@@ -19,6 +19,11 @@ export class NewsDetailViewComponent implements OnInit {
     article: 'some valya sambhavam'
   };
 
+  constructor() {}
+
+  ngOnInit() {
+    // console.log(this.news)
+  }
   get relatedGames() {
     if (
       this.news.relatedSports &&
@@ -29,9 +34,7 @@ export class NewsDetailViewComponent implements OnInit {
     return [];
   }
 
-  constructor() {}
-
-  ngOnInit() {
-    // console.log(this.news)
+  get taggedClubs() {
+    return Object.keys(this.news.taggedClubs);
   }
 }

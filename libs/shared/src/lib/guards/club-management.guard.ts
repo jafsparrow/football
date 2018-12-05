@@ -23,6 +23,7 @@ export class ClubManagementGuard implements CanActivate {
       take(1),
       map(user => {
         if (this.auth.isClubManagementUser(user)) return true;
+        this.router.navigate(['login']);
         return false;
       })
     );

@@ -71,8 +71,11 @@
       <h4>search clubs to tag in the news</h4>
       <mat-chip-list class="tagged-clubs-list">
         <mat-chip *ngFor="let club of taggedClubs"
-          >{{ club.name }}
-          <span (click)="clubTagToggle(false, club)" class="tag-cancel-cross">
+          >{{ taggedClubObject[club].name }}
+          <span
+            (click)="clubTagToggle(false, taggedClubObject[club])"
+            class="tag-cancel-cross"
+          >
             X
           </span>
         </mat-chip>
@@ -133,7 +136,9 @@
     <mat-card>
       <ng-template matStepLabel>Save the news</ng-template>
       Please review the article and save.
-      <news-detail [news]="newsObject"></news-detail>
+      <football-news-detail-view
+        [news]="newsObject"
+      ></football-news-detail-view>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <!-- need to display update button if the mode is edit -->

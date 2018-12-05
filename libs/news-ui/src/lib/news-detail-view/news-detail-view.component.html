@@ -32,9 +32,9 @@
   <mat-card-content>
     <mat-chip-list>
       <mat-chip
-        *ngFor="let club of news.taggedClubs"
+        *ngFor="let club of taggedClubs"
         (click)="navigateToClubDetails(club)"
-        >{{ club.name }}</mat-chip
+        >{{ news.taggedClubs[club].name }}</mat-chip
       >
     </mat-chip-list>
   </mat-card-content>

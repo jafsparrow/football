@@ -31,15 +31,14 @@ export class EventsListComponent implements OnInit {
           }
         })
       )
-      .subscribe(res => (this.dataSource = new MatTableDataSource(res)));
-
-    // Assign the data to the data source for the table to render
+      .subscribe(res => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngOnInit() {}
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

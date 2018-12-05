@@ -66,6 +66,7 @@ export class LocalAdminService {
   approveClub(club) {
     const userId = club.requestedUser.uid;
     const clubId = club.id;
+    const clubTier = club.tier ? club.tier : 'none';
     return this.acceptClub(club.id)
       .then(() => {
         const localBodyCode = club.address.localBodyCode;
@@ -84,7 +85,8 @@ export class LocalAdminService {
         const newPermission = {
           club: club.name,
           clubId: clubId,
-          role: 'admin'
+          role: 'admin',
+          tier: clubTier
         };
 
         const data = { permission: newPermission };

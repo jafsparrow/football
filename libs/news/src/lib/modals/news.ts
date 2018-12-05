@@ -9,7 +9,7 @@ export class News {
   author?: NewsAuthor;
   mainClub?: MainClub;
   relatedSports: {};
-  taggedClubs: ClubMeta[]
+  taggedClubs: {};
   image?: string | any;
   status?: string;
 }
@@ -28,6 +28,6 @@ export class NewsAuthor {
 export class MainClub {
   name?: string;
   id?: string;
-  logoUrl: string;
+  logoUrl?: string;
+  tier?: string;
 }
-

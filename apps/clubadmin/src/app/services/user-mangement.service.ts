@@ -23,11 +23,11 @@ export class UserMangementService {
       .valueChanges();
   }
 
-  updateUserAccess(user, role, clubId) {
+  updateUserAccess(user, role, clubId, clubTier = 'none') {
     return this.db
       .collection('users')
       .doc(user.uid)
-      .update({ permission: { role: role, clubId: clubId } });
+      .update({ permission: { role: role, clubId: clubId, tier: clubTier } });
   }
 
   removedUserAccess(user) {

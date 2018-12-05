@@ -83,19 +83,25 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   publishNews() {
-    if (this.canPublish) {
-      this.newsService
-        .updateNewsStatus(this.news, 'published')
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
-    } else {
-      console.log('something wrong happened while publishing item');
+    if (
+      confirm('You are about to publish this news. Do you want to continue.? ')
+    ) {
+      if (this.canPublish) {
+        this.newsService
+          .updateNewsStatus(this.news, 'published')
+          .then(res => console.log(res))
+          .catch(error => console.log(error));
+      } else {
+        console.log('something wrong happened while publishing item');
+      }
     }
   }
   deleteNews() {
-    this.newsService.deleteNews(this.news).then(res => {
-      this._router.navigate(['news']);
-    });
+    if (confirm('Do you want to delete this news..? ')) {
+      this.newsService.deleteNews(this.news).then(res => {
+        this._router.navigate(['news']);
+      });
+    }
   }
 
   isUserAuthorizedForNewsAction() {

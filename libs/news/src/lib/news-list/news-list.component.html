@@ -25,10 +25,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<mat-paginator
-  MatPaginator
-  [pageSizeOptions]="[5, 10, 25, 100]"
-></mat-paginator>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 <button mat-fab routerLink="/news/add" color="accent" class="fab-button">
   <mat-icon class="mat-18">add</mat-icon>
 </button>

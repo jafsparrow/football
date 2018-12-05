@@ -83,9 +83,12 @@ export class UserManagementComponent implements OnInit {
         } , Would you like to proceed?`
       )
     ) {
+      const clubTier = this.user.mainClub.tier
+        ? this.user.mainClub.tier
+        : 'none';
       this.submitting = true;
       this.userService
-        .updateUserAccess(user, 'editor', this.user.mainClub.id)
+        .updateUserAccess(user, 'editor', this.user.mainClub.id, clubTier)
         .then(() => {
           this.submitting = false;
           console.log('editor access updated');

@@ -106,12 +106,8 @@ export class NewsService {
     );
   }
   // create a new news.
+  // update the news to include extra fields like author, is_active , created_on, status
   createNews(news: any) {
-    // update the news to include extra fields like author, is_active , created_on, status
-    // news.author = 'Jafar';
-    // news.isActive = true;
-    // news.createdDate = new Date();
-    // news.status = 'published';
     console.log(news);
     return this.news.add(news).then(res => {
       console.log(res.id);
