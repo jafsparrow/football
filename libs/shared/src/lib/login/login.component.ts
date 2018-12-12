@@ -31,15 +31,15 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log(
-      'Changed',
-      changes.loginRole.currentValue,
-      changes.loginRole.previousValue
-    );
+    // console.log(
+    //   'Changed',
+    //   changes.loginRole.currentValue,
+    //   changes.loginRole.previousValue
+    // );
   }
 
   ngOnInit() {
-    console.log('Init', this.loginRole);
+    // console.log('Init', this.loginRole);
     this.auth.user$.subscribe(user => {
       if (user) {
         this.user = user;

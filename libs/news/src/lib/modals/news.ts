@@ -5,7 +5,7 @@ export class News {
   content: string;
   isActive?: boolean;
   createdDate: Date;
-  publishedDate?: Date;
+  publishedDate?: Date | any;
   author?: NewsAuthor;
   mainClub?: MainClub;
   relatedSports: {};

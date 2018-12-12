@@ -1,3 +1,4 @@
+import { SeoService } from './services/seo.service';
 import { ClubsModule } from '@football/clubs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { routes } from './routes';
@@ -51,7 +52,7 @@ import { EventsDetailComponent } from './events/events-detail/events-detail.comp
     EventsDetailComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     NxModule.forRoot(),
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     BrowserAnimationsModule,
@@ -65,7 +66,7 @@ import { EventsDetailComponent } from './events/events-detail/events-detail.comp
     NewsUiModule,
     EventUiModule
   ],
-  providers: [{ provide: 'siteType', useValue: evnType }],
+  providers: [{ provide: 'siteType', useValue: evnType }, SeoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

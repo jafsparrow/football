@@ -19,7 +19,6 @@ export class AuthenticationService {
   email = 'jafar@test.com';
   password = 'jafrose';
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
-    console.log('auth service is constructed');
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -57,7 +56,7 @@ export class AuthenticationService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    console.log('google response', user);
+    // console.log('google response', user);
 
     userRef
       .valueChanges()
@@ -74,8 +73,8 @@ export class AuthenticationService {
           data['email'] = user.email;
           data['registrationStep'] = 1;
         }
-        console.log(user);
-        console.log(data);
+        // console.log(user);
+        // console.log(data);
         return userRef.set(data, { merge: true });
       });
   }

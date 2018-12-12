@@ -24,7 +24,8 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "input":
+                  "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
               "apps/clubadmin/src/styles.css"
             ],
@@ -76,7 +77,8 @@
             "karmaConfig": "apps/clubadmin/karma.conf.js",
             "styles": [
               {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "input":
+                  "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
               "apps/clubadmin/src/styles.css"
             ],
@@ -94,9 +96,7 @@
               "apps/clubadmin/tsconfig.app.json",
               "apps/clubadmin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -121,9 +121,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/clubadmin-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -149,9 +147,7 @@
               "libs/news/tsconfig.lib.json",
               "libs/news/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -177,9 +173,7 @@
               "libs/events/tsconfig.lib.json",
               "libs/events/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -205,9 +199,7 @@
               "libs/shared/tsconfig.lib.json",
               "libs/shared/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -222,7 +214,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/timeout",
+            "outputPath": "dist/apps/timeout/browser",
             "index": "apps/timeout/src/index.html",
             "main": "apps/timeout/src/main.ts",
             "polyfills": "apps/timeout/src/polyfills.ts",
@@ -231,9 +223,7 @@
               "apps/timeout/src/favicon.ico",
               "apps/timeout/src/assets"
             ],
-            "styles": [
-              "apps/timeout/src/styles.css"
-            ],
+            "styles": ["apps/timeout/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -280,9 +270,7 @@
             "polyfills": "apps/timeout/src/polyfills.ts",
             "tsConfig": "apps/timeout/tsconfig.spec.json",
             "karmaConfig": "apps/timeout/karma.conf.js",
-            "styles": [
-              "apps/timeout/src/styles.css"
-            ],
+            "styles": ["apps/timeout/src/styles.css"],
             "scripts": [],
             "assets": [
               "apps/timeout/src/favicon.ico",
@@ -297,9 +285,25 @@
               "apps/timeout/tsconfig.app.json",
               "apps/timeout/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/apps/timeout/server",
+            "main": "apps/timeout/src/main.server.ts",
+            "tsConfig": "apps/timeout/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/timeout/src/environments/environment.ts",
+                  "with": "apps/timeout/src/environments/environment.prod.ts"
+                }
+              ]
+            }
           }
         }
       }
@@ -324,9 +328,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/timeout-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -352,9 +354,7 @@
               "libs/clubs/tsconfig.lib.json",
               "libs/clubs/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -380,9 +380,7 @@
               "libs/event-ui/tsconfig.lib.json",
               "libs/event-ui/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -408,9 +406,7 @@
               "libs/news-ui/tsconfig.lib.json",
               "libs/news-ui/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -434,9 +430,7 @@
               "apps/localadmin/src/favicon.ico",
               "apps/localadmin/src/assets"
             ],
-            "styles": [
-              "apps/localadmin/src/styles.css"
-            ],
+            "styles": ["apps/localadmin/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -483,9 +477,7 @@
             "polyfills": "apps/localadmin/src/polyfills.ts",
             "tsConfig": "apps/localadmin/tsconfig.spec.json",
             "karmaConfig": "apps/localadmin/karma.conf.js",
-            "styles": [
-              "apps/localadmin/src/styles.css"
-            ],
+            "styles": ["apps/localadmin/src/styles.css"],
             "scripts": [],
             "assets": [
               "apps/localadmin/src/favicon.ico",
@@ -500,9 +492,7 @@
               "apps/localadmin/tsconfig.app.json",
               "apps/localadmin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -527,9 +517,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/localadmin-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

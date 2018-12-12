@@ -25,7 +25,7 @@ export class EventsLandingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userSubscription = this.auth.user$.subscribe(user => {
       this.user = user;
-      if (this.user.mainClub) {
+      if (this.user && this.user.mainClub) {
         this.favClubsEvents$ = this.eventService
           .getRecentClubEvents(this.user.mainClub.id)
           .pipe(
@@ -34,7 +34,7 @@ export class EventsLandingComponent implements OnInit, OnDestroy {
             })
           );
       }
-      if (this.user.taggedClubs) {
+      if (this.user && this.user.taggedClubs) {
         this.taggedClubsEvents$ = this.eventService
           .getTaggedClubsEvents(this.user)
           .pipe(

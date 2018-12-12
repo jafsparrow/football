@@ -5,11 +5,11 @@ export class News {
   content: string;
   isActive?: boolean;
   createdDate: Date;
-  publishedDate?: Date;
+  publishedDate?: Date | any;
   author?: NewsAuthor;
   mainClub?: MainClub;
   relatedSports: {};
-  taggedClubs: ClubMeta[]
+  taggedClubs: ClubMeta[];
   image?: string | any;
   status?: string;
 }
@@ -30,4 +30,3 @@ export class MainClub {
   id?: string;
   logoUrl: string;
 }
-

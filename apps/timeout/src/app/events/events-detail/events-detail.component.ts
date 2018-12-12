@@ -20,7 +20,7 @@ export class EventsDetailComponent implements OnInit {
     this.event$ = this.route.params.pipe(
       switchMap(params => {
         const id = params['id'];
-        console.log(id);
+        // console.log(id);
         return this.eventService.getDetailedEvent(id);
       })
     );

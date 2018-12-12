@@ -34,31 +34,26 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventService
-      .getRecentClubEvents('1')
-      .subscribe(res => console.log(res));
-    this.events$ = this.authSerivice.user$
-      .pipe(
-        switchMap(user => {
-          if (user) {
-            // to display a info message for the user that user,
-            // does not have fav or tagged_clubs. it will display on the page
-            this.homeMessage.isLoggedIn = true;
-            if (!user.mainClub.id) {
-              this.homeMessage.hasFavClub = false;
-            }
-            if (!user.taggedClubs) {
-              if (Object.keys(user.taggedClubs).length < 1) {
-                this.homeMessage.hasTaggedClubs = false;
-              }
-            }
-            return this.eventService.getEventsForLoggedInUser(user);
+    this.events$ = this.authSerivice.user$.pipe(
+      switchMap(user => {
+        if (user) {
+          // to display a info message for the user that user,
+          // does not have fav or tagged_clubs. it will display on the page
+          this.homeMessage.isLoggedIn = true;
+          if (!user.mainClub.id) {
+            this.homeMessage.hasFavClub = false;
           }
-          // if the user is not logged in, the message should say the following.
-          return this.eventService.getTopeTierClubEvents(10);
-        })
-      )
-      .pipe(tap(events => console.log(events)));
+          if (!user.taggedClubs) {
+            if (Object.keys(user.taggedClubs).length < 1) {
+              this.homeMessage.hasTaggedClubs = false;
+            }
+          }
+          return this.eventService.getEventsForLoggedInUser(user);
+        }
+        // if the user is not logged in, the message should say the following.
+        return this.eventService.getTopeTierClubEvents(10);
+      })
+    );
 
     this.news$ = this.newsTeaser.getRecentTenNews();
   }

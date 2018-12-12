@@ -9,15 +9,19 @@
       [routerLink]="['/clubinfo', news.mainClub?.id]"
       >{{ news.mainClub?.name ? news.mainClub?.name : 'Default club' }}</span
     >
-    <div class="news-title">{{ news.title | truncate: 100:true }}</div>
+    <div class="news-title" [routerLink]="['/news/detail', news.id]">
+      {{ news.title | truncate: 100:true }}
+    </div>
   </div>
-  <button
-    mat-mini-fab
-    class="view-more-button"
-    [routerLink]="['/news/detail', news.id]"
-  >
-    <mat-icon aria-label="Example icon-button with a heart icon"
-      >arrow_forward_ios</mat-icon
+  <!--
+    <button
+      mat-mini-fab
+      class="view-more-button"
+      [routerLink]="['/news/detail', news.id]"
     >
-  </button>
+      <mat-icon aria-label="Example icon-button with a heart icon"
+        >arrow_forward_ios</mat-icon
+      >
+    </button>
+  -->
 </mat-card>

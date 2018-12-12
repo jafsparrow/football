@@ -14,9 +14,9 @@
       "@football/news": ["./libs/news/src/index.ts"],
       "@football/events": ["./libs/events/src/index.ts"],
       "@football/shared": ["./libs/shared/src/index.ts"],
-      "@football/clubs": ["libs/clubs/src/index.ts"],
-      "@football/event-ui": ["libs/event-ui/src/index.ts"],
-      "@football/news-ui": ["libs/news-ui/src/index.ts"]
+      "@football/clubs": ["./libs/clubs/src/index.ts"],
+      "@football/event-ui": ["./libs/event-ui/src/index.ts"],
+      "@football/news-ui": ["./libs/news-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

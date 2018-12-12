@@ -161,7 +161,11 @@ export class AddNewsComponent implements OnInit {
 
   clubTagToggle($event, club) {
     if ($event.checked) {
-      this.taggedClubObject[club.id] = club;
+      this.taggedClubObject[club.id] = {
+        id: club.id,
+        name: club.name,
+        tier: club.tier
+      };
     } else {
       if (this.taggedClubObject[club.id]) {
         delete this.taggedClubObject[club.id];

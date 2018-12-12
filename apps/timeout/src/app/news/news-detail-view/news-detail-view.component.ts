@@ -1,9 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NewsCommonService } from './../../../../../../libs/shared/src/lib/services/news-common.service';
+import { NewsCommonService } from '@football/shared';
 import { Component, OnInit } from '@angular/core';
 import { News } from '@football/shared';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'football-news-full',
@@ -14,15 +15,24 @@ export class NewsFullViewComponent implements OnInit {
   news$: Observable<News>;
   constructor(
     private _newsService: NewsCommonService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private seo: SeoService
   ) {}
 
   ngOnInit() {
+    let id = '';
     this.news$ = this.activatedRoute.params.pipe(
       switchMap(params => {
-        console.log(params);
-        const id = params['id'];
+        id = params['id'];
         return this._newsService.getDetailedNews(id);
+      }),
+      tap(news => {
+        this.seo.generateTags({
+          id: id,
+          title: news.title,
+          description: news.summary,
+          image: news.image ? news.image : ''
+        });
       })
     );
   }

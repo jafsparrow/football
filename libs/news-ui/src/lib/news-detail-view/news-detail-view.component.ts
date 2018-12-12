@@ -33,6 +33,9 @@ export class NewsDetailViewComponent implements OnInit {
     }
     return [];
   }
+  get publishedDate() {
+    return this.news.publishedDate ? this.news.publishedDate.toDate() : '';
+  }
 
   get taggedClubs() {
     return Object.keys(this.news.taggedClubs);

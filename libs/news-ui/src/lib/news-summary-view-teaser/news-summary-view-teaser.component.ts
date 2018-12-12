@@ -10,7 +10,5 @@ export class NewsSummaryViewTeaserComponent implements OnInit {
   @Input() news: News[];
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.news);
-  }
+  ngOnInit() {}
 }

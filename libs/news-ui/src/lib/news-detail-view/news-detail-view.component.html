@@ -14,24 +14,46 @@
     <mat-card-title class="news-title"> {{ news.title }} </mat-card-title>
     <mat-card-subtitle>
       <span> {{ news.author ? news.author.name : 'News Author Name' }} </span>
-      <!--
-        <span class="news-publish-date">: {{news.publishedDate? (news.publishedDate.toDate() | date) : 'Published Date'}}</span>
-      -->
+
+      <span class="news-publish-date"
+        >:
+        {{
+          news.publishedDate
+            ? (news.publishedDate.toDate() | date)
+            : 'Published Date'
+        }}</span
+      >
     </mat-card-subtitle>
   </mat-card-header>
+
   <mat-chip-list>
     <mat-chip *ngFor="let game of relatedGames"> {{ game }} </mat-chip>
   </mat-chip-list>
-  <img
-    *ngIf="news.image"
-    mat-card-image
-    src="{{news.image}}"
-    alt="{{news.title}}"
-    class="news-image"
-  />
+  <br />
+  <div
+    *ngIf="news?.image"
+    [ngStyle]="{
+      'background-image': 'url(' + news.image + ')',
+      'background-position': 'center',
+      'background-size': 'cover',
+      height: '300px'
+    }"
+  ></div>
+  <!--
+    <img
+      *ngIf="news.image"
+      mat-card-image
+      src="{{news.image}}"
+      alt="{{news.title}}"
+      class="news-image"
+    />
+  -->
   <mat-card-content>
+    <br />
     <mat-chip-list>
       <mat-chip
+        color="accent"
+        selected
         *ngFor="let club of taggedClubs"
         (click)="navigateToClubDetails(club)"
         >{{ news.taggedClubs[club].name }}</mat-chip

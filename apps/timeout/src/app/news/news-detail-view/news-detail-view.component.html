@@ -1,5 +1,5 @@
 <div *ngIf="(news$ | async) as news; else: loading">
-  <football-news-detail-view [news]="news$ | async"></football-news-detail-view>
+  <football-news-detail-view [news]="news"></football-news-detail-view>
 </div>
 
 <ng-template #loading>
