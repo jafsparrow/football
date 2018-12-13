@@ -38,6 +38,7 @@ export class ClubDetailComponent implements OnInit {
         line1: [{ value: '', disabled: true }, [Validators.required]],
         line2: { value: '', disabled: true },
         pin: [{ value: '', disabled: true }, [Validators.required]],
+        location: [''],
         district: [{ value: '', disabled: true }, [Validators.required]],
         localBodyType: [],
         localBody: [{ value: '', disabled: true }, [Validators.required]]

@@ -32,7 +32,7 @@ export class ClubRequestComponent implements OnInit {
     this.clubRequestForm = this._fb.group({
       name: ['', [Validators.required]],
       shortName: ['', [Validators.required]],
-      tier: ['', [Validators.required]],
+      tier: ['second', [Validators.required]],
       contact: [
         '',
         [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]

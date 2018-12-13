@@ -11,6 +11,7 @@ export class ClubsService {
     club['requestType'] = 'club';
     club['status'] = 'initiated';
     club['requestedUser'] = user;
+    club['shortName'] = club['shortName'].toUpperCase();
     return this._db.collection('requests').add(club);
   }
 }

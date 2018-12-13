@@ -29,10 +29,11 @@
       <input
         matInput
         placeholder="club short name"
+        style="text-transform:uppercase"
         formControlName="shortName"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field style="display: none">
       <mat-select placeholder="Tier" formControlName="tier">
         <mat-option value="first">first</mat-option>
         <mat-option value="second">second</mat-option>
@@ -64,7 +65,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Location" formControlName="location" />
+        <input matInput placeholder="Place" formControlName="location" />
       </mat-form-field>
 
       <mat-form-field>

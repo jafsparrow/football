@@ -62,12 +62,13 @@ export class ClubDetailsService {
 
   private findClubs(term) {
     console.log(term);
+    const upperTerm = term.toUpperCase();
     return this.db
       .collection('clubs', ref =>
         ref
-          .orderBy('name')
-          .startAt(term)
-          .endAt(term + '\uf8ff')
+          .orderBy('shortName')
+          .startAt(upperTerm)
+          .endAt(upperTerm + '\uf8ff')
       )
       .snapshotChanges()
       .pipe(

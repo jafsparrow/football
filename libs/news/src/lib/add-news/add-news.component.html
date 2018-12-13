@@ -83,7 +83,7 @@
       <mat-form-field style="width: 80%">
         <input
           matInput
-          placeholder="Search for the clubs to tag"
+          placeholder="Enter club short code (eg; FCB)"
           #clubSearchInput
           ngModel
         />
@@ -107,7 +107,8 @@
             />
           </div>
           <div class="club-info-area" fxFlex="75">
-            {{ club.name }} : {{ club.codeNumber ? club.codeNumber : '' }}
+            {{ club.name }} : {{ club.shortName ? club.shortName : '' }}
+            <div>{{ club.codeNumber ? club.codeNumber : '' }}</div>
             <div>
               {{ club.address.place ? club.address.place : 'Place is unknown' }}
             </div>
