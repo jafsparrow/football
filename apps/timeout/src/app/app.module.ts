@@ -5,7 +5,10 @@ import { routes } from './routes';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SharedModule, MaterialLibraryModule } from '@football/shared';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  BrowserTransferStateModule
+} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -53,6 +56,7 @@ import { EventsDetailComponent } from './events/events-detail/events-detail.comp
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
     NxModule.forRoot(),
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     BrowserAnimationsModule,

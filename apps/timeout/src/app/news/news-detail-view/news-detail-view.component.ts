@@ -1,10 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NewsCommonService } from '@football/shared';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { News } from '@football/shared';
 import { switchMap, tap } from 'rxjs/operators';
 import { SeoService } from '../../services/seo.service';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'football-news-full',
@@ -16,7 +18,9 @@ export class NewsFullViewComponent implements OnInit {
   constructor(
     private _newsService: NewsCommonService,
     public activatedRoute: ActivatedRoute,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId,
+    private transferState: TransferState
   ) {}
 
   ngOnInit() {
@@ -24,7 +28,21 @@ export class NewsFullViewComponent implements OnInit {
     this.news$ = this.activatedRoute.params.pipe(
       switchMap(params => {
         id = params['id'];
-        return this._newsService.getDetailedNews(id);
+
+        const NEWS_KEY = makeStateKey<any>('news-' + id);
+        if (this.transferState.hasKey(NEWS_KEY)) {
+          const news = this.transferState.get<any>(NEWS_KEY, null);
+          this.transferState.remove(NEWS_KEY);
+          return of(news);
+        } else {
+          return this._newsService.getDetailedNews(id).pipe(
+            tap(course => {
+              if (isPlatformServer(this.platformId)) {
+                this.transferState.set(NEWS_KEY, course);
+              }
+            })
+          );
+        }
       }),
       tap(news => {
         this.seo.generateTags({

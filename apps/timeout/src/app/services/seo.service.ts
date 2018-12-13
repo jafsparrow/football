@@ -9,7 +9,7 @@ export class SeoService {
     // default values
     tags = {
       title: 'Timeout Sports - sevens football',
-      description: 'Local Sports news for all',
+      description: 'Local Clubs Sports news for all',
       image: 'https://angularfirebase.com/images/logo.png',
       slug: '',
       ...tags
@@ -19,6 +19,7 @@ export class SeoService {
     this.titleService.setTitle(tags.title);
 
     // Set meta tags
+    this.meta.updateTag({ name: 'description', content: tags.description });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary' });
     this.meta.updateTag({ name: 'twitter:site', content: '@angularfirebase' });
     this.meta.updateTag({ name: 'twitter:title', content: tags.title });
