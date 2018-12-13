@@ -41,6 +41,7 @@ export class ClubRequestComponent implements OnInit {
         line1: ['', [Validators.required]],
         line2: '',
         pin: ['', [Validators.required]],
+        location: ['', [Validators.required]],
         district: ['', [Validators.required]],
         bodyType: ['Municipality'],
         localBody: ['', [Validators.required]],
