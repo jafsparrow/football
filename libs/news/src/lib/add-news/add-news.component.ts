@@ -13,7 +13,7 @@ import { ClubDetailsService } from '../services/club-details.service';
 import { FileUpload } from '../modals/upload-file';
 import { Subject, Observable, of } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { switchMap, finalize } from 'rxjs/operators';
+import { switchMap, finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'news-add',
@@ -57,7 +57,7 @@ export class AddNewsComponent implements OnInit {
     taggedClubs: {},
     author: {}
   }; // this holds the data of the whole news from client before submitting to the server so that it can be shown in the preview
-
+  isSearchingForClub = false;
   constructor(
     private formBuilder: FormBuilder,
     private newService: NewsService,
@@ -68,9 +68,13 @@ export class AddNewsComponent implements OnInit {
   ) {
     console.log('news add component');
     this.articleAddFrom = this.buildForm();
-    this.clubSearchResults$ = this.clubDetailService.searchClubs(
-      this.searchTerm$
-    );
+    this.clubSearchResults$ = this.clubDetailService
+      .searchClubs(this.searchTerm$)
+      .pipe(
+        tap(res => {
+          this.isSearchingForClub = false;
+        })
+      );
 
     this.auth.user$.subscribe(res => {
       this.user = res;
@@ -188,7 +192,17 @@ export class AddNewsComponent implements OnInit {
         // save the news id in a local variable.
         this.createdNewsKey = res.id;
         if (this.selectedFiles && this.selectedFiles.length === 1) {
-          this.uploadImage();
+          this.uploadImage().subscribe(downLoadUrl => {
+            if (downLoadUrl) {
+              this.updateNewsImage(downLoadUrl).then(() => {
+                this.submitting = false;
+                this.route.navigate(['/news/view', this.createdNewsKey]);
+              });
+            } else {
+              console.log('error in upload the file.');
+              this.submitting = false;
+            }
+          });
         }
         this.submitting = false;
         this.route.navigate(['/news/view', this.createdNewsKey]);
@@ -205,33 +219,49 @@ export class AddNewsComponent implements OnInit {
       .updateNews(this.newsObject, this.createdNewsKey)
       .then(() => {
         if (this.selectedFiles && this.selectedFiles.length === 1) {
-          console.log('there are files.');
-          this.uploadImage();
+          this.uploadImage().subscribe(downLoadUrl => {
+            if (downLoadUrl) {
+              this.updateNewsImage(downLoadUrl).then(() => {
+                this.submitting = false;
+                this.route.navigate(['/news/view', this.createdNewsKey]);
+              });
+            } else {
+              console.log('error in upload the file.');
+              this.submitting = false;
+            }
+          });
+        } else {
+          console.log('no files are selected to upload.');
+          this.submitting = false;
         }
-        this.submitting = false;
-        this.route.navigate(['/news/view', this.createdNewsKey]);
       });
   }
   uploadImage() {
     const file = this.selectedFiles;
     if (file && file.length === 1) {
-      console.log('upload image fucntion.');
-      console.log(file.item(0));
+      // console.log('upload image fucntion.');
+      // console.log(file.item(0));
       const currentUpload: FileUpload = new FileUpload(file.item(0));
-      this.newService.uploadNewsImage(file.item(0)).subscribe(downLoadUrl => {
-        console.log(downLoadUrl);
-        // update the news with the new download URL
-        this.newService.updateNewsAfterImageLoad(
-          this.createdNewsKey,
-          downLoadUrl
-        );
-      });
+      return this.newService.uploadNewsImage(file.item(0));
     } else {
       console.error('No file found!');
+      return of(null);
     }
   }
   testMe($event) {
     console.log($event);
+  }
+
+  updateNewsImage(downLoadUrl) {
+    return this.newService.updateNewsAfterImageLoad(
+      this.createdNewsKey,
+      downLoadUrl
+    );
+  }
+
+  searchClubs(inputText) {
+    this.isSearchingForClub = true;
+    this.searchTerm$.next(inputText);
   }
 }
 

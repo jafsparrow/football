@@ -53,7 +53,6 @@ export class ClubDetailsService {
 
   searchClubs(term$: Observable<string>) {
     return term$.pipe(
-      debounceTime(2000),
       distinctUntilChanged(),
       switchMap(term => {
         return this.findClubs(term);
@@ -62,8 +61,14 @@ export class ClubDetailsService {
   }
 
   private findClubs(term) {
+    console.log(term);
     return this.db
-      .collection('clubs', ref => ref.where('name', '>=', term))
+      .collection('clubs', ref =>
+        ref
+          .orderBy('name')
+          .startAt(term)
+          .endAt(term + '\uf8ff')
+      )
       .snapshotChanges()
       .pipe(
         map(res => {

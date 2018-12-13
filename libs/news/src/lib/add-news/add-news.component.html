@@ -80,15 +80,17 @@
           </span>
         </mat-chip>
       </mat-chip-list>
-      <mat-form-field class="full-width">
+      <mat-form-field style="width: 80%">
         <input
           matInput
           placeholder="Search for the clubs to tag"
-          (keyup)="searchTerm$.next($event.target.value)"
           #clubSearchInput
           ngModel
         />
       </mat-form-field>
+      <button mat-button (click)="searchClubs(clubSearchInput.value)">
+        Search
+      </button>
       <!-- {{club}} -->
       <div
         *ngIf="(clubSearchResults$ | async) as clubSearchResult; else: loading"
@@ -105,8 +107,10 @@
             />
           </div>
           <div class="club-info-area" fxFlex="75">
-            {{ club.name }} : IX-22334
-            <div>Kunnumpuram</div>
+            {{ club.name }} : {{ club.codeNumber ? club.codeNumber : '' }}
+            <div>
+              {{ club.address.place ? club.address.place : 'Place is unknown' }}
+            </div>
           </div>
           <div class="action-button-area" fxFlex="15">
             <button mat-icon-button>
@@ -117,8 +121,12 @@
         </div>
       </div>
       <ng-template #loading>
-        <div *ngIf="clubSearchInput.touched">flblajf d</div>
-        loading ....
+        <mat-progress-spinner
+          *ngIf="isSearchingForClub"
+          mode="indeterminate"
+          color="primary"
+          [strokeWidth]="5"
+        ></mat-progress-spinner>
       </ng-template>
 
       <div *ngFor="">

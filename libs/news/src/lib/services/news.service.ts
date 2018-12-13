@@ -171,12 +171,7 @@ export class NewsService {
   }
 
   updateNewsAfterImageLoad(key: string, downloadLink: string) {
-    this.news
-      .doc(key)
-      .update({ image: downloadLink })
-      .then(res => {
-        console.log('image donwload link has been updated');
-      });
+    return this.news.doc(key).update({ image: downloadLink });
   }
 
   getTaggedClubNews(user) {
@@ -244,9 +239,14 @@ export class NewsService {
   }
 
   updateNewsStatus(news, status) {
+    // if news is getting published. publish date has to be added along.
+    const data =
+      status === 'published'
+        ? { status: status, publishedDate: Date() }
+        : { status: status };
     return this.db
       .collection('news')
       .doc(news.id)
-      .update({ status: status });
+      .update(data);
   }
 }
