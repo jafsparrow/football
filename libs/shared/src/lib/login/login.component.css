@@ -1,11 +1,13 @@
 .container {
   padding: 100px 0px;
 }
-
 mat-card {
-  min-width: 500px;
+  /* min-width: 500px; */
 }
 
+.login-container {
+  min-width: 70%;
+}
 .full-width {
   width: 100%;
 }

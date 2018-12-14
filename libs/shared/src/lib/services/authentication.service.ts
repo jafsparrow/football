@@ -27,8 +27,7 @@ export class AuthenticationService {
         } else {
           return of(null);
         }
-      }),
-      share()
+      })
     );
   }
 

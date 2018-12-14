@@ -26,9 +26,9 @@
         <div class="address-section">
           <div>{{ club.address.line1 }}</div>
           <div *ngIf="club.address.line2">{{ club.address.line2 }}</div>
-          <div>{{ club.address.location }}</div>
-          <div>{{ club.address.pin }}</div>
-          <div>{{ club.address.localBody }}</div>
+          <div>Place: {{ club.address.location }}</div>
+          <div>Pin: {{ club.address.pin }}</div>
+          <div>local body: {{ club.address.localBody }}</div>
           <div>{{ club.address.district }}</div>
         </div>
       </div>
