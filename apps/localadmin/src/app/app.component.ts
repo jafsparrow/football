@@ -9,8 +9,8 @@ import { NavRoute } from '@football/shared';
 export class AppComponent {
   title = 'localadmin';
   sideNavOptions: NavRoute[] = [
-    { name: 'Dashboard', route: 'dashboard' },
+    { name: 'Dashboard', route: '/home' },
     { name: 'Club Admin Users', route: '/superadmin', icon: 'more' },
-    { name: 'Events', route: 'events', icon: 'publish' }
+    { name: 'Club Requests', route: '/club', icon: 'publish' }
   ];
 }
