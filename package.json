@@ -18,6 +18,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/platform-server": "^6.1.10",
     "@angular/router": "^6.1.0",
+    "@angular/service-worker": "^6.1.0",
     "@kolkov/angular-editor": "^0.11.3",
     "@ngrx/effects": "6.0.1",
     "@ngrx/router-store": "6.0.1",

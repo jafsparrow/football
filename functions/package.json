@@ -11,6 +11,18 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@angular/animations": "6.0.2",
+    "@angular/common": "6.0.2",
+    "@angular/compiler": "6.0.2",
+    "@angular/core": "6.0.2",
+    "@angular/forms": "6.0.2",
+    "@angular/http": "6.0.2",
+    "@angular/platform-browser": "6.0.2",
+    "@angular/platform-browser-dynamic": "6.0.2",
+    "@angular/platform-server": "6.0.2",
+    "express": "~4.16.3",
+    "rxjs": "~6.1.0",
+    "zone.js": "~0.8.26",
     "algoliasearch": "^3.30.0",
     "firebase-admin": "~6.0.0",
     "firebase-functions": "^2.0.3"

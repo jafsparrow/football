@@ -35,6 +35,7 @@ import { EventUiModule } from '@football/event-ui';
 import { EventsLandingComponent } from './events/events-landing/events-landing.component';
 import { EventsListComponent } from './events/events-list/events-list.component';
 import { EventsDetailComponent } from './events/events-detail/events-detail.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { EventsDetailComponent } from './events/events-detail/events-detail.comp
     FlexLayoutModule,
     ReactiveFormsModule,
     NewsUiModule,
-    EventUiModule
+    EventUiModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [{ provide: 'siteType', useValue: evnType }, SeoService],
   bootstrap: [AppComponent]
