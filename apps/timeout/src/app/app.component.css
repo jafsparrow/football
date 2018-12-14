@@ -10,3 +10,8 @@ mat-sidenav {
 mat-sidenav {
   background-color: #ebebeb;
 }
+
+.router-outlet {
+  max-width: 900px;
+  margin: 0px auto;
+}
