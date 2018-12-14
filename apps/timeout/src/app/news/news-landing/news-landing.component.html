@@ -1,10 +1,12 @@
 <div *ngIf="user">
   <div *ngIf="(mainClubNews$ | async) as mainClubNews">
     <div class="section-header">
-      Liverpool News
-      <button mat-icon-button routerLink="list/favclub">
-        <mat-icon class="mat-18">trending_flat</mat-icon>
-      </button>
+      {{ user.mainClub.name }} News
+      <!--
+        <button mat-icon-button routerLink="list/favclub">
+          <mat-icon class="mat-18">trending_flat</mat-icon>
+        </button>
+      -->
     </div>
 
     <!-- <news-teaser-two [news]="mainClubNews"></news-teaser-two> -->
@@ -17,15 +19,18 @@
   <div *ngIf="(taggedClubNews$ | async) as taggedClubNews">
     <div class="section-header">
       Tagged Club News
-      <button mat-icon-button routerLink="list/tagged">
-        <mat-icon class="mat-18">trending_flat</mat-icon>
-      </button>
+      <!--
+        <button mat-icon-button routerLink="list/tagged">
+          <mat-icon class="mat-18">trending_flat</mat-icon>
+        </button>
+      -->
     </div>
+    <football-news-summary-view-teaser
+      [news]="taggedClubNews"
+    ></football-news-summary-view-teaser>
   </div>
-  <football-news-summary-view-teaser
-    [news]="taggedClubNews"
-  ></football-news-summary-view-teaser>
 </div>
+<div *ngFor="let club of clubsArray">{{ club.name }}</div>
 
 <div *ngIf="(recentNews$ | async) as news">
   <div class="section-header">

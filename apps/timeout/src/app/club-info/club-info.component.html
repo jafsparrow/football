@@ -1,6 +1,10 @@
 <mat-card class="club-info-container">
-  <div class="top-section">
-    <div class="header-container" fxLayout="row" fxLayout.lt-sm="column">
+  <div class="top-section" *ngIf="club">
+    <div
+      class="header-container"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
       <div class="section-1-container" fxFlex="40%">
         <div class="section-1" fxLayout="column" fxLayoutAlign="center center">
           <img
@@ -10,37 +14,79 @@
           <div class="club-name">
             {{ club?.name ? club?.name : 'My Fav Club' }}
           </div>
-          <div class="club-caption">
-            Not Just another game freaks. We are freaks with a goal and our
-            young soldiers are on the verge.
-          </div>
         </div>
       </div>
 
       <div class="section-2" fxFlex>
         <mat-icon class="mat-18">phone</mat-icon>
-        <span id="phone"> +91 948394933</span>
-        <div class="address-section">anfield, second strett 25454</div>
-        <div><strong>Local Body: </strong>vengara</div>
+        <span id="phone">
+          {{ club?.contact ? club.contact : '+91 948394933' }}</span
+        >
+        <div>{{ club.shortName }}</div>
+        <div class="address-section">
+          <div>{{ club.address.line1 }}</div>
+          <div *ngIf="club.address.line2">{{ club.address.line2 }}</div>
+          <div>{{ club.address.location }}</div>
+          <div>{{ club.address.pin }}</div>
+          <div>{{ club.address.localBody }}</div>
+          <div>{{ club.address.district }}</div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="club-feeds">
-    <mat-tab-group>
+    <mat-tab-group
+      mat-align-tabs="center"
+      (selectedTabChange)="selectedTab($event.tab.textLabel)"
+    >
+      <mat-tab label="Achievement">
+        <ng-template matTabContent>
+          <div class="achievement-view" *ngFor="let item of achievements">
+            <div class="header">
+              {{ item.title }} :: <span>{{ item.date.toDate() | date }}</span>
+            </div>
+            <div class="des">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
+              consectetur voluptate non consequatur odit libero provident
+              voluptates ratione quaerat. Ullam soluta deserunt
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Management">
+        <ng-template matTabContent>
+          <div class="management-container" fxLayout="row wrap">
+            <div
+              class="item-container"
+              *ngFor="let item of management"
+              fxFlex="25%"
+              fxFlex.lt-md="50%"
+            >
+              <div class="mangement-item">
+                <div class="role line-display">
+                  <span class="label">Name: </span>{{ item.name }}
+                </div>
+                <div class="role">
+                  <span class="label">Role: </span>{{ item.role }}
+                </div>
+                <div class="contact">
+                  <span class="label">Contact:</span> {{ item.contact }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
       <mat-tab label="News">
         <ng-template matTabContent>
-          <div class="news-tab">
-            <mat-progress-bar
-              mode="indeterminate"
-              *ngIf="isNewsLoading"
-            ></mat-progress-bar>
-          </div>
+          <football-news-summary-view-teaser [news]="news">
+          </football-news-summary-view-teaser>
         </ng-template>
       </mat-tab>
       <mat-tab label="Events">
         <ng-template matTabContent>
-          The Second Content
           <football-events-summary-teaser
             [events]="events"
           ></football-events-summary-teaser>

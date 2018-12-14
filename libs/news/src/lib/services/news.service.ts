@@ -126,12 +126,6 @@ export class NewsService {
     return task.snapshotChanges().pipe(uploadTask => {
       return storageRef.getDownloadURL();
     });
-
-    // return uploadTask.then(res => {
-    //   console.log('upload completed');
-    //   return res;
-    //   })
-    // .catch(err => console.log(err));
   }
   updateNews(news, id = '') {
     return this.db

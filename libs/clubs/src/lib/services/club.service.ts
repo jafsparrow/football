@@ -142,4 +142,21 @@ export class ClubService {
         })
       );
   }
+
+  getClubItemInfo(itemType, clubId) {
+    return this.db
+      .collection('clubs')
+      .doc(clubId)
+      .collection(itemType)
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
 }

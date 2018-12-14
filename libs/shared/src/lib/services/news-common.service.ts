@@ -15,9 +15,8 @@ export class NewsCommonService {
   news: AngularFirestoreCollection<any>;
 
   constructor(
-    private db: AngularFirestore
-  ) // private clubDetailService: ClubDetailsService
-  {}
+    private db: AngularFirestore // private clubDetailService: ClubDetailsService
+  ) {}
 
   // read news list. implement 10 pagination.
   getNews(limitNumber = 100) {
@@ -69,7 +68,7 @@ export class NewsCommonService {
     console.log(taggedClubs);
     const calls = [];
     for (const fav of taggedClubs) {
-      calls.push(this.getNewForClub(fav));
+      calls.push(this.getNewsForClub(fav));
     }
     return forkJoin(calls).pipe(
       map(arrays => [].concat.apply([], arrays)),
@@ -81,9 +80,8 @@ export class NewsCommonService {
     );
   }
 
-  private getNewForClub(club_ID: string) {
+  private getNewsForClub(club_ID: string) {
     const club_search = `taggedClubs.${club_ID}.id`;
-    console.log(club_search);
     return this.db
       .collection('news', ref => ref.where(club_search, '==', club_ID))
       .snapshotChanges()

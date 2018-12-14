@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap, take, share } from 'rxjs/operators';
 import { User } from '../modal/user';
 
 @Injectable({
@@ -21,12 +21,14 @@ export class AuthenticationService {
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
+        console.log('auth subscription now');
         if (user) {
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
-      })
+      }),
+      share()
     );
   }
 

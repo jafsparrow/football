@@ -47,13 +47,13 @@ export class EventsCommonService {
       );
   }
 
-  public getRecentClubEvents(club_ID: string) {
+  public getRecentClubEvents(club_ID: string, limit = 5) {
     return this.db
       .collection('events', ref =>
         ref
           .orderBy('createdDate', 'desc')
           .where('mainClub.id', '==', club_ID)
-          .limit(5)
+          .limit(limit)
       )
       .snapshotChanges()
       .pipe(
