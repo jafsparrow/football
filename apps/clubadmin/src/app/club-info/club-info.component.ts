@@ -2,7 +2,6 @@ import { AuthenticationService } from '@football/shared';
 import { ClubAdminService } from './../services/club-admin.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { NewsCommonService } from '@football/shared';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 @Component({
@@ -20,15 +19,13 @@ export class ClubInfoComponent implements OnInit {
   club = null;
   managements = [];
   achievements = [];
-  clubId = '5ZRSBNKpB1u2OJ0urK0w';
+  clubId;
   news = {
     banner:
       'http://www.clubcontrol.co.uk/wp-content/uploads/2016/01/Club-Control-Main-Banner-BG.jpg',
     logo:
       'http://diylogodesigns.com/blog/wp-content/uploads/2015/12/creative-football-club-logo-design-uk-14.png'
   };
-
-  sampleIter = null;
   id = '';
   clubNews$: Observable<any[]>;
   constructor(
@@ -37,7 +34,7 @@ export class ClubInfoComponent implements OnInit {
     public auth: AuthenticationService
   ) {
     this.clubBasicForm = this._fb.group({
-      name: ['', [Validators.required]],
+      name: [{ value: '', disabled: true }, [Validators.required]],
       shortName: ['', [Validators.required]],
       contact: [
         '',
@@ -64,7 +61,6 @@ export class ClubInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sampleIter = 'skdflsdjflkjsdfsdf'.split('');
     this.clubInfoLoading = true;
     this.auth.user$
       .pipe(
@@ -73,7 +69,7 @@ export class ClubInfoComponent implements OnInit {
           this.clubId = user.permission.clubId;
           this.getClubManagement();
           this.getClubAchivements();
-          return this.clubAdminService.getClubById('OeE0VAUfqkVP04IXwoUD');
+          return this.clubAdminService.getClubById(this.clubId);
         })
       )
       .subscribe(club => {

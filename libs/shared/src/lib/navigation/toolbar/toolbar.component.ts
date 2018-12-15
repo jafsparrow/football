@@ -1,5 +1,12 @@
 import { AuthenticationService } from './../../services/authentication.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  Inject
+} from '@angular/core';
 import { Route, Router } from '@angular/router';
 
 @Component({
@@ -11,8 +18,17 @@ export class ToolbarComponent implements OnInit {
   @Input() appTitle = 'Welcome';
   @Output() menuClicked = new EventEmitter();
   user: any;
-  constructor(private _auth: AuthenticationService, private _router: Router) {
+  isAdminSite;
+
+  constructor(
+    private _auth: AuthenticationService,
+    private _router: Router,
+    @Inject('siteType') siteType
+  ) {
     this.user = null;
+    if (siteType === 'admin') {
+      this.isAdminSite = true;
+    }
   }
 
   ngOnInit() {

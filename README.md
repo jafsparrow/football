@@ -14,6 +14,13 @@ Nx is designed to help you create and build enterprise grade Angular application
 
 [x] News add/edit/delete
 
+### Lessons.
+
+1.  Adding port to the angular-cli.json for different apps.
+2.  How to use library for Ui component.
+3.  webpack configuration for angular universal.
+4.  How ng add service worker work?
+
 ## Generate your first application
 
 Run `ng generate app myapp` to generate an application. When using Nx, you can create multiple applications and libraries in the same CLI workspace. Read more [here](http://nrwl.io/nx).
