@@ -20,6 +20,7 @@ Nx is designed to help you create and build enterprise grade Angular application
 2.  How to use library for Ui component.
 3.  webpack configuration for angular universal.
 4.  How ng add service worker work?
+5.  Using parseHub to extract data out of other websites.
 
 ## Generate your first application
 
