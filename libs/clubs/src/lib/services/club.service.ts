@@ -66,15 +66,22 @@ export class ClubService {
           | firebase.firestore.Query = ref;
 
         query = query.limit(10);
+        if (localBody) {
+          query = query.where('address.localBody', '==', localBody);
+        }
+
         if (district) {
-          query = query.where('district', '==', district);
+          query = query.where('address.district', '==', district);
         }
         if (name) {
           query = query.where('name', '>=', name);
+          // query = query
+          //   .orderBy('name')
+          //   .startAt(name)
+          //   .endAt(name + '\uf8ff');
         }
-        if (localBody) {
-          query = query.where('localBody', '==', localBody);
-        }
+        console.log(query);
+
         return query;
       })
       .snapshotChanges()
@@ -90,15 +97,18 @@ export class ClubService {
   }
 
   searchClubsByName(name, limit = 5) {
+    console.log(name);
     return this.db
       .collection('clubs', ref => {
         let query:
           | firebase.firestore.CollectionReference
           | firebase.firestore.Query = ref;
+        query = query
+          .orderBy('name')
+          .startAt(name)
+          .endAt(name + '\uf8ff');
 
-        if (limit) {
-          query = query.limit(limit);
-        }
+        query = query.limit(limit);
 
         return query;
       })

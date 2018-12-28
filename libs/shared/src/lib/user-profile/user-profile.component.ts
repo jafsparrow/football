@@ -18,6 +18,7 @@ import { tap, switchMap } from 'rxjs/operators';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
+  districts = Keraladistricts.sort();
   bldGroups = bloodGroups;
   profileForm: FormGroup;
 
@@ -25,7 +26,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   uid = null;
 
   localBodyForClubSearch$: Observable<any>;
+  localBodyForAddress$: Observable<any>;
   localBodyForTaggingClubs$: Observable<any>;
+
+  districtFilterForAddress$: BehaviorSubject<string | null>;
+  bodyTypeFilterForAddress$: BehaviorSubject<string | null>;
 
   districtFilterForClubSearch$: BehaviorSubject<string | null>;
   bodyTypeFilterForClubSearch$: BehaviorSubject<string | null>;
@@ -74,6 +79,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.bodyTypeFilterForClubSearch$ = new BehaviorSubject(null);
     this.districtFilterForTaggingClubs$ = new BehaviorSubject(null);
     this.bodyTypeFilterForTaggingClubs$ = new BehaviorSubject(null);
+    this.districtFilterForAddress$ = new BehaviorSubject(null);
+    this.bodyTypeFilterForAddress$ = new BehaviorSubject(null);
   }
   ngOnInit() {
     this.user$ = this.auth.user$.pipe(
@@ -81,22 +88,37 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.profileForm.patchValue(user);
         this.uid = user.uid;
         const taggedClubsObject = user.taggedClubs;
-        Object.keys(taggedClubsObject).forEach(key => {
-          this.taggedClubs.push(taggedClubsObject[key]);
-        });
+        if (taggedClubsObject) {
+          Object.keys(taggedClubsObject).forEach(key => {
+            this.taggedClubs.push(taggedClubsObject[key]);
+          });
+        }
       })
     );
 
     this.clubSearchResults$ = null;
     this.favClubSearchResults$ = null;
 
+    this.localBodyForAddress$ = combineLatest(
+      this.districtFilterForAddress$,
+      this.bodyTypeFilterForAddress$
+    ).pipe(
+      switchMap(([district, bodyType]) => {
+        console.log(district, bodyType);
+        return this.locationService.searchLocalBodies(district, bodyType);
+      }),
+      tap(res => console.log(res))
+    );
+
     this.localBodyForClubSearch$ = combineLatest(
       this.districtFilterForClubSearch$,
       this.bodyTypeFilterForClubSearch$
     ).pipe(
-      switchMap(([district, localBody]) => {
-        return this.locationService.searchLocalBodies(district, localBody);
-      })
+      switchMap(([district, bodyType]) => {
+        console.log(district, bodyType);
+        return this.locationService.searchLocalBodies(district, bodyType);
+      }),
+      tap(res => console.log(res))
     );
 
     this.localBodyForTaggingClubs$ = combineLatest(
@@ -110,11 +132,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   addressDistrictChange(district) {
-    this.bodyTypeFilterForClubSearch$.next(null);
-    this.districtFilterForClubSearch$.next(district);
+    this.bodyTypeFilterForAddress$.next(null);
+    this.districtFilterForAddress$.next(district);
   }
   addressBodyTypeChange(localBodyType) {
-    this.bodyTypeFilterForClubSearch$.next(localBodyType);
+    this.bodyTypeFilterForAddress$.next(localBodyType);
   }
 
   tagClubdistrictChange(value) {
@@ -122,12 +144,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.districtFilterForTaggingClubs$.next(value);
     this.searchCriteria['district'] = value;
     this.searchCriteria['localBody'] = null;
-    this.searchCriteria['name'] = null;
+    this.searchCriteria['clubName'] = null;
   }
 
   tagClublocalBodyTypeChange(value) {
     this.bodyTypeFilterForTaggingClubs$.next(value);
-    this.searchCriteria['name'] = null;
+    this.searchCriteria['clubName'] = null;
   }
 
   clubNameSearchForTag(value) {
@@ -165,13 +187,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.searchCriteria.localBody == null
     )
       return of(null);
+    console.log(this.searchCriteria);
     this.clubSearchResults$ = this.clubService
       .searchClubsOnParams(
         this.searchCriteria.clubName,
         this.searchCriteria.district,
         this.searchCriteria.localBody
       )
-      .pipe(tap(clubs => (this.isTagClubSearch = false)));
+      .pipe(
+        tap(clubs => {
+          this.isTagClubSearch = false;
+          console.log('jafar - inside the search part');
+          console.log(clubs);
+        })
+      );
   }
   clubTagToggle($event, club) {
     // const taggingClub = { id: club.id, name: club.name };
@@ -189,14 +218,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   updateClubSearchTerm(term) {
     this.searchTerm = term;
+    if (term) {
+      this.searchCriteria.localBody = term;
+    }
   }
 
   searchClub(clubName) {
     this.isfavClubSearch = true;
     if (clubName !== '') {
       this.favClubSearchResults$ = this.clubService
-        .searchClubsByName(name, 3)
-        .pipe(tap(clubs => (this.isfavClubSearch = false)));
+        .searchClubsByName(clubName, 3)
+        .pipe(
+          tap(clubs => {
+            this.isfavClubSearch = false;
+            console.log(clubs);
+          })
+        );
     }
   }
 
@@ -217,3 +254,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 }
 
 export const bloodGroups = ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'];
+
+export const Keraladistricts = [
+  'Thiruvananthapuram',
+  'Kollam',
+  'Pathanamthitta',
+  'Alappuzha',
+  'Kottayam',
+  'Idukki',
+  'Ernakulam',
+  'Thrissur',
+  'Palakkad',
+  'Malappuram',
+  'Kozhikkode',
+  'Wayanad',
+  'Kannur',
+  'Kasaragod'
+];

@@ -46,15 +46,6 @@ export class ClubInfoComponent implements OnInit {
         this.achievements = achievements;
       });
 
-    // this.events = [
-    //   { title: 'hello world', summary: 'duper super duper hello world' },
-    //   {
-    //     title: 'Test event should see if it goes before one liner world',
-    //     summary: 'duper super duper hello world'
-    //   },
-    //   { title: 'hello world', summary: 'duper super duper hello world' },
-    //   { title: 'hello world', summary: 'duper super duper hello world' }
-    // ];
   }
 
   loadClubNews() {

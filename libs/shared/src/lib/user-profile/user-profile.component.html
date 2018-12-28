@@ -1,6 +1,6 @@
 <mat-card
   class="user-profile-container"
-  *ngIf="(user$ | async) as user; else: loading"
+  *ngIf="(user$ | async) as user; else loading"
 >
   <form [formGroup]="profileForm" (ngsubmit)="updateUserProfile()">
     <mat-vertical-stepper linear="false" #stepper>
@@ -60,9 +60,11 @@
                 formControlName="district"
                 (selectionChange)="addressDistrictChange($event.value)"
               >
-                <mat-option value="Malappuram">Malappuram</mat-option>
-                <mat-option value="Calicut">Calicut</mat-option>
-                <mat-option value="Trissur">Trissur</mat-option>
+                <mat-option
+                  *ngFor="let district of districts"
+                  [value]="district"
+                  >{{ district }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
             <mat-form-field>
@@ -70,13 +72,13 @@
                 placeholder="Local Body Type"
                 (selectionChange)="addressBodyTypeChange($event.value)"
               >
-                <mat-option value="municipality">municipality</mat-option>
-                <mat-option value="corporation">corporation</mat-option>
-                <mat-option value="gramapanchayath">gramapanchayath</mat-option>
+                <mat-option value="Municipality">Municipality</mat-option>
+                <mat-option value="Corporation">Corporation</mat-option>
+                <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field
-              *ngIf="(localBodyForClubSearch$ | async) as localbodies"
+              *ngIf="(localBodyForAddress$ | async) as localbodies"
             >
               <mat-select placeholder="Local Body" formControlName="localBody">
                 <mat-option
@@ -132,7 +134,7 @@
         <div
           *ngIf="
             (favClubSearchResults$ | async) as favclubsearchResults;
-            else: favClubLoading
+            else favClubLoading
           "
         >
           <div
@@ -148,11 +150,11 @@
             </div>
             <div class="club-info-area" fxFlex="75">
               {{ club.name }} :
-              {{ club?.cludId ? club.cludId : 'no club id generated' }}
+              {{ club?.codeNumber ? club.codeNumber : 'no club id generated' }}
               <div>
                 {{
-                  club.address?.place
-                    ? club.address.place
+                  club.address?.location
+                    ? club.address.location
                     : 'location is not updated'
                 }}
               </div>
@@ -183,9 +185,11 @@
               placeholder="District"
               (selectionChange)="tagClubdistrictChange($event.value)"
             >
-              <mat-option value="Malappuram">Malappuram</mat-option>
-              <mat-option value="Calicut">Calicut</mat-option>
-              <mat-option value="Trissur">Trissur</mat-option>
+              <mat-option
+                *ngFor="let district of districts"
+                [value]="district"
+                >{{ district }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
           <mat-form-field>
@@ -193,9 +197,9 @@
               placeholder="Local Body Type"
               (selectionChange)="tagClublocalBodyTypeChange($event.value)"
             >
-              <mat-option value="municipality">municipality</mat-option>
-              <mat-option value="corporation">corporation</mat-option>
-              <mat-option value="gramapanchayath">grama panchayath</mat-option>
+              <mat-option value="Municipality">Municipality</mat-option>
+              <mat-option value="Corporation">Corporation</mat-option>
+              <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="(localBodyForTaggingClubs$ | async) as bodies">
@@ -226,7 +230,7 @@
         <div
           *ngIf="
             (clubSearchResults$ | async) as clubSearchResult;
-            else: taggedLoading
+            else taggedLoading
           "
         >
           <div
@@ -242,11 +246,11 @@
             </div>
             <div class="club-info-area" fxFlex="75">
               {{ club.name }} :
-              {{ club?.cludId ? club.cludId : 'no club id generated' }}
+              {{ club?.codeNumber ? club.codeNumber : 'no club id generated' }}
               <div>
                 {{
-                  club.address?.place
-                    ? club.address.place
+                  club.address?.location
+                    ? club.address.location
                     : 'location is not updated'
                 }}
               </div>

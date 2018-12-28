@@ -27,9 +27,13 @@
         <div class="address-section">
           <div>{{ club.address.line1 }}</div>
           <div *ngIf="club.address.line2">{{ club.address.line2 }}</div>
-          <div>Place: {{ club.address.location }}</div>
-          <div>Pin: {{ club.address.pin }}</div>
-          <div>local body: {{ club.address.localBody }}</div>
+          <div *ngIf="club.address.location">
+            Place: {{ club.address.location }}
+          </div>
+          <div *ngIf="club.address.pin">Pin: {{ club.address.pin }}</div>
+          <div *ngIf="club.address.localBody">
+            local body: {{ club.address.localBody }}
+          </div>
           <div>{{ club.address.district }}</div>
         </div>
       </div>
@@ -47,10 +51,8 @@
             <div class="header">
               {{ item.title }} : <span>{{ item.date.toDate() | date }}</span>
             </div>
-            <div class="des">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
-              consectetur voluptate non consequatur odit libero provident
-              voluptates ratione quaerat. Ullam soluta deserunt
+            <div class="des" *ngIf="item?.description">
+              {{ item.description }}
             </div>
           </div>
         </ng-template>
@@ -82,8 +84,12 @@
 
       <mat-tab label="News">
         <ng-template matTabContent>
-          <football-news-summary-view-teaser [news]="news">
+          <football-news-summary-view-teaser
+            [news]="news"
+            *ngIf="news; else noNews"
+          >
           </football-news-summary-view-teaser>
+          <ng-template #noNews> test you </ng-template>
         </ng-template>
       </mat-tab>
       <mat-tab label="Events">

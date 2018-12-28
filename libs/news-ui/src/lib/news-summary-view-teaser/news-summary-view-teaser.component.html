@@ -1,17 +1,22 @@
-<mat-card
-  class="club-news-container"
-  fxLayout="row wrap"
-  fxLayout.xs="column"
-  fxLayoutAlign="start none"
->
+<mat-card class="club-news-container">
   <div
-    class="club-news-item-container"
-    fxFlex="32%"
-    fxFlex.lg="25"
-    *ngFor="let item of news"
+    *ngIf="news.length > 0; else noNews"
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="start none"
   >
-    <football-news-card-summary-view
-      [news]="item"
-    ></football-news-card-summary-view>
+    <div
+      class="club-news-item-container"
+      fxFlex="32%"
+      fxFlex.lg="25"
+      *ngFor="let item of news"
+    >
+      <football-news-card-summary-view
+        [news]="item"
+      ></football-news-card-summary-view>
+    </div>
   </div>
+  <ng-template #noNews>
+    <div>Oops...!! There are no news published recently..!</div>
+  </ng-template>
 </mat-card>

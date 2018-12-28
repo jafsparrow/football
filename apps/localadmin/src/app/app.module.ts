@@ -7,7 +7,7 @@ import { NxModule } from '@nrwl/nx';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
+import { environment, evnType } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ClubRequestsComponent } from './club-requests/club-requests.component';
@@ -46,7 +46,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     SharedModule
   ],
-  providers: [],
+  providers: [{ provide: 'siteType', useValue: evnType }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

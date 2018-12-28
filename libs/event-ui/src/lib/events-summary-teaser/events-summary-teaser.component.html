@@ -1,6 +1,6 @@
 <mat-card class="event-container">
   <div
-    *ngIf="events.length > 0; else: noEvents"
+    *ngIf="events.length > 0; else noEvents"
     fxLayout="row wrap"
     fxLayout.lt-md="column"
   >
@@ -10,10 +10,7 @@
       ></football-events-summary-view>
     </div>
   </div>
+  <ng-template #noEvents>
+    <div>Looks like there are no recent events to display.</div>
+  </ng-template>
 </mat-card>
-<ng-template #noEvents>
-  <div>
-    Looks like there are no recent events to show. Why don't you browse your
-    favorite clubs and see what new there.
-  </div>
-</ng-template>
