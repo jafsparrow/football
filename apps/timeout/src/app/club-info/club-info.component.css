@@ -22,10 +22,11 @@
 
 .top-section {
   background-color: #eee;
+  background-image: linear-gradient(to right, #eee, rgb(147, 147, 209));
   height: 40%;
 }
 .header-container {
-  margin: 5px auto;
+  margin: 0px auto;
   padding: 20px;
 }
 
@@ -33,10 +34,13 @@
   position: relative;
 }
 .address-section {
+  font-weight: 100;
+  font-size: 14px;
 }
 
 #phone {
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: 200;
 }
 
 /* achivement summary */

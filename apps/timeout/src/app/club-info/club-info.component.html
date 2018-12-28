@@ -12,8 +12,9 @@
             src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
           />
           <div class="club-name">
-            {{ club?.name ? club?.name : 'My Fav Club' }}
+            {{ club?.shortName ? club?.shortName : 'My Fav Club' }}
           </div>
+          <div>{{ club?.name ? club?.name : 'My Fav Club' }}</div>
         </div>
       </div>
 
