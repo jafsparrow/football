@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestoreCollection,
+  AngularFirestore
+} from '@angular/fire/firestore';
 import { forkJoin } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
@@ -13,9 +16,10 @@ export class NewsTeaserService {
 
   favClubs = ['5ZRSBNKpB1u2OJ0urK0w', 'U9HsplCcUBvfcV95DOoP'];
   constructor(private db: AngularFirestore) {
-
     // this.$newRef = this.db.collection('news');
-    this.$generalNewsTen = this.db.collection('news', ref => ref.where('is_active', '==', true).limit(6));
+    this.$generalNewsTen = this.db.collection('news', ref =>
+      ref.where('is_active', '==', true).limit(10)
+    );
     // .where('status', '==', 'published').orderBy('created_on').limit(10));
 
     // this.$favClubNewsFive = this.db.collection('news', ref =>
@@ -26,7 +30,6 @@ export class NewsTeaserService {
     //     .limit(5));
   }
 
-
   getTaggedClubNews() {
     const calls = [];
     for (const fav of this.favClubs) {
@@ -36,39 +39,39 @@ export class NewsTeaserService {
   }
 
   getNewForClub(club_ID: string) {
-    const club_search = 'tagged_clubs.'+club_ID;
+    const club_search = 'tagged_clubs.' + club_ID;
     console.log(club_search);
-    return this.db.collection('news', ref => ref.where(club_search, '==',true)).valueChanges().pipe(take(1));
+    return this.db
+      .collection('news', ref => ref.where(club_search, '==', true))
+      .valueChanges()
+      .pipe(take(1));
   }
 
   getRecentTenNews() {
-
-    return this.$generalNewsTen.snapshotChanges()
-      .pipe(
-        map(res => {
+    return this.$generalNewsTen.snapshotChanges().pipe(
+      map(res => {
         return res.map(item => {
           const data = item.payload.doc.data();
           const id = item.payload.doc.id;
           return { id, ...data };
         });
-      }));
-
+      })
+    );
   }
 
   getFavClubNewsFive() {
-    return this.$favClubNewsFive.snapshotChanges()
-      .pipe(
-        map(res => {
+    return this.$favClubNewsFive.snapshotChanges().pipe(
+      map(res => {
         return res.map(item => {
           const data = item.payload.doc.data();
           const id = item.payload.doc.id;
-          return { id, ...data};
+          return { id, ...data };
         });
       }),
       map(res => {
         console.log(res);
         return res;
-      }));
+      })
+    );
   }
-
 }
