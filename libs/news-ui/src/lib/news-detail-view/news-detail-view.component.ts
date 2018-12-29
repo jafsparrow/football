@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { News } from '@football/shared';
 
@@ -8,6 +9,7 @@ import { News } from '@football/shared';
 })
 export class NewsDetailViewComponent implements OnInit {
   @Input() news: News;
+  @Input() route: any;
   news1 = {
     author: 'Jafar Chembatty',
     title: 'hello title of the news',
@@ -19,7 +21,7 @@ export class NewsDetailViewComponent implements OnInit {
     article: 'some valya sambhavam'
   };
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // console.log(this.news)
@@ -39,5 +41,15 @@ export class NewsDetailViewComponent implements OnInit {
 
   get taggedClubs() {
     return Object.keys(this.news.taggedClubs);
+  }
+  // this should navigate to the given route. if not route is given as input,
+  // it should default to 'clubinfo/id'.
+  navigateToClubDetails(clubId) {
+    let routerPath = `clubinfo/${clubId}`;
+    if (this.route) {
+      routerPath = `${this.route}/${clubId}`;
+    }
+
+    this.router.navigate([routerPath]);
   }
 }

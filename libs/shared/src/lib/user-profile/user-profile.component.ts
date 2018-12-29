@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UserProfileService } from './../services/user-profile.service';
 import { LocationService } from './../services/location.service';
 import { AuthenticationService } from '../services/authentication.service';
@@ -56,7 +57,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     public auth: AuthenticationService,
     public fb: FormBuilder,
     public locationService: LocationService,
-    public profileService: UserProfileService
+    public profileService: UserProfileService,
+    private _router: Router
   ) {
     this.profileForm = this.fb.group({
       fullName: [''],
@@ -172,7 +174,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.favClubSearchResults$ = of(null);
     this.profileService
       .updatedUserProfile(updatedProfile, this.uid)
-      .then(() => console.log('profile has been updated.'))
+      .then(() => {
+        console.log('profile has been updated.');
+        // navigate to home page.
+        this._router.navigate(['/']);
+      })
       .catch(err => console.log('something wrong while updating user profile'));
   }
 

@@ -17,10 +17,9 @@
 
       <span class="news-publish-date"
         >:
-        {{
-          news.publishedDate ? (news.publishedDate | date) : 'Published Date'
-        }}</span
-      >
+        <!-- {{ news.publishedDate ? news.publishedDate : 'Published Date' }} -->
+        {{ publishedDate | date }}
+      </span>
     </mat-card-subtitle>
   </mat-card-header>
 

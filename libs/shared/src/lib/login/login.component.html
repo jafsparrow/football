@@ -1,5 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="space-around center" class="container">
-  <mat-card class="login-container">
+  <div class="spinner-cotainer" *ngIf="inProgressLogin">
+    <div>Buckle up, we are almost there</div>
+    <div class="spinner">
+      <mat-progress-spinner
+        mode="indeterminate"
+        color="primary"
+        [strokeWidth]="10"
+      ></mat-progress-spinner>
+    </div>
+  </div>
+  <mat-card class="login-container" *ngIf="!inProgressLogin">
     <div class="login-brand-area">
       <img
         src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX17572194.jpg"

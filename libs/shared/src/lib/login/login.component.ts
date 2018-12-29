@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnChanges {
 
   isLoading = false;
   isError = false;
+  inProgressLogin = false;
 
   user: any;
 
@@ -57,12 +58,14 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   login() {
+    this.inProgressLogin = true;
     this.auth.googleLogin().then(res => {
       this.auth.user$.pipe(take(1)).subscribe(user => {
         if (this.checkLoginEligibility(user, this.loginRole)) {
           // when triggerd navigation inside other api, ie; promise, angular wouln't know as its not in angular zon
           // so letting angular know the route below.
           this.zone.run(() => this.router.navigate([this.redirectURL]));
+          this.inProgressLogin = false;
         } else {
           this.auth
             .logout()
