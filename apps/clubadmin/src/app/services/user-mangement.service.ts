@@ -16,7 +16,6 @@ export class UserMangementService {
           | firebase.firestore.CollectionReference
           | firebase.firestore.Query = ref;
 
-        // query = query.where('fullName', '>=', username);
         query = query.where('mainClub.id', '==', clubId);
         return query;
       })

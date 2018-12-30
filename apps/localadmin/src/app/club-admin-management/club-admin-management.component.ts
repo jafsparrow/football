@@ -59,13 +59,15 @@ export class ClubAdminManagementComponent implements OnInit {
         })
       )
       .subscribe(users => {
+        console.log(users);
         if (users) {
           console.log('subscribed for user');
-          console.log(users);
+
           const admins = users.filter(user => {
             if (user.permission && user.permission.role) {
               return user.permission.role === 'admin';
             }
+            return user; // if the user is new nad have nor permission updated at all.
           });
 
           if (admins.length > 2) {

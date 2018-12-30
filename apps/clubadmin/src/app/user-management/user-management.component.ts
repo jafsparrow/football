@@ -31,14 +31,16 @@ export class UserManagementComponent implements OnInit {
     this.auth.user$
       .pipe(
         switchMap(user => {
+          console.log(user.permission.clubId);
           this.user = user;
-          return this.userService.getClubFollowers(user.mainClub.id);
+          return this.userService.getClubFollowers(user.permission.clubId); //user.mainClub.id); // This is the permission clubID.
         }),
         map(users => {
           return users.filter(user => {
             if (user.permission && user.permission.role) {
               return user.permission.role !== 'admin';
             }
+            return user;
           });
         })
       )

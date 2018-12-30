@@ -194,9 +194,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     )
       return of(null);
     console.log(this.searchCriteria);
+    function toPascalCase(word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    }
     this.clubSearchResults$ = this.clubService
       .searchClubsOnParams(
-        this.searchCriteria.clubName,
+        toPascalCase(this.searchCriteria.clubName),
         this.searchCriteria.district,
         this.searchCriteria.localBody
       )
@@ -231,6 +234,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   searchClub(clubName) {
     this.isfavClubSearch = true;
+
+    function toPascalCase(word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    }
+    clubName = toPascalCase(clubName);
+    // console.log('j1', clubName);
     if (clubName !== '') {
       this.favClubSearchResults$ = this.clubService
         .searchClubsByName(clubName, 3)

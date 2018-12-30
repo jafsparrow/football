@@ -78,6 +78,7 @@ export class SuperAdminManagementComponent implements OnInit {
             if (user.permission && user.permission.role) {
               return user.permission.role === 'admin';
             }
+            return user; // if no permission is updated for a new user.
           });
 
           if (admins.length > 2) {
@@ -150,7 +151,7 @@ export class SuperAdminManagementComponent implements OnInit {
     ) {
       this.submitting = true;
       console.log(this.selectedClub);
-      console.log(user);
+      // console.log(user);
       this.localAdminService
         .updateUserAccess(user, 'admin', this.selectedClub.id)
         .then(() => {
