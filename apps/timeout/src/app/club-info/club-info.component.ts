@@ -13,8 +13,9 @@ import { NewsCommonService, EventsCommonService } from '@football/shared';
 })
 export class ClubInfoComponent implements OnInit {
   clubId = '1';
-  clubNews$: Observable<any[]>;
-  isNewsLoading = false;
+  // clubNews$: Observable<any[]>;
+  // isNewsLoading = false;
+  isLoading;
   club = null;
   achievements = [];
   news = [];
@@ -29,6 +30,7 @@ export class ClubInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this._activatedrouter.params
       .pipe(
         switchMap(params => {
@@ -42,10 +44,10 @@ export class ClubInfoComponent implements OnInit {
         })
       )
       .subscribe(achievements => {
+        this.isLoading = false;
         console.log(achievements);
         this.achievements = achievements;
       });
-
   }
 
   loadClubNews() {

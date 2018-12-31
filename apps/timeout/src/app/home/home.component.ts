@@ -3,10 +3,13 @@ import {
   NewsTeaserService,
   EventsCommonService
 } from '@football/shared';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { EventItem } from '@football/events';
 import { switchMap, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'football-home',
@@ -24,37 +27,56 @@ export class HomeComponent implements OnInit {
   isUserLoggedIn = true;
 
   events: EventItem[];
-  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: false };
+  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: true };
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
-    private eventService: EventsCommonService
+    private eventService: EventsCommonService,
+    @Inject(PLATFORM_ID) private platformId,
+    private transferState: TransferState
   ) {
     this.isNewsLoading = true;
   }
 
   ngOnInit() {
-    this.events$ = this.authSerivice.user$.pipe(
-      switchMap(user => {
-        if (user) {
-          // to display a info message for the user that user,
-          // does not have fav or tagged_clubs. it will display on the page
-          this.user = user;
-          this.homeMessage.isLoggedIn = true;
-          if (user.mainClub.id) {
-            this.homeMessage.hasFavClub = true;
-          }
-          if (!user.taggedClubs) {
-            if (Object.keys(user.taggedClubs).length < 1) {
-              this.homeMessage.hasTaggedClubs = false;
+    const EVENT_KEY = makeStateKey<any>('events-' + 3);
+    this.events$ = this.authSerivice.user$
+      .pipe(
+        switchMap(user => {
+          if (this.transferState.hasKey(EVENT_KEY)) {
+            const events = this.transferState.get<any>(EVENT_KEY, null);
+            this.transferState.remove(EVENT_KEY);
+            return of(events);
+          } else {
+            if (user) {
+              // to display a info message for the user that user,
+              // does not have fav or tagged_clubs. it will display on the page
+
+              this.user = user;
+              this.homeMessage.isLoggedIn = true;
+              if (user.mainClub.id) {
+                this.homeMessage.hasFavClub = true;
+              }
+              if (!user.taggedClubs) {
+                if (Object.keys(user.taggedClubs).length < 1) {
+                  this.homeMessage.hasTaggedClubs = false;
+                }
+              }
+
+              return this.eventService.getEventsForLoggedInUser(user);
             }
+            // if the user is not logged in, the message should say the following.
+            return this.eventService.getTopeTierClubEvents(10);
           }
-          return this.eventService.getEventsForLoggedInUser(user);
-        }
-        // if the user is not logged in, the message should say the following.
-        return this.eventService.getTopeTierClubEvents(10);
-      })
-    );
+        })
+      )
+      .pipe(
+        tap(events => {
+          if (isPlatformServer(this.platformId)) {
+            this.transferState.set(EVENT_KEY, events);
+          }
+        })
+      );
 
     this.news$ = this.newsTeaser.getRecentTenNews();
   }

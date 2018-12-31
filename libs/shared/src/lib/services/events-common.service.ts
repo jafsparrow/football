@@ -48,13 +48,9 @@ export class EventsCommonService {
   }
 
   public getRecentClubEvents(club_ID: string, limit = 5) {
+    console.log(club_ID);
     return this.db
-      .collection('events', ref =>
-        ref
-          .orderBy('createdDate', 'desc')
-          .where('mainClub.id', '==', club_ID)
-          .limit(limit)
-      )
+      .collection('events', ref => ref.where('mainClub.id', '==', club_ID))
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -83,7 +79,10 @@ export class EventsCommonService {
       // add the first tier clubs 10 events which are created latest. and push it to the calls array.
       calls.push(this.getTopeTierClubEvents());
       // add users fav clubs events as well.
-      calls.push(this.getRecentClubEvents(user.mainClub.id));
+      console.log(user);
+      if (user.mainClub.id) {
+        calls.push(this.getRecentClubEvents(user.mainClub.id));
+      }
       return forkJoin(calls).pipe(
         map(arrays => [].concat.apply([], arrays)),
         map(news => {

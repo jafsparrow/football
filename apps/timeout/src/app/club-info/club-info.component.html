@@ -1,4 +1,12 @@
-<mat-card class="club-info-container">
+<div class="loading-spinner" *ngIf="isLoading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="accent"
+    [strokeWidth]="10"
+  ></mat-progress-spinner>
+</div>
+
+<mat-card class="club-info-container" *ngIf="!isLoading">
   <div class="top-section" *ngIf="club">
     <div
       class="header-container"
@@ -9,7 +17,7 @@
         <div class="section-1" fxLayout="column" fxLayoutAlign="center center">
           <img
             class="club-icon"
-            src="https://i2.wp.com/sefiks.com/wp-content/uploads/2017/03/blowfish.png?zoom=1.25&resize=310%2C310&ssl=1"
+            src="https://seeklogo.com/images/C/central-sport-club-logo-EE3375A815-seeklogo.com.gif"
           />
           <div class="club-name">
             {{ club?.shortName ? club?.shortName : 'My Fav Club' }}
