@@ -83,7 +83,7 @@
               <mat-select placeholder="Local Body" formControlName="localBody">
                 <mat-option
                   *ngFor="let localbody of localbodies"
-                  value="localbody.name"
+                  [value]="localbody.name"
                   >{{ localbody.name }}</mat-option
                 >
               </mat-select>
