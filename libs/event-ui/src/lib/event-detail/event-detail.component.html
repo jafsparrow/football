@@ -1,31 +1,29 @@
-<!--
-  <div class="event-container" fxLayout="row" fxLayout.lt-sm="column">
-    <div class="event-header-section" fxFlex>
-      <div
-        class="header-container"
-        fxLayout="column"
-        fxLayoutAlign="center center"
-      >
-        <div class="header-data">
-          <div class="event-title">
-            title of the Event this can a long text. just want to see if it fits
-          </div>
-          <div class="event-date">12/05/15 <span>Liverpool</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="event-content-section" fxFlex>content</div>
-  </div>
--->
-
 <mat-card>
   <mat-card-header>
     <mat-card-title>{{ event.title }}</mat-card-title>
     <mat-card-subtitle
-      >Date: {{ event.date.toDate() | date }}
+      >Published Date: {{ event.publishedDate?.toDate() | date }}
     </mat-card-subtitle>
   </mat-card-header>
+  <div style="padding: 5px">
+    <mat-chip-list>
+      <mat-chip
+        color="accent"
+        selected
+        [routerLink]="['/clubinfo', event.mainClub.id]"
+        >{{
+          event.mainClub?.name ? event.mainClub.name : 'club-name'
+        }}</mat-chip
+      >
+    </mat-chip-list>
+  </div>
   <mat-card-content>
-    content later it has to display html content</mat-card-content
-  >
+    <mat-card class="date-card">
+      Event Date: {{ event.date.toDate() | date }}
+    </mat-card>
+    <mat-card *ngIf="event.expiryDate" class="date-card">
+      Apply before: {{ event.expiryDate.toDate() | date }}
+    </mat-card>
+    <div [innerHTML]="event.content" style="margin: 10px 0px"></div>
+  </mat-card-content>
 </mat-card>

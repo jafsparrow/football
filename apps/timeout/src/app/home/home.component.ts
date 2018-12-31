@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   news$: Observable<any[]>;
   isNewsLoading: boolean;
   favNews: Array<any>;
-
+  user: any;
   isFavNewsLoading = true;
   isUserLoggedIn = true;
 
@@ -39,9 +39,10 @@ export class HomeComponent implements OnInit {
         if (user) {
           // to display a info message for the user that user,
           // does not have fav or tagged_clubs. it will display on the page
+          this.user = user;
           this.homeMessage.isLoggedIn = true;
-          if (!user.mainClub.id) {
-            this.homeMessage.hasFavClub = false;
+          if (user.mainClub.id) {
+            this.homeMessage.hasFavClub = true;
           }
           if (!user.taggedClubs) {
             if (Object.keys(user.taggedClubs).length < 1) {

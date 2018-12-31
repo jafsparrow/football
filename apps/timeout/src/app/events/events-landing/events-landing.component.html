@@ -1,12 +1,16 @@
 <div style="padding: 5px">
   <mat-chip-list>
-    <mat-chip color="accent" selected *ngFor="let club of clubsArray">{{
-      club?.name ? club.name : 'club-name'
-    }}</mat-chip>
+    <mat-chip
+      color="accent"
+      selected
+      *ngFor="let club of clubsArray"
+      [routerLink]="['/clubinfo', club.id]"
+      >{{ club?.name ? club.name : 'club-name' }}</mat-chip
+    >
   </mat-chip-list>
 </div>
 <div *ngIf="user">
-  <div *ngIf="(favClubsEvents$ | async) as favevents; else: eventLoading">
+  <div *ngIf="(favClubsEvents$ | async) as favevents; else eventLoading">
     <div class="event-section-header">{{ user?.mainClub?.name }} events.</div>
     <football-events-summary-teaser
       [events]="favevents"

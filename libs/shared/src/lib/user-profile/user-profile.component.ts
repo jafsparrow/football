@@ -195,7 +195,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return of(null);
     console.log(this.searchCriteria);
     function toPascalCase(word) {
-      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+      return word
+        ? word.charAt(0).toUpperCase() + word.substr(1).toLowerCase()
+        : null;
     }
     this.clubSearchResults$ = this.clubService
       .searchClubsOnParams(

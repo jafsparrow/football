@@ -34,10 +34,11 @@
 
 <div *ngIf="(recentNews$ | async) as news">
   <div class="section-header">
-    Recent News
-    <button mat-icon-button routerLink="list/all">
+    Other News
+    <!-- keep the below code. wil user this later when Implement infinit scroll for all the news. -->
+    <!-- <button mat-icon-button routerLink="list/all">
       <mat-icon class="mat-18">trending_flat</mat-icon>
-    </button>
+    </button> -->
   </div>
 
   <football-news-summary-view-teaser

@@ -1,13 +1,16 @@
 <div class="home-message">
-  <div *ngIf="homeMessage.isLoggedIn; else: notLoggedIn">
+  <div *ngIf="homeMessage.isLoggedIn; else notLoggedIn">
     <div *ngIf="!homeMessage.hasFavClub">
-      It seems like you have not selected you fav club. Please update from user
-      profile. If you don't find your favorite club, please add your clubs by
-      clicking <span><a>Register a Club</a></span>
+      Please set you
+      <span><a [routerLink]="['/profile']">favorite club</a></span> to get news
+      and events notification from the your club. If you don't find your
+      favorite club, please add your clubs by clicking
+      <span><a [routerLink]="['/registerclub']">Register a Club</a></span>
     </div>
     <div *ngIf="!homeMessage.hasTaggedClubs">
-      Did you know that you can tag clubs so that event and news from those
-      clubs can reach you sooner. Please add clubs to your tagged clubs.
+      Did you know that you can follow other clubs too.? Their news and events
+      will reach you soon.! Add clubs to you
+      <span><a [routerLink]="['/profile']">tagged club</a></span> list.
     </div>
   </div>
   <ng-template #notLoggedIn
@@ -24,7 +27,7 @@
 </div>
 
 <football-events-summary-teaser
-  *ngIf="(events$ | async) as events; else: eventLoading"
+  *ngIf="(events$ | async) as events; else eventLoading"
   [events]="events"
 >
 </football-events-summary-teaser>
@@ -39,7 +42,7 @@
   </button>
 </div>
 
-<div *ngIf="(news$ | async) as news; else: newsLoading">
+<div *ngIf="(news$ | async) as news; else newsLoading">
   <football-news-summary-view-teaser [news]="news">
   </football-news-summary-view-teaser>
 </div>

@@ -10,4 +10,8 @@ export class EventDetailComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  get date() {
+    return this.event.date.toDate();
+  }
 }

@@ -38,7 +38,11 @@ export const routes: Route[] = [
       { path: 'detail/:id', component: NewsFullViewComponent }
     ]
   },
-  { path: 'club', component: ClubRequestComponent, canActivate: [AuthGuard] },
+  {
+    path: 'registerclub',
+    component: ClubRequestComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'clubinfo/:id', component: ClubInfoComponent },
   { path: 'login', component: TimeoutLoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }

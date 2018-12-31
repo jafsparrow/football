@@ -2,18 +2,21 @@
   <div class="time-section" fxFlex="100px" *ngIf="eventDate.available">
     <span class="day">{{ eventDate.day }}</span>
     <span class="month">{{ eventDate.month }}</span>
-    <span class="year">2014</span>
+    <span class="year">{{ eventDate.year }}</span>
   </div>
 
   <div class="event-summary-section" fxFlex>
     <span class="event-title" [routerLink]="['/events/detail', event.id]">{{
       event?.title
     }}</span>
-
+    <div class="clubname">{{ event.mainClub?.name }}</div>
     <div class="event-bottom-action">
-      <span class="club-tags" *ngFor="let item of relatedItemsArr">{{
-        item
-      }}</span>
+      <span
+        class="club-tags"
+        *ngFor="let item of relatedItemsArr"
+        [style.background-color]="getBackColor(item)"
+        >{{ item }}</span
+      >
     </div>
   </div>
 </div>

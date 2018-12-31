@@ -114,6 +114,7 @@ export class EventsAddComponent implements OnInit {
 
     eventData['relatedSports'] = this.selectedSports;
     eventData['status'] = 'draft';
+    console.log(eventData);
     this.eventService
       .createEvent(eventData)
       .then(res => this.router.navigate(['events']))

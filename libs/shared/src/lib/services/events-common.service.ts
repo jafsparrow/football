@@ -136,6 +136,7 @@ export class EventsCommonService {
             return { id, ...data };
           });
         }),
+        tap(res => console.log(res)),
         take(1)
       );
   }

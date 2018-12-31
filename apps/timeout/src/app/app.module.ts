@@ -70,7 +70,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ReactiveFormsModule,
     NewsUiModule,
     EventUiModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   providers: [{ provide: 'siteType', useValue: evnType }, SeoService],
   bootstrap: [AppComponent]

@@ -33,3 +33,11 @@ mat-card {
   margin: 0px auto; */
   margin-top: 5px;
 }
+
+.date-card {
+  font-size: 16px;
+  font-weight: 200;
+  text-transform: uppercase;
+  background-color: #efefef;
+  padding: 8px;
+}
