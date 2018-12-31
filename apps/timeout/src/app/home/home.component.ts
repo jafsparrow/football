@@ -31,52 +31,51 @@ export class HomeComponent implements OnInit {
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
-    private eventService: EventsCommonService,
-    @Inject(PLATFORM_ID) private platformId,
-    private transferState: TransferState
-  ) {
+    private eventService: EventsCommonService // @Inject(PLATFORM_ID) private platformId,
+  ) // private transferState: TransferState
+  {
     this.isNewsLoading = true;
   }
 
   ngOnInit() {
-    const EVENT_KEY = makeStateKey<any>('events-' + 3);
-    this.events$ = this.authSerivice.user$
-      .pipe(
-        switchMap(user => {
-          if (this.transferState.hasKey(EVENT_KEY)) {
-            const events = this.transferState.get<any>(EVENT_KEY, null);
-            this.transferState.remove(EVENT_KEY);
-            return of(events);
-          } else {
-            if (user) {
-              // to display a info message for the user that user,
-              // does not have fav or tagged_clubs. it will display on the page
+    // const EVENT_KEY = makeStateKey<any>('events-' + 3);
+    this.events$ = this.authSerivice.user$.pipe(
+      switchMap(user => {
+        //TODO - tried to do server side data transfer for home page. It broke while the transition.
+        // UI is getting broken. fix it later.
+        // if (this.transferState.hasKey(EVENT_KEY)) {
+        //   const events = this.transferState.get<any>(EVENT_KEY, null);
+        //   this.transferState.remove(EVENT_KEY);
+        //   return of(events);
+        // } else {
+        if (user) {
+          // to display a info message for the user that user,
+          // does not have fav or tagged_clubs. it will display on the page
 
-              this.user = user;
-              this.homeMessage.isLoggedIn = true;
-              if (user.mainClub.id) {
-                this.homeMessage.hasFavClub = true;
-              }
-              if (!user.taggedClubs) {
-                if (Object.keys(user.taggedClubs).length < 1) {
-                  this.homeMessage.hasTaggedClubs = false;
-                }
-              }
-
-              return this.eventService.getEventsForLoggedInUser(user);
+          this.user = user;
+          this.homeMessage.isLoggedIn = true;
+          if (user.mainClub.id) {
+            this.homeMessage.hasFavClub = true;
+          }
+          if (!user.taggedClubs) {
+            if (Object.keys(user.taggedClubs).length < 1) {
+              this.homeMessage.hasTaggedClubs = false;
             }
-            // if the user is not logged in, the message should say the following.
-            return this.eventService.getTopeTierClubEvents(10);
           }
-        })
-      )
-      .pipe(
-        tap(events => {
-          if (isPlatformServer(this.platformId)) {
-            this.transferState.set(EVENT_KEY, events);
-          }
-        })
-      );
+
+          return this.eventService.getEventsForLoggedInUser(user);
+        }
+        // if the user is not logged in, the message should say the following.
+        return this.eventService.getTopeTierClubEvents(10);
+      })
+      // )
+      // .pipe(
+      //   tap(events => {
+      //     if (isPlatformServer(this.platformId)) {
+      //       this.transferState.set(EVENT_KEY, events);
+      //     }
+      //   })
+    );
 
     this.news$ = this.newsTeaser.getRecentTenNews();
   }
