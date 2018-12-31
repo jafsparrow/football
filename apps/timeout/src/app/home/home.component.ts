@@ -27,13 +27,12 @@ export class HomeComponent implements OnInit {
   isUserLoggedIn = true;
 
   events: EventItem[];
-  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: true };
+  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: false };
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
-    private eventService: EventsCommonService // @Inject(PLATFORM_ID) private platformId,
-  ) // private transferState: TransferState
-  {
+    private eventService: EventsCommonService // @Inject(PLATFORM_ID) private platformId, // private transferState: TransferState
+  ) {
     this.isNewsLoading = true;
   }
 
@@ -57,9 +56,9 @@ export class HomeComponent implements OnInit {
           if (user.mainClub.id) {
             this.homeMessage.hasFavClub = true;
           }
-          if (!user.taggedClubs) {
-            if (Object.keys(user.taggedClubs).length < 1) {
-              this.homeMessage.hasTaggedClubs = false;
+          if (user.taggedClubs) {
+            if (Object.keys(user.taggedClubs).length > 0) {
+              this.homeMessage.hasTaggedClubs = true;
             }
           }
 
