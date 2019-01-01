@@ -38,6 +38,7 @@
           (change)="fileSelection($event)"
           #file
           style="display: none;"
+          accept="image/*"
         />
         <br />
         <img [src]="imageUrl" /> <br />
@@ -93,7 +94,7 @@
       </button>
       <!-- {{club}} -->
       <div
-        *ngIf="(clubSearchResults$ | async) as clubSearchResult; else: loading"
+        *ngIf="(clubSearchResults$ | async) as clubSearchResult; else loading"
       >
         <div
           class="club-search-info"

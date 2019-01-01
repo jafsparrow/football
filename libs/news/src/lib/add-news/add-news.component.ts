@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { AuthenticationService } from '@football/shared';
 import { News, ClubMeta } from './../modals/news';
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
@@ -14,6 +15,9 @@ import { FileUpload } from '../modals/upload-file';
 import { Subject, Observable, of } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { switchMap, finalize, tap } from 'rxjs/operators';
+
+// image resize
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 @Component({
   selector: 'news-add',
@@ -64,9 +68,10 @@ export class AddNewsComponent implements OnInit {
     private clubDetailService: ClubDetailsService,
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private ng2ImgMax: Ng2ImgMaxService
   ) {
-    console.log('news add component');
+    // console.log('news add component');
     this.articleAddFrom = this.buildForm();
     this.clubSearchResults$ = this.clubDetailService
       .searchClubs(this.searchTerm$)
@@ -92,7 +97,7 @@ export class AddNewsComponent implements OnInit {
         switchMap(params => {
           const id = params['id'];
           if (id) {
-            console.log(id);
+            // console.log(id);
             this.isEditing = true;
             this.createdNewsKey = id;
             return this.newService.getDetailedNews(id);
@@ -102,7 +107,7 @@ export class AddNewsComponent implements OnInit {
       )
       .subscribe(news => {
         if (news) {
-          console.log(news);
+          // console.log(news);
           this.articleAddFrom.patchValue(news);
           this.imageUrl = news.image ? news.image : ''; //'https://picsum.photos/200/300';
         } else {
@@ -127,12 +132,29 @@ export class AddNewsComponent implements OnInit {
     this.selectedFiles = ($event.target as HTMLInputElement).files;
 
     if ($event.target.files && $event.target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL($event.target.files[0]); // read file as data url
-      reader.onload = event => {
-        // called once readAsDataURL is completed
-        this.imageUrl = event.target.result;
-      };
+      const image = $event.target.files[0];
+      this.ng2ImgMax.resizeImage(image, 600, 10000).subscribe(
+        result => {
+          console.log(result);
+          const reader = new FileReader();
+          reader.readAsDataURL(result); // read file as data url
+          reader.onload = event => {
+            // called once readAsDataURL is completed
+            this.imageUrl = event.target.result;
+          };
+        },
+        error => {
+          console.log('😢 Oh no!', error);
+          return null;
+        }
+      );
+
+      // const reader = new FileReader();
+      // reader.readAsDataURL($event.target.files[0]); // read file as data url
+      // reader.onload = event => {
+      //   // called once readAsDataURL is completed
+      //   this.imageUrl = event.target.result;
+      // };
     }
   }
   sportSelectionChange($event) {
@@ -241,13 +263,31 @@ export class AddNewsComponent implements OnInit {
     if (file && file.length === 1) {
       // console.log('upload image fucntion.');
       // console.log(file.item(0));
-      const currentUpload: FileUpload = new FileUpload(file.item(0));
-      return this.newService.uploadNewsImage(file.item(0));
+      // const currentUpload: FileUpload = new FileUpload(file.item(0));
+      const selectedImage = file[0];
+      return this.ng2ImgMax.resizeImage(selectedImage, 600, 10000).pipe(
+        switchMap(result => {
+          console.log('result', result);
+          const uploadImage = new File([result], result.name);
+          return this.newService.uploadNewsImage(uploadImage);
+        })
+      );
+      // return this.ng2ImgMax.resizeImage(selectedImage, 600, 300).subscribe(
+      //   result => {
+      //     const uploadImage = new File([result], result.name);
+      //     return this.newService.uploadNewsImage(uploadImage);
+      //   },
+      //   error => {
+      //     console.log('😢 Oh no!', error);
+      //     return of(null);
+      //   }
+      // );
     } else {
       console.error('No file found!');
       return of(null);
     }
   }
+
   testMe($event) {
     console.log($event);
   }

@@ -120,8 +120,8 @@ export class NewsService {
       `${this.basePath}/${upload.name}`
     );
     // const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
-    console.log('upload image service function and the file is');
-    console.log(upload);
+    // console.log('upload image service function and the file is');
+    // console.log(upload);
     const task = storageRef.put(upload);
     return task.snapshotChanges().pipe(uploadTask => {
       return storageRef.getDownloadURL();

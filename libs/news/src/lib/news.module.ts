@@ -5,6 +5,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularEditorModule } from '@kolkov/angular-editor';
+// image resize and compress library
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -48,7 +50,8 @@ export const newsRoutes: Route[] = [
     FlexLayoutModule,
     AngularEditorModule,
     SharedModule,
-    NewsUiModule
+    NewsUiModule,
+    Ng2ImgMaxModule
   ],
   declarations: [
     NewsListComponent,
