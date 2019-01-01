@@ -330,3 +330,51 @@ export const editorConfiguation: AngularEditorConfig = {
     }
   ]
 };
+
+// here is the code before adding the image resize compress thing. Just keeping it safe.
+// submitNews() {
+//   this.submitting = true;
+//   const newsItem = this.newsObject;
+//   newsItem['image'] = '';
+//   newsItem['status'] = 'draft';
+//   newsItem['mainClub'] = {
+//     id: this.user.permission.clubId,
+//     name: this.user.permission.club,
+//     tier: this.user.permission.tier ? this.user.permission.tier : 'none'
+//   };
+
+//   this.newService.createNews(newsItem).then(res => {
+//     if (res) {
+//       // save the news id in a local variable.
+//       this.createdNewsKey = res.id;
+//       if (this.selectedFiles && this.selectedFiles.length === 1) {
+//         this.uploadImage().subscribe(downLoadUrl => {
+//           if (downLoadUrl) {
+//             this.updateNewsImage(downLoadUrl).then(() => {
+//               this.submitting = false;
+//               this.route.navigate(['/news/view', this.createdNewsKey]);
+//             });
+//           } else {
+//             console.log('error in upload the file.');
+//             this.submitting = false;
+//           }
+//         });
+//       }
+//       this.submitting = false;
+//       this.route.navigate(['/news/view', this.createdNewsKey]);
+//     }
+//   });
+// }
+
+// uploadImage() {
+//   const file = this.selectedFiles;
+//   if (file && file.length === 1) {
+//     // console.log('upload image fucntion.');
+//     // console.log(file.item(0));
+//     const currentUpload: FileUpload = new FileUpload(file.item(0));
+//     return this.newService.uploadNewsImage(file.item(0));
+//   } else {
+//     console.error('No file found!');
+//     return of(null);
+//   }
+// }
