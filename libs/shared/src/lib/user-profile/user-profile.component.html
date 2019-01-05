@@ -59,6 +59,7 @@
                 placeholder="District"
                 formControlName="district"
                 (selectionChange)="addressDistrictChange($event.value)"
+                [(value)]="selectedDistrictForAddress"
               >
                 <mat-option
                   *ngFor="let district of districts"
@@ -71,23 +72,44 @@
               <mat-select
                 placeholder="Local Body Type"
                 (selectionChange)="addressBodyTypeChange($event.value)"
+                [(value)]="selectedBodyTypeForAddress"
               >
                 <mat-option value="Municipality">Municipality</mat-option>
                 <mat-option value="Corporation">Corporation</mat-option>
                 <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field
-              *ngIf="(localBodyForAddress$ | async) as localbodies"
-            >
-              <mat-select placeholder="Local Body" formControlName="localBody">
-                <mat-option
-                  *ngFor="let localbody of localbodies"
-                  [value]="localbody.name"
-                  >{{ localbody.name }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field>
+            <span *ngIf="(localBodyForAddress$ | async) as localbodies">
+              <span
+                *ngIf="
+                  _localBodiesForAddressLoading;
+                  else localBodyForAddressLoading
+                "
+              >
+                <mat-progress-spinner
+                  style="display: inline"
+                  mode="indeterminate"
+                  color="primary"
+                  [strokeWidth]="2"
+                  diameter="30"
+                ></mat-progress-spinner>
+              </span>
+
+              <ng-template #localBodyForAddressLoading>
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Local Body"
+                    formControlName="localBody"
+                  >
+                    <mat-option
+                      *ngFor="let localbody of localbodies"
+                      [value]="localbody.name"
+                      >{{ localbody.name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </ng-template>
+            </span>
           </div>
         </div>
         <div>
@@ -183,7 +205,11 @@
           <mat-form-field>
             <mat-select
               placeholder="District"
-              (selectionChange)="tagClubdistrictChange($event.value)"
+              [(value)]="selectedDistrict"
+              (selectionChange)="
+                tagClubdistrictChange($event.value, localBodyTypeDropdown)
+              "
+              #districtDropdown
             >
               <mat-option
                 *ngFor="let district of districts"
@@ -192,9 +218,12 @@
               >
             </mat-select>
           </mat-form-field>
+
           <mat-form-field>
             <mat-select
               placeholder="Local Body Type"
+              [(value)]="selectedBodyType"
+              #localBodyTypeDropdown
               (selectionChange)="tagClublocalBodyTypeChange($event.value)"
             >
               <mat-option value="Municipality">Municipality</mat-option>
@@ -202,22 +231,42 @@
               <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field *ngIf="(localBodyForTaggingClubs$ | async) as bodies">
-            <mat-select
-              placeholder="Local Body"
-              (selectionChange)="updateClubSearchTerm($event.value)"
-            >
-              <mat-option *ngFor="let body of bodies" [value]="body.name">{{
-                body.name
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <button mat-raised-button (click)="searchClubs()">
-            Search Clubs
-          </button>
+          <span *ngIf="(localBodyForTaggingClubs$ | async) as bodies">
+            <span *ngIf="_localBodiesLoading; else localBodyForTagLoading">
+              <mat-progress-spinner
+                style="display: inline"
+                mode="indeterminate"
+                color="primary"
+                [strokeWidth]="2"
+                diameter="30"
+              ></mat-progress-spinner>
+            </span>
+
+            <ng-template #localBodyForTagLoading>
+              <mat-form-field>
+                <mat-select
+                  placeholder="Local Body"
+                  (selectionChange)="updateClubSearchTerm($event.value)"
+                >
+                  <mat-option *ngFor="let body of bodies" [value]="body.name">{{
+                    body.name
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-template>
+          </span>
+          <div>
+            <button mat-raised-button (click)="searchClubs()">
+              Search Clubs
+            </button>
+          </div>
         </div>
         <div *ngIf="taggedClubs.length > 4">
           You can only tag maxium 5 clubs
+        </div>
+        <div *ngIf="taggedClubs.length > 0">
+          <br />
+          These are the clubs tagged to your profile
         </div>
         <mat-chip-list class="tagged-clubs-list">
           <mat-chip *ngFor="let club of taggedClubs"

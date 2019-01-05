@@ -20,6 +20,16 @@ import { tap, switchMap } from 'rxjs/operators';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   districts = Keraladistricts.sort();
+
+  selectedDistrict = '';
+  selectedBodyType = '';
+  localBodies = [];
+  _localBodiesLoading = false;
+
+  selectedDistrictForAddress = '';
+  selectedBodyTypeForAddress = '';
+  _localBodiesForAddressLoading = false;
+
   bldGroups = bloodGroups;
   profileForm: FormGroup;
 
@@ -106,10 +116,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.bodyTypeFilterForAddress$
     ).pipe(
       switchMap(([district, bodyType]) => {
-        console.log(district, bodyType);
+        this._localBodiesForAddressLoading = true;
+        // console.log(district, bodyType);
         return this.locationService.searchLocalBodies(district, bodyType);
       }),
-      tap(res => console.log(res))
+      tap(res => (this._localBodiesForAddressLoading = false))
     );
 
     this.localBodyForClubSearch$ = combineLatest(
@@ -117,10 +128,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.bodyTypeFilterForClubSearch$
     ).pipe(
       switchMap(([district, bodyType]) => {
-        console.log(district, bodyType);
+        this._localBodiesForAddressLoading = true;
         return this.locationService.searchLocalBodies(district, bodyType);
       }),
-      tap(res => console.log(res))
+      tap(local => (this._localBodiesForAddressLoading = false))
     );
 
     this.localBodyForTaggingClubs$ = combineLatest(
@@ -128,12 +139,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.bodyTypeFilterForTaggingClubs$
     ).pipe(
       switchMap(([district, localBody]) => {
+        this._localBodiesLoading = true;
         return this.locationService.searchLocalBodies(district, localBody);
-      })
+      }),
+      tap(local => (this._localBodiesLoading = false))
     );
   }
 
   addressDistrictChange(district) {
+    this.selectedBodyTypeForAddress = '';
     this.bodyTypeFilterForAddress$.next(null);
     this.districtFilterForAddress$.next(district);
   }
@@ -141,7 +155,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.bodyTypeFilterForAddress$.next(localBodyType);
   }
 
-  tagClubdistrictChange(value) {
+  tagClubdistrictChange(value, dropdown) {
+    this.selectedBodyType = '';
+    this.selectedBodyTypeForAddress = '';
     this.bodyTypeFilterForTaggingClubs$.next(null);
     this.districtFilterForTaggingClubs$.next(value);
     this.searchCriteria['district'] = value;
@@ -193,7 +209,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.searchCriteria.localBody == null
     )
       return of(null);
-    console.log(this.searchCriteria);
+    // console.log(this.searchCriteria);
     function toPascalCase(word) {
       return word
         ? word.charAt(0).toUpperCase() + word.substr(1).toLowerCase()
@@ -208,8 +224,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .pipe(
         tap(clubs => {
           this.isTagClubSearch = false;
-          console.log('jafar - inside the search part');
-          console.log(clubs);
+          // console.log('jafar - inside the search part');
+          // console.log(clubs);
         })
       );
   }
@@ -248,7 +264,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         .pipe(
           tap(clubs => {
             this.isfavClubSearch = false;
-            console.log(clubs);
+            // console.log(clubs);
           })
         );
     }
