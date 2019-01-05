@@ -1,7 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NewsCommonService } from '@football/shared';
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  Inject,
+  OnDestroy
+} from '@angular/core';
 import { News } from '@football/shared';
 import { switchMap, tap } from 'rxjs/operators';
 import { SeoService } from '../../services/seo.service';
@@ -13,7 +19,7 @@ import { isPlatformServer } from '@angular/common';
   templateUrl: './news-detail-view.component.html',
   styleUrls: ['./news-detail-view.component.css']
 })
-export class NewsFullViewComponent implements OnInit {
+export class NewsFullViewComponent implements OnInit, OnDestroy {
   news$: Observable<News>;
   constructor(
     private _newsService: NewsCommonService,
@@ -53,5 +59,13 @@ export class NewsFullViewComponent implements OnInit {
         });
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.seo.generateTags({
+      title: 'timeout sports'
+    });
+
+    console.log('hello ');
   }
 }
