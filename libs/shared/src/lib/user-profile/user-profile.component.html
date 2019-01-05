@@ -5,7 +5,7 @@
   <form [formGroup]="profileForm" (ngsubmit)="updateUserProfile()">
     <mat-vertical-stepper linear="false" #stepper>
       <mat-step>
-        <ng-template matStepLabel>update your basic infor</ng-template>
+        <ng-template matStepLabel>update your basic information</ng-template>
         <mat-form-field class="full-width">
           <input
             matInput
@@ -31,7 +31,7 @@
         <div><button mat-button matStepperNext>Next</button></div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Fill out your address</ng-template>
+        <ng-template matStepLabel>Update location details</ng-template>
         <div formGroupName="address">
           <mat-form-field>
             <input
@@ -121,6 +121,11 @@
         <ng-template matStepLabel
           >Update your club and you can also tag other clubs</ng-template
         >
+
+        <div>
+          നിങ്ങളുടെ ഇഷ്ടപെട്ട ക്ലബ് തിരഞ്ഞെടുക്കുക. ഇഷ്ടപെട്ട ക്ലബിന്റെ
+          ന്യൂസുകളും മറ്റും എളുപ്പത്തിൽ ഹോം പേജിൽ വായിക്കാൻ സാധിക്കും
+        </div>
         <div fxLayout="row">
           <mat-form-field fxFlex>
             <input
@@ -194,6 +199,11 @@
           </div>
         </ng-template>
         <h4>Search for the clubs you wish to tag to your profile</h4>
+
+        <div>
+          തിരെഞ്ഞെടുന്ന അഞ്ച് ക്ലബുകൾ ഇവിടെ സെലക്റ്റ് ചെയ്യുക. ഇങ്ങനെ ടാഗ് ചെയ്ത
+          ക്ലബുകളുടെ ന്യൂസും മറ്റും ഹോം പേജിൽ തന്നെ വായിക്കാൻ സാധിക്കും
+        </div>
         <div>
           <mat-form-field class="full-width">
             <input
