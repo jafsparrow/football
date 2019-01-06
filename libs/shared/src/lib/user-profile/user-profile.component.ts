@@ -1,3 +1,4 @@
+import { MainClub } from './../modal/news';
 import { Router } from '@angular/router';
 import { UserProfileService } from './../services/user-profile.service';
 import { LocationService } from './../services/location.service';
@@ -101,6 +102,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       tap(user => {
         this.profileForm.patchValue(user);
         this.uid = user.uid;
+        if (user.mainClub && user.mainClub.id) {
+          this.mainClub = user.mainClub;
+        }
         const taggedClubsObject = user.taggedClubs;
         if (taggedClubsObject) {
           Object.keys(taggedClubsObject).forEach(key => {
@@ -179,7 +183,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   updateUserProfile() {
     this._userProfileUpdating = true;
     const updatedProfile = this.profileForm.value;
-    updatedProfile['mainClub'] = this.mainClub;
+    if (this.mainClub['id']) {
+      updatedProfile['mainClub'] = this.mainClub;
+    }
     const taggedClubObject = {};
 
     this.taggedClubs.forEach(item => {
