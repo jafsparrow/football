@@ -14,4 +14,16 @@ mat-sidenav {
 .router-outlet {
   max-width: 900px;
   margin: 0px auto;
+  height: 100%;
+}
+
+.footer {
+  background-color: #eee;
+  padding: 20px;
+  bottom: 0px;
+  width: 100%;
+}
+
+.footer p {
+  font-size: 10px;
 }
