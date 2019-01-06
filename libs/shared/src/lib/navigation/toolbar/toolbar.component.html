@@ -9,7 +9,7 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <div *ngIf="user; else: notLoggedIn">
+    <div *ngIf="user; else notLoggedIn">
       <div *ngIf="!isAdminSite">
         <button mat-menu-item routerLink="/profile">
           <mat-icon>account_circle</mat-icon>
@@ -26,7 +26,7 @@
           <span>My Club</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item [routerLink]="['/club']">
+        <button mat-menu-item [routerLink]="['/registerclub']">
           <mat-icon>fiber_new</mat-icon>
           <span>Register a club</span>
         </button>

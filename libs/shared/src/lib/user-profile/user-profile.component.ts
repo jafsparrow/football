@@ -30,6 +30,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   selectedBodyTypeForAddress = '';
   _localBodiesForAddressLoading = false;
 
+  _userProfileUpdating = false;
+
   bldGroups = bloodGroups;
   profileForm: FormGroup;
 
@@ -175,6 +177,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   updateUserProfile() {
+    this._userProfileUpdating = true;
     const updatedProfile = this.profileForm.value;
     updatedProfile['mainClub'] = this.mainClub;
     const taggedClubObject = {};
@@ -192,6 +195,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .updatedUserProfile(updatedProfile, this.uid)
       .then(() => {
         console.log('profile has been updated.');
+        this._userProfileUpdating = false;
         // navigate to home page.
         this._router.navigate(['/']);
       })

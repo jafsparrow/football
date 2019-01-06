@@ -343,10 +343,18 @@
             mat-button
             type="submit"
             (click)="updateUserProfile()"
-            [disabled]="!profileForm.valid"
+            [disabled]="!profileForm.valid && !_userProfileUpdating"
           >
             update
           </button>
+
+          <mat-progress-spinner
+            *ngIf="_userProfileUpdating"
+            mode="indeterminate"
+            color="primary"
+            [strokeWidth]="2"
+            diameter="30"
+          ></mat-progress-spinner>
         </div>
       </mat-step>
     </mat-vertical-stepper>
