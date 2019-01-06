@@ -233,17 +233,29 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
       );
   }
-  clubTagToggle($event, club) {
+  clubTagToggle($event, tagClub) {
     // const taggingClub = { id: club.id, name: club.name };
+    console.log(this.taggedClubs);
+    const club = {
+      name: tagClub.name,
+      id: tagClub.id,
+      tier: tagClub.tier ? tagClub.tier : 'none'
+    };
     if ($event) {
       if (this.taggedClubs.length < 5) {
         this.taggedClubs.push(club);
       }
     } else {
-      const index = this.taggedClubs.indexOf(club);
-      if (index !== -1) {
-        this.taggedClubs.splice(index, 1);
-      }
+      // const index = this.taggedClubs.indexOf(club);
+      const matChedClubs = this.taggedClubs.filter(item => {
+        return item.id !== club.id;
+      });
+      this.taggedClubs = matChedClubs;
+      // if (index !== -1) {
+      //   this.taggedClubs.splice(index, 1);
+      // }
+
+      //TODO = tutorial on finding index from array object and filtering on array object.
     }
   }
 
