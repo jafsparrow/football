@@ -183,9 +183,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   updateUserProfile() {
     this._userProfileUpdating = true;
     const updatedProfile = this.profileForm.value;
-    if (this.mainClub['id']) {
       updatedProfile['mainClub'] = this.mainClub;
-    }
+    
     const taggedClubObject = {};
 
     this.taggedClubs.forEach(item => {

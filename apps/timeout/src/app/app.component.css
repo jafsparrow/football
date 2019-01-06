@@ -24,6 +24,11 @@ mat-sidenav {
   width: 100%;
 }
 
+/* .mat-sidenav-content {
+  position: relative;
+}
 .footer p {
   font-size: 10px;
-}
+  position: absolute;
+  bottom: 0px;
+} */
