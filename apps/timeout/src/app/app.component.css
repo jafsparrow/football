@@ -8,21 +8,21 @@ mat-sidenav {
 }
 
 mat-sidenav {
-  background-color: #ebebeb;
+  /* background-color: #ebebeb; */
 }
 
 .router-outlet {
   max-width: 900px;
   margin: 0px auto;
-  height: 100%;
+  /* height: 100%; */
 }
 
-.footer {
+/* .footer {
   background-color: #eee;
   padding: 20px;
   bottom: 0px;
   width: 100%;
-}
+} */
 
 /* .mat-sidenav-content {
   position: relative;
