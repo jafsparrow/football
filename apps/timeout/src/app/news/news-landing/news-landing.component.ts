@@ -31,15 +31,15 @@ export class NewsLandingComponent implements OnInit, OnDestroy {
     this.userSubscription = this._auth.user$.subscribe(user => {
       if (user) {
         this.user = user;
-        if (user.mainClub && user.mainClub.id) {
-          this.mainClubNews$ = this.newsService
-            .getClubNews(user.mainClub.id, 6)
-            .pipe(
-              tap(news => {
-                return this.updateClubsArrayFromEvents(news);
-              })
-            );
-        }
+        // if (user.mainClub && user.mainClub.id) {
+        //   this.mainClubNews$ = this.newsService
+        //     .getClubNews(user.mainClub.id, 6)
+        //     .pipe(
+        //       tap(news => {
+        //         return this.updateClubsArrayFromEvents(news);
+        //       })
+        //     );
+        // }
 
         if (user.taggedClubs) {
           this.taggedClubNews$ = this.newsService.getTaggedClubNews(user).pipe(

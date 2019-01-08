@@ -2,7 +2,6 @@
   class="user-profile-container"
   *ngIf="(user$ | async) as user; else loading"
 >
-  <button (click)="printMe()">click me</button>
   <form [formGroup]="profileForm" (ngsubmit)="updateUserProfile()">
     <mat-vertical-stepper linear="false" #stepper>
       <mat-step>
@@ -55,6 +54,7 @@
           </mat-form-field>
           <div
             fxLayout="row"
+            fxLayout.sm="column"
             *ngIf="addressDetails?.localBody"
             style="padding:5px"
           >

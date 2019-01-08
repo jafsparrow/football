@@ -45,7 +45,7 @@ export class ClubInfoComponent implements OnInit {
       )
       .subscribe(achievements => {
         this.isLoading = false;
-        console.log(achievements);
+        // console.log(achievements);
         this.achievements = achievements;
       });
   }
