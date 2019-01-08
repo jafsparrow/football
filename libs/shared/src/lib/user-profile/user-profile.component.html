@@ -121,11 +121,11 @@
         <ng-template matStepLabel
           >Update your club and you can also tag other clubs</ng-template
         >
-
+        <!--
         <div>
           നിങ്ങളുടെ ഇഷ്ടപെട്ട ക്ലബ് തിരഞ്ഞെടുക്കുക. ഇഷ്ടപെട്ട ക്ലബിന്റെ
           ന്യൂസുകളും മറ്റും എളുപ്പത്തിൽ ഹോം പേജിൽ വായിക്കാൻ സാധിക്കും
-        </div>
+        </div> -->
         <!-- <div fxLayout="row">
           <mat-form-field fxFlex>
             <input
@@ -145,7 +145,7 @@
             </button>
           </div>
         </div> -->
-        <div class="user-fav-club-container ">
+        <!-- <div class="user-fav-club-container ">
           Your current favourite club is :
           <span class="fav-club-name">{{
             user.mainClub?.name
@@ -157,8 +157,8 @@
             Selected Club is :
             <span class="fav-club-name">{{ mainClub.name }}</span>
           </div>
-        </div>
-        <ais-instantsearch
+        </div> -->
+        <!-- <ais-instantsearch
           [config]="{
             apiKey: 'bb54da3aa3a5f72f9d9bef9137d4548b',
             appId: 'Y5AWSS2ZES',
@@ -239,7 +239,7 @@
           <div *ngIf="isfavClubSearch">
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
-        </ng-template>
+        </ng-template> -->
         <h4>Search for the clubs you wish to tag to your profile</h4>
 
         <div>
@@ -264,7 +264,8 @@
               >
                 <div *ngIf="hits.length === 0">
                   No results found matching <strong>{{ results.query }}</strong
-                  >.
+                  >. if your clubs is not listed, please send us the details
+                  <a routerLink="/registerclub">Register your club</a>
                 </div>
                 <div *ngFor="let hit of hits" style="padding: 5px">
                   <div style="background-color:#eee" fxLayout="row">
@@ -355,7 +356,10 @@
             </button>
           </div> -->
         </div>
-        <div *ngIf="taggedClubs.length > 4" style="background-color: pink">
+        <div
+          *ngIf="taggedClubs.length > 4"
+          style="background-color: pink; padding: 10px"
+        >
           Maximum clubs are tagged already. You can only tag maxium 5 clubs
         </div>
         <div *ngIf="taggedClubs.length > 0">

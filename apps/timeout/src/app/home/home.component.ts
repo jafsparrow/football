@@ -20,14 +20,16 @@ export class HomeComponent implements OnInit {
   news: Array<any>;
   events$: Observable<any[]>;
   news$: Observable<any[]>;
+  taggedNews$: Observable<any[]>;
   isNewsLoading: boolean;
   favNews: Array<any>;
   user: any;
   isFavNewsLoading = true;
   isUserLoggedIn = true;
+  taggedClubsArray = [];
 
   events: EventItem[];
-  homeMessage = { isLoggedIn: false, hasFavClub: false, hasTaggedClubs: false };
+  homeMessage = { isLoggedIn: false, hasFavClub: true, hasTaggedClubs: false };
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
@@ -38,44 +40,60 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // const EVENT_KEY = makeStateKey<any>('events-' + 3);
-    this.events$ = this.authSerivice.user$.pipe(
-      switchMap(user => {
-        //TODO - tried to do server side data transfer for home page. It broke while the transition.
-        // UI is getting broken. fix it later.
-        // if (this.transferState.hasKey(EVENT_KEY)) {
-        //   const events = this.transferState.get<any>(EVENT_KEY, null);
-        //   this.transferState.remove(EVENT_KEY);
-        //   return of(events);
-        // } else {
-        if (user) {
-          // to display a info message for the user that user,
-          // does not have fav or tagged_clubs. it will display on the page
-
-          this.user = user;
-          this.homeMessage.isLoggedIn = true;
-          if (user.mainClub.id) {
-            this.homeMessage.hasFavClub = true;
-          }
-          if (user.taggedClubs) {
-            if (Object.keys(user.taggedClubs).length > 0) {
-              this.homeMessage.hasTaggedClubs = true;
-            }
-          }
-
-          return this.eventService.getEventsForLoggedInUser(user);
-        }
-        // if the user is not logged in, the message should say the following.
-        return this.eventService.getTopeTierClubEvents(10);
-      })
-      // )
-      // .pipe(
-      //   tap(events => {
-      //     if (isPlatformServer(this.platformId)) {
-      //       this.transferState.set(EVENT_KEY, events);
-      //     }
-      //   })
-    );
-
+    this.events$ = this.eventService.getTopeTierClubEvents(10);
     this.news$ = this.newsTeaser.getRecentTenNews();
+
+    this.authSerivice.user$.subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.homeMessage.isLoggedIn = true;
+        if (user.taggedClubs) {
+          const userTaggedClubs = user.taggedClubs;
+          Object.keys(userTaggedClubs).forEach(key => {
+            this.taggedClubsArray.push(userTaggedClubs[key]);
+          });
+          if (Object.keys(user.taggedClubs).length > 0) {
+            this.homeMessage.hasTaggedClubs = true;
+          }
+        }
+      }
+    });
+    // this.events$ = this.authSerivice.user$.pipe(
+    //   switchMap(user => {
+    //     //TODO - tried to do server side data transfer for home page. It broke while the transition.
+    //     // UI is getting broken. fix it later.
+    //     // if (this.transferState.hasKey(EVENT_KEY)) {
+    //     //   const events = this.transferState.get<any>(EVENT_KEY, null);
+    //     //   this.transferState.remove(EVENT_KEY);
+    //     //   return of(events);
+    //     // } else {
+    //     if (user) {
+    //       // to display a info message for the user that user,
+    //       // does not have fav or tagged_clubs. it will display on the page
+
+    //       this.user = user;
+    //       this.homeMessage.isLoggedIn = true;
+    //       if (user.mainClub.id) {
+    //         this.homeMessage.hasFavClub = true;
+    //       }
+    //       if (user.taggedClubs) {
+    //         if (Object.keys(user.taggedClubs).length > 0) {
+    //           this.homeMessage.hasTaggedClubs = true;
+    //         }
+    //       }
+
+    //       return this.eventService.getEventsForLoggedInUser(user);
+    //     }
+    //     // if the user is not logged in, the message should say the following.
+    //     return this.eventService.getTopeTierClubEvents(10);
+    //   })
+    // )
+    // .pipe(
+    //   tap(events => {
+    //     if (isPlatformServer(this.platformId)) {
+    //       this.transferState.set(EVENT_KEY, events);
+    //     }
+    //   })
+    // );
   }
 }

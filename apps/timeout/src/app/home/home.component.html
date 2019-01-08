@@ -39,9 +39,23 @@
   <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
   <br />
 </ng-template>
+
+<div style="padding: 5px" *ngIf="taggedClubsArray.length > 0">
+  <mat-chip-list>
+    <mat-chip
+      color="accent"
+      selected
+      *ngFor="let club of taggedClubsArray"
+      [routerLink]="['/clubinfo', club.id]"
+      >{{ club?.name ? club.name : 'club-name' }}</mat-chip
+    >
+  </mat-chip-list>
+</div>
+
 <div class="section-header">
   News
-  <button mat-icon-button routerLink="/news">
+  <button mat-button routerLink="/news">
+    view more
     <mat-icon class="mat-18">trending_flat</mat-icon>
   </button>
 </div>

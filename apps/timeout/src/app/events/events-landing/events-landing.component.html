@@ -10,12 +10,12 @@
   </mat-chip-list>
 </div>
 <div *ngIf="user">
-  <div *ngIf="(favClubsEvents$ | async) as favevents; else eventLoading">
+  <!-- <div *ngIf="(favClubsEvents$ | async) as favevents; else eventLoading">
     <div class="event-section-header">{{ user?.mainClub?.name }} events.</div>
     <football-events-summary-teaser
       [events]="favevents"
     ></football-events-summary-teaser>
-  </div>
+  </div> -->
 
   <div *ngIf="(taggedClubsEvents$ | async) as tagevents">
     <div class="event-section-header">Recents events from tagged clubs</div>

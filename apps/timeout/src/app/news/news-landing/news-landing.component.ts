@@ -63,12 +63,12 @@ export class NewsLandingComponent implements OnInit, OnDestroy {
   }
 
   private updateClubsArrayFromEvents(news) {
-    // this.clubsArray = this.clubsArray
-    //   .concat(news.map(event => event.mainClub))
-    //   .filter(
-    //     (club, index, arr) =>
-    //       arr.map(item => item['id']).indexOf(club['id']) === index
-    //   );
+    this.clubsArray = this.clubsArray
+      .concat(news.map(event => event.mainClub))
+      .filter(
+        (club, index, arr) =>
+          arr.map(item => item['id']).indexOf(club['id']) === index
+      );
 
     return news;
   }

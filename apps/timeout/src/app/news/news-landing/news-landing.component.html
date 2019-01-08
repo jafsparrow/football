@@ -1,20 +1,27 @@
+<div style="padding: 5px">
+  <mat-chip-list>
+    <mat-chip
+      color="accent"
+      selected
+      *ngFor="let club of clubsArray"
+      [routerLink]="['/clubinfo', club.id]"
+      >{{ club?.name ? club.name : 'club-name' }}</mat-chip
+    >
+  </mat-chip-list>
+</div>
+
 <div *ngIf="user">
-  <div *ngIf="(mainClubNews$ | async) as mainClubNews">
+  <!-- <div *ngIf="(mainClubNews$ | async) as mainClubNews">
     <div class="section-header">
       {{ user.mainClub.name }} News
-      <!--
-        <button mat-icon-button routerLink="list/favclub">
-          <mat-icon class="mat-18">trending_flat</mat-icon>
-        </button>
-      -->
+
     </div>
 
-    <!-- <news-teaser-two [news]="mainClubNews"></news-teaser-two> -->
 
     <football-news-summary-view-teaser
       [news]="mainClubNews"
     ></football-news-summary-view-teaser>
-  </div>
+  </div> -->
 
   <div *ngIf="(taggedClubNews$ | async) as taggedClubNews">
     <div class="section-header">
@@ -30,7 +37,6 @@
     ></football-news-summary-view-teaser>
   </div>
 </div>
-<div *ngFor="let club of clubsArray">{{ club.name }}</div>
 
 <div *ngIf="(recentNews$ | async) as news">
   <div class="section-header">
