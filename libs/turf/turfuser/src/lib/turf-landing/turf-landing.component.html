@@ -1,0 +1,12 @@
+<p>turf-landing works!</p>
+<div fxLayout="row wrap">
+  <mat-card *ngFor="let ground of grounds" fxflex>
+    <a>{{ ground.name }}</a>
+    <div>
+      <small>{{ ground.type }}</small>
+    </div>
+    <button (click)="selected(ground)">View</button>
+  </mat-card>
+</div>
+
+<football-turf-detail [ground]="selectedGround"></football-turf-detail>

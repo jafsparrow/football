@@ -45,5 +45,6 @@ export const routes: Route[] = [
   },
   { path: 'clubinfo/:id', component: ClubInfoComponent },
   { path: 'login', component: TimeoutLoginComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'turf', loadChildren: '@football/turf/turfuser#TurfTurfuserModule' }
 ];

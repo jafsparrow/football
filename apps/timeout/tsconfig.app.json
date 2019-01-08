@@ -4,11 +4,6 @@
     "outDir": "../../dist/out-tsc/apps/timeout",
     "types": []
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ],
-  "include": [
-    "**/*.ts"
-  ]
+  "exclude": ["test.ts", "**/*.spec.ts"],
+  "include": ["**/*.ts", "../../libs/turf/turfuser/src/index.ts"]
 }
