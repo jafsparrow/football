@@ -43,6 +43,9 @@
     },
     "localadmin-e2e": {
       "tags": []
+    },
+    "turf-turfuser": {
+      "tags": []
     }
   }
 }

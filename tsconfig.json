@@ -7,24 +7,40 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@football/news": ["./libs/news/src/index.ts"],
-      "@football/events": ["./libs/events/src/index.ts"],
-      "@football/shared": ["./libs/shared/src/index.ts"],
-      "@football/clubs": ["./libs/clubs/src/index.ts"],
-      "@football/event-ui": ["./libs/event-ui/src/index.ts"],
-      "@football/news-ui": ["./libs/news-ui/src/index.ts"]
+      "@football/news": [
+        "./libs/news/src/index.ts"
+      ],
+      "@football/events": [
+        "./libs/events/src/index.ts"
+      ],
+      "@football/shared": [
+        "./libs/shared/src/index.ts"
+      ],
+      "@football/clubs": [
+        "./libs/clubs/src/index.ts"
+      ],
+      "@football/event-ui": [
+        "./libs/event-ui/src/index.ts"
+      ],
+      "@football/news-ui": [
+        "./libs/news-ui/src/index.ts"
+      ],
+      "@football/turf/turfuser": [
+        "libs/turf/turfuser/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
-  // "files": [
-  //   "./libs/events/src/lib/events.module.ts",
-  //   "./libs/news/src/lib/news.module.ts"
-  // ]
-
-  //  the files section is added on 11 Nov 2018 because of typescript compilation which not sure why happened, this is moved to application
-  // ts.config file as "Include" part.. no errors anymore
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
