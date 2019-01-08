@@ -10,7 +10,7 @@
       >{{ news.mainClub?.name ? news.mainClub?.name : 'Default club' }}</span
     >
     <div class="news-title" [routerLink]="['/news/detail', news.id]">
-      {{ news.title | truncate: 100:true }}
+      {{ news.title | truncate: 150:true }}
     </div>
   </div>
   <!--

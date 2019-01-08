@@ -2,6 +2,7 @@
   class="user-profile-container"
   *ngIf="(user$ | async) as user; else loading"
 >
+  <button (click)="printMe()">click me</button>
   <form [formGroup]="profileForm" (ngsubmit)="updateUserProfile()">
     <mat-vertical-stepper linear="false" #stepper>
       <mat-step>
@@ -52,8 +53,23 @@
               <mat-option value="kerala">kerala</mat-option>
             </mat-select>
           </mat-form-field>
+          <div
+            fxLayout="row"
+            *ngIf="addressDetails?.localBody"
+            style="padding:5px"
+          >
+            <span fxFlex="25">{{ addressDetails?.localBody }}</span>
+            <span *ngIf="addressDetails?.district"
+              >{{ addressDetails?.district }} <strong>district</strong></span
+            >
+            <span
+              ><button mat-button (click)="editLocalBody()" color="primary">
+                Edit
+              </button></span
+            >
+          </div>
 
-          <div>
+          <div *ngIf="_isAddressDetailLocalBodyEditing">
             <mat-form-field>
               <mat-select
                 placeholder="District"
@@ -79,6 +95,7 @@
                 <mat-option value="Grama Panchayat">Grama Panchayat</mat-option>
               </mat-select>
             </mat-form-field>
+
             <span *ngIf="(localBodyForAddress$ | async) as localbodies">
               <span
                 *ngIf="
@@ -435,6 +452,12 @@
           >
             update
           </button>
+          <div
+            *ngIf="!profileForm.valid"
+            style="padding: 5px; background-color: pink"
+          >
+            Please fill up all the required fields.
+          </div>
 
           <mat-progress-spinner
             *ngIf="_userProfileUpdating"

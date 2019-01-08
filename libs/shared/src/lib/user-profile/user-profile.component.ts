@@ -55,6 +55,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   bodyTypeFilterForTaggingClubs$: BehaviorSubject<string | null>;
   taggedClubs = [];
   mainClub = {};
+  addressDetails = {};
+  _isAddressDetailLocalBodyEditing = false;
 
   searchTerm: any;
   searchCriteria = {
@@ -77,16 +79,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ) {
     this.profileForm = this.fb.group({
       fullName: [''],
-      phone: [
-        '',
-        [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]
-      ],
+      phone: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
       bloodGroup: ['', [Validators.required]],
       address: this.fb.group({
-        line1: ['', [Validators.required]],
+        line1: [''],
         line2: [''],
-        district: ['', [Validators.required]],
-        localBody: ['', [Validators.required]]
+        district: [''],
+        localBody: ['']
       })
     });
 
@@ -104,6 +103,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       tap(user => {
         this.profileForm.patchValue(user);
         this.uid = user.uid;
+        this.addressDetails = user.address;
         if (user.mainClub && user.mainClub.id) {
           this.mainClub = user.mainClub;
         }
@@ -125,7 +125,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ).pipe(
       switchMap(([district, bodyType]) => {
         this._localBodiesForAddressLoading = true;
-        // console.log(district, bodyType);
+        console.log(district, bodyType);
         return this.locationService.searchLocalBodies(district, bodyType);
       }),
       tap(res => (this._localBodiesForAddressLoading = false))
@@ -137,6 +137,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ).pipe(
       switchMap(([district, bodyType]) => {
         this._localBodiesForAddressLoading = true;
+
         return this.locationService.searchLocalBodies(district, bodyType);
       }),
       tap(local => (this._localBodiesForAddressLoading = false))
@@ -156,10 +157,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   addressDistrictChange(district) {
     this.selectedBodyTypeForAddress = '';
+    console.log('district changed?');
     this.bodyTypeFilterForAddress$.next(null);
     this.districtFilterForAddress$.next(district);
   }
   addressBodyTypeChange(localBodyType) {
+    console.log('body type address changed?');
     this.bodyTypeFilterForAddress$.next(localBodyType);
   }
 
@@ -212,6 +215,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   get phone() {
     return this.profileForm.get('phone');
   }
+
   searchClubs() {
     this.isTagClubSearch = true;
     if (
@@ -326,6 +330,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return this.mainClub['id'] === hit.id;
     }
     return false;
+  }
+  editLocalBody() {
+    if (this.addressDetails['district']) {
+      this.districtFilterForAddress$.next(this.addressDetails['district']);
+    }
+    if (this.addressDetails['localBodyType']) {
+      this.bodyTypeFilterForAddress$.next(this.addressDetails['localBodyType']);
+    }
+    this._isAddressDetailLocalBodyEditing = true;
+  }
+  // test
+  printMe() {
+    console.log(this.profileForm);
   }
 }
 

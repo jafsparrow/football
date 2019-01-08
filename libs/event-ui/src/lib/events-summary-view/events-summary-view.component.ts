@@ -40,7 +40,7 @@ export class EventsSummaryViewComponent implements OnInit {
   setTheDates() {
     if (this.event && this.event.date) {
       const eventDate = this.event.date.toDate();
-      console.log(eventDate);
+      // console.log(eventDate);
       this.eventDate.available = true;
       this.eventDate.day = eventDate.getDate();
 

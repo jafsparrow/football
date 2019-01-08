@@ -79,7 +79,7 @@ export class EventsCommonService {
       // add the first tier clubs 10 events which are created latest. and push it to the calls array.
       calls.push(this.getTopeTierClubEvents());
       // add users fav clubs events as well.
-      console.log(user);
+      // console.log(user);
       if (user.mainClub.id) {
         calls.push(this.getRecentClubEvents(user.mainClub.id));
       }
@@ -135,7 +135,6 @@ export class EventsCommonService {
             return { id, ...data };
           });
         }),
-        tap(res => console.log(res)),
         take(1)
       );
   }
