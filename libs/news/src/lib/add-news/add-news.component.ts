@@ -140,7 +140,8 @@ export class AddNewsComponent implements OnInit {
           reader.readAsDataURL(result); // read file as data url
           reader.onload = event => {
             // called once readAsDataURL is completed
-            this.imageUrl = event.target.result;
+
+            this.imageUrl = event.target['result'];
           };
         },
         error => {

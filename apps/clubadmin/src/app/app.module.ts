@@ -30,6 +30,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserManagementActionsComponent } from './user-management/user-management-actions/user-management-actions.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgAisModule } from 'angular-instantsearch';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     NewsUiModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgAisModule.forRoot()
   ],
   declarations: [
     AppComponent,
