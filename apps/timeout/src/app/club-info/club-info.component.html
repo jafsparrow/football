@@ -33,7 +33,7 @@
         >
         <div>{{ club.shortName }}</div>
         <div class="address-section">
-          <div *ngIf="club.address.line1">{{ club.address.line1 }}</div>
+          <div *ngIf="club.address?.line1">{{ club.address.line1 }}</div>
           <div *ngIf="club.address.line2">{{ club.address.line2 }}</div>
           <div *ngIf="club.address.location">
             Place: {{ club.address.location }}

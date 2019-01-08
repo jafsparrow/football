@@ -33,6 +33,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   _userProfileUpdating = false;
 
+  _algoliaFavClubShowResults = false;
+
   bldGroups = bloodGroups;
   profileForm: FormGroup;
 
@@ -183,8 +185,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   updateUserProfile() {
     this._userProfileUpdating = true;
     const updatedProfile = this.profileForm.value;
-      updatedProfile['mainClub'] = this.mainClub;
-    
+    updatedProfile['mainClub'] = this.mainClub;
+
     const taggedClubObject = {};
 
     this.taggedClubs.forEach(item => {
@@ -304,6 +306,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.bodyTypeFilterForClubSearch$.unsubscribe();
     this.districtFilterForTaggingClubs$.unsubscribe();
     this.bodyTypeFilterForTaggingClubs$.unsubscribe();
+  }
+
+  // Alogolia search
+  searchChanged(query) {
+    if (query.length) {
+      this._algoliaFavClubShowResults = true;
+    } else {
+      this._algoliaFavClubShowResults = false;
+    }
+  }
+
+  isSelectedClub(hit) {
+    return this.taggedClubs.filter(item => item.id === hit.id).length > 0;
+  }
+
+  isFavouriteClub(hit) {
+    if (this.mainClub['id']) {
+      return this.mainClub['id'] === hit.id;
+    }
+    return false;
   }
 }
 

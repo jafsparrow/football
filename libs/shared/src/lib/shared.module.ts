@@ -20,6 +20,8 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NewsCommonService } from './services/news-common.service';
 
+import { NgAisModule } from 'angular-instantsearch';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { NewsCommonService } from './services/news-common.service';
     MaterialLibraryModule,
     FlexLayoutModule,
     AngularFirestoreModule.enablePersistence(),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    NgAisModule.forRoot()
   ],
   declarations: [
     LoginComponent,

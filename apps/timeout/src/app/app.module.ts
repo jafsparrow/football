@@ -37,6 +37,7 @@ import { EventsListComponent } from './events/events-list/events-list.component'
 import { EventsDetailComponent } from './events/events-detail/events-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +73,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     EventUiModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
   ],
   providers: [{ provide: 'siteType', useValue: evnType }, SeoService],
   bootstrap: [AppComponent]

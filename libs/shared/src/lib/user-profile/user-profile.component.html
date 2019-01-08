@@ -126,7 +126,7 @@
           നിങ്ങളുടെ ഇഷ്ടപെട്ട ക്ലബ് തിരഞ്ഞെടുക്കുക. ഇഷ്ടപെട്ട ക്ലബിന്റെ
           ന്യൂസുകളും മറ്റും എളുപ്പത്തിൽ ഹോം പേജിൽ വായിക്കാൻ സാധിക്കും
         </div>
-        <div fxLayout="row">
+        <!-- <div fxLayout="row">
           <mat-form-field fxFlex>
             <input
               class="full-width"
@@ -144,20 +144,62 @@
               Search
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="user-fav-club-container ">
           Your current favourite club is :
           <span class="fav-club-name">{{
             user.mainClub?.name
               ? user.mainClub.name
               : 'You have
-            not updated your fav club'
+              not updated your fav club'
           }}</span>
           <div *ngIf="mainClub.name">
             Selected Club is :
             <span class="fav-club-name">{{ mainClub.name }}</span>
           </div>
         </div>
+        <ais-instantsearch
+          [config]="{
+            apiKey: 'bb54da3aa3a5f72f9d9bef9137d4548b',
+            appId: 'Y5AWSS2ZES',
+            indexName: 'clubs',
+            routing: true
+          }"
+        >
+          <ais-search-box (change)="searchChanged($event)"></ais-search-box>
+          <ais-hits *ngIf="_algoliaFavClubShowResults">
+            <ng-template
+              let-hits="hits"
+              let-results="results"
+              let-refine="showMore"
+            >
+              <div *ngIf="hits.length === 0">
+                No results found matching <strong>{{ results.query }}</strong
+                >.
+              </div>
+              <div *ngFor="let hit of hits" style="padding: 5px">
+                <div style="background-color:#eee" fxLayout="row">
+                  <div fxFlex style="padding:5px">
+                    <ais-highlight attribute="name" [hit]="hit">
+                    </ais-highlight>
+                    <p style="font-size: 10px">{{ hit.address.location }}</p>
+                  </div>
+                  <div>
+                    <button
+                      mat-raised-button
+                      color="accent"
+                      (click)="updateFavClub(hit)"
+                      [disabled]="isFavouriteClub(hit)"
+                    >
+                      select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ais-hits>
+        </ais-instantsearch>
+
         <div
           *ngIf="
             (favClubSearchResults$ | async) as favclubsearchResults;
@@ -205,7 +247,49 @@
           ക്ലബുകളുടെ ന്യൂസും മറ്റും ഹോം പേജിൽ തന്നെ വായിക്കാൻ സാധിക്കും
         </div>
         <div>
-          <mat-form-field class="full-width">
+          <ais-instantsearch
+            [config]="{
+              apiKey: 'bb54da3aa3a5f72f9d9bef9137d4548b',
+              appId: 'Y5AWSS2ZES',
+              indexName: 'clubs',
+              routing: true
+            }"
+          >
+            <ais-search-box></ais-search-box>
+            <ais-hits>
+              <ng-template
+                let-hits="hits"
+                let-results="results"
+                let-refine="showMore"
+              >
+                <div *ngIf="hits.length === 0">
+                  No results found matching <strong>{{ results.query }}</strong
+                  >.
+                </div>
+                <div *ngFor="let hit of hits" style="padding: 5px">
+                  <div style="background-color:#eee" fxLayout="row">
+                    <div fxFlex style="padding:5px">
+                      <ais-highlight attribute="name" [hit]="hit">
+                      </ais-highlight>
+                      <p style="font-size: 10px">{{ hit.address.location }}</p>
+                    </div>
+                    <div>
+                      <button
+                        mat-raised-button
+                        color="accent"
+                        (click)="clubTagToggle(true, hit)"
+                        [disabled]="isSelectedClub(hit)"
+                      >
+                        select
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ais-hits>
+          </ais-instantsearch>
+
+          <!-- <mat-form-field class="full-width">
             <input
               matInput
               placeholder="Enter the club name to search"
@@ -269,10 +353,10 @@
             <button mat-raised-button (click)="searchClubs()">
               Search Clubs
             </button>
-          </div>
+          </div> -->
         </div>
-        <div *ngIf="taggedClubs.length > 4">
-          You can only tag maxium 5 clubs
+        <div *ngIf="taggedClubs.length > 4" style="background-color: pink">
+          Maximum clubs are tagged already. You can only tag maxium 5 clubs
         </div>
         <div *ngIf="taggedClubs.length > 0">
           <br />
