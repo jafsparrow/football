@@ -61,10 +61,10 @@
 </div>
 <div class="section-header">
   Top Club News
-  <button mat-button routerLink="/news">
+  <!-- <button mat-button routerLink="/news">
     view more
     <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
+  </button> -->
 </div>
 
 <div *ngIf="(news$ | async) as news; else newsLoading">
@@ -78,10 +78,10 @@
 
 <div class="section-header">
   Events
-  <button mat-button routerLink="/events">
+  <!-- <button mat-button routerLink="/events">
     view more
     <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
+  </button> -->
 </div>
 
 <football-events-summary-teaser

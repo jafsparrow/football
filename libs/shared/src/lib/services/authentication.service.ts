@@ -13,23 +13,30 @@ import { User } from '../modal/user';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  user: BehaviorSubject<any> = new BehaviorSubject(null);
-  user$: Observable<any>;
+  user$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   email = 'jafar@test.com';
   password = 'jafrose';
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
-    console.log('construction of service');
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-        console.log('auth subscription now');
-        console.log(user);
-        if (user) {
-          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+    this.afAuth.authState
+      .pipe(
+        switchMap(user => {
+          console.log('auth state changed');
+          // console.log(user);
+          if (user) {
+            return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(userinfo => {
+        if (userinfo) {
+          this.user$.next(userinfo);
         } else {
-          return of(null);
+          this.user$.next(null);
         }
-      })
-    );
+      });
   }
 
   login(): Promise<any> {
