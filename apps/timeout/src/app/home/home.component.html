@@ -21,22 +21,6 @@
     </div>
   </ng-template>
 </div>
-<div class="section-header">
-  News
-  <button mat-button routerLink="/news">
-    view more
-    <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
-</div>
-
-<div *ngIf="(news$ | async) as news; else newsLoading">
-  <football-news-summary-view-teaser [news]="news">
-  </football-news-summary-view-teaser>
-</div>
-
-<ng-template #newsLoading>
-  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-</ng-template>
 
 <div style="padding: 5px" *ngIf="taggedClubsArray.length > 0">
   <mat-chip-list>
@@ -49,13 +33,55 @@
     >
   </mat-chip-list>
 </div>
+<div *ngIf="user">
+  <div *ngIf="(taggedClubNews$ | async) as taggedClubNews">
+    <div class="section-header">News from selected clubs</div>
+    <football-news-summary-view-teaser
+      [news]="taggedClubNews"
+    ></football-news-summary-view-teaser>
+  </div>
+</div>
+<div *ngIf="user">
+  <div class="section-header">Events from selected clubs</div>
+  <div *ngIf="(taggedClubsEvents$ | async) as tagevents">
+    <football-events-summary-teaser
+      [events]="tagevents"
+    ></football-events-summary-teaser>
+  </div>
+</div>
+<div style="padding: 5px" *ngIf="clubsArray.length > 0">
+  <mat-chip-list>
+    <mat-chip
+      selected
+      *ngFor="let club of clubsArray"
+      [routerLink]="['/clubinfo', club.id]"
+      >{{ club?.name ? club.name : 'club-name' }}</mat-chip
+    >
+  </mat-chip-list>
+</div>
+<div class="section-header">
+  Top Club News
+  <!-- <button mat-button routerLink="/news">
+    view more
+    <mat-icon class="mat-18">trending_flat</mat-icon>
+  </button> -->
+</div>
+
+<div *ngIf="(news$ | async) as news; else newsLoading">
+  <football-news-summary-view-teaser [news]="news">
+  </football-news-summary-view-teaser>
+</div>
+
+<ng-template #newsLoading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>
 
 <div class="section-header">
   Events
-  <button mat-button routerLink="/events">
+  <!-- <button mat-button routerLink="/events">
     view more
     <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button>
+  </button> -->
 </div>
 
 <football-events-summary-teaser

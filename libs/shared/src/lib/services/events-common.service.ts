@@ -48,7 +48,7 @@ export class EventsCommonService {
   }
 
   public getRecentClubEvents(club_ID: string, limit = 5) {
-    console.log(club_ID);
+    // console.log(club_ID);
     return this.db
       .collection('events', ref => ref.where('mainClub.id', '==', club_ID))
       .snapshotChanges()

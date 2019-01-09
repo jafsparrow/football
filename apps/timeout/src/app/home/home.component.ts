@@ -1,12 +1,19 @@
 import {
   AuthenticationService,
   NewsTeaserService,
-  EventsCommonService
+  EventsCommonService,
+  NewsCommonService
 } from '@football/shared';
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  Inject,
+  OnDestroy
+} from '@angular/core';
 import { EventItem } from '@football/events';
 import { switchMap, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
@@ -16,7 +23,11 @@ import { isPlatformServer } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  userSubscription: Subscription;
+  taggedClubNews$: Observable<any[]>;
+  taggedClubsEvents$: Observable<any[]>;
+  clubsArray = [];
   news: Array<any>;
   events$: Observable<any[]>;
   news$: Observable<any[]>;
@@ -33,6 +44,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private authSerivice: AuthenticationService,
     private newsTeaser: NewsTeaserService,
+    public newsService: NewsCommonService,
     private eventService: EventsCommonService // @Inject(PLATFORM_ID) private platformId, // private transferState: TransferState
   ) {
     this.isNewsLoading = true;
@@ -40,19 +52,30 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // const EVENT_KEY = makeStateKey<any>('events-' + 3);
-    this.events$ = this.eventService.getTopeTierClubEvents(10);
-    this.news$ = this.newsTeaser.getRecentTenNews();
+    this.events$ = this.eventService
+      .getTopeTierClubEvents(10)
+      .pipe(tap(items => this.updateClubsArray(items)));
+    this.news$ = this.newsTeaser
+      .getRecentTenNews()
+      .pipe(tap(items => this.updateClubsArray(items)));
 
-    this.authSerivice.user$.subscribe(user => {
+    this.userSubscription = this.authSerivice.user$.subscribe(user => {
       if (user) {
         this.user = user;
         this.homeMessage.isLoggedIn = true;
         if (user.taggedClubs) {
           const userTaggedClubs = user.taggedClubs;
-          Object.keys(userTaggedClubs).forEach(key => {
-            this.taggedClubsArray.push(userTaggedClubs[key]);
-          });
           if (Object.keys(user.taggedClubs).length > 0) {
+            // if there are tagged clubs, get the news.
+            this.taggedClubNews$ = this.newsService.getTaggedClubNews(user);
+            this.taggedClubsEvents$ = this.eventService.getTaggedClubsEvents(
+              user
+            );
+
+            Object.keys(userTaggedClubs).forEach(key => {
+              this.taggedClubsArray.push(userTaggedClubs[key]);
+            });
+
             this.homeMessage.hasTaggedClubs = true;
           }
         }
@@ -95,5 +118,19 @@ export class HomeComponent implements OnInit {
     //     }
     //   })
     // );
+  }
+
+  private updateClubsArray(items) {
+    this.clubsArray = this.clubsArray
+      .concat(items.map(event => event.mainClub))
+      .filter(
+        (club, index, arr) =>
+          arr.map(item => item['id']).indexOf(club['id']) === index
+      );
+
+    return items;
+  }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
   }
 }
