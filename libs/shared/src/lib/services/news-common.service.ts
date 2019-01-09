@@ -65,7 +65,7 @@ export class NewsCommonService {
       taggedClubs = Object.keys(user.taggedClubs);
     }
 
-    console.log(taggedClubs);
+    // console.log(taggedClubs);
     const calls = [];
     for (const fav of taggedClubs) {
       calls.push(this.getNewsForClub(fav));

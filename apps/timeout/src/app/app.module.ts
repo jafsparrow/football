@@ -4,7 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { routes } from './routes';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { SharedModule, MaterialLibraryModule } from '@football/shared';
+import {
+  SharedModule,
+  MaterialLibraryModule,
+  AuthenticationService
+} from '@football/shared';
 import {
   BrowserModule,
   BrowserTransferStateModule
@@ -36,7 +40,6 @@ import { EventsLandingComponent } from './events/events-landing/events-landing.c
 import { EventsListComponent } from './events/events-list/events-list.component';
 import { EventsDetailComponent } from './events/events-detail/events-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
 
 @NgModule({
   declarations: [
@@ -73,7 +76,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     EventUiModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    }),
+    })
   ],
   providers: [{ provide: 'siteType', useValue: evnType }, SeoService],
   bootstrap: [AppComponent]
