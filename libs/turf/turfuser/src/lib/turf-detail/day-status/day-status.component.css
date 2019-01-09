@@ -1,0 +1,7 @@
+.timeslot {
+  border-radius: 5px;
+  border: 2px dashed #eee;
+  padding: 15px;
+  padding-top: 20px;
+  margin: 5px;
+}

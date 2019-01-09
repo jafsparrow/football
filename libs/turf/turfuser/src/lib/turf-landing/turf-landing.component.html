@@ -1,12 +1,31 @@
-<p>turf-landing works!</p>
-<div fxLayout="row wrap">
-  <mat-card *ngFor="let ground of grounds" fxflex>
-    <a>{{ ground.name }}</a>
-    <div>
-      <small>{{ ground.type }}</small>
+<mat-card>
+  <div class="turf-details-container" fxLayout="column">
+    <div class="turf-name">Football Hut</div>
+
+    <div fxLayout="row">
+      <div class="description" fxflex="40">
+        We provide good quality surface with refreshment facilities. Lorem ipsum
+        dolor sit amet consectetur, adipisicing elit. Quia labore voluptas
+        dolores delectus enim fugit! Adipisci totam quibusdam quis aperiam in
+        esse fugiat velit, itaque dicta, officiis deleniti, nostrum eos.
+      </div>
+      <div class="contact-details" fxFlex="30">
+        <strong>PLACE: </strong> Vengara <br />
+        <strong>PHONE: </strong> 993393894
+      </div>
     </div>
-    <button (click)="selected(ground)">View</button>
-  </mat-card>
-</div>
+  </div>
+  <div class="ground-header"><h2>Our Grounds</h2></div>
+  <div fxLayout="row wrap">
+    <div *ngFor="let ground of grounds" class="ground-container" fxFlex>
+      <a>{{ ground.name }}</a>
+      <div>
+        <small>{{ ground.type }}</small>
+      </div>
+      <button mat-button (click)="(onClick)">Check Availability</button>
+      <button mat-button (click)="(onClick)">Book</button>
+    </div>
+  </div>
+</mat-card>
 
 <football-turf-detail [ground]="selectedGround"></football-turf-detail>

@@ -1,3 +1,4 @@
+import { BookingComponent } from './booking/booking.component';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import {
   FormControl,
@@ -6,6 +7,7 @@ import {
   FormGroup
 } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'football-turf-detail',
@@ -20,7 +22,11 @@ export class TurfDetailComponent implements OnInit, OnChanges {
   _groundId = '6AOTEwrKh3zMtm9LRFd3';
 
   $groundBooking: any;
-  constructor(private _fb: FormBuilder, private _db: AngularFirestore) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _db: AngularFirestore,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.bookGroundFrom = this._fb.group({
@@ -42,6 +48,19 @@ export class TurfDetailComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this._isLoading = false;
     }, 2000);
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(BookingComponent, {
+      width: '600px',
+      data: {
+        groundName: 'test',
+        date: new Date()
+      }
+    });
+    // dialogRef.disableClose = true;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   changeInput($event) {

@@ -1,0 +1,37 @@
+<mat-card>
+  <p>Select a date to check availability</p>
+  <div fxLayout="row">
+    <div fxFlex="50">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Choose a date"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" (click)="(onClick)">
+        Check Availability
+      </button>
+    </div>
+  </div>
+  <div
+    class="timeslot"
+    fxLayout="row"
+    *ngFor="let timeRange of sample.split('')"
+  >
+    <div fxFlex>
+      10 AM
+      <span
+        ><small><strong> - </strong></small></span
+      >11 AM
+    </div>
+    <mat-chip-list>
+      <mat-chip color="#cac" (click)="openBookingForm()"> booked </mat-chip>
+    </mat-chip-list>
+  </div>
+</mat-card>

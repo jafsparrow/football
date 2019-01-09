@@ -1,0 +1,60 @@
+<mat-card>
+  <div>Booking for the ground 5s</div>
+
+  <form [formGroup]="bookGroundFrom">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" value="Sushi" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="Phone"
+        value="Sushi"
+        type="tel"
+        formControlName="phone"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        formControlName="date"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="time"
+        id="appt"
+        placeholder="Start Time"
+        name="appt"
+        required
+        (change)="changeInput($event)"
+        formControlName="startTime"
+      />
+      <mat-hint align="start"><strong>Select Start time</strong> </mat-hint>
+      <mat-hint align="end">eg: 10:00 AM</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="time"
+        id="appt"
+        placeholder="End Time"
+        name="appt"
+        required
+        (change)="changeInput()"
+        formControlName="endTime"
+      />
+      <mat-hint align="start"><strong>Select End time</strong> </mat-hint>
+      <mat-hint align="end">eg: 11:00 AM</mat-hint>
+    </mat-form-field>
+
+    <button mat-button (click)="btnClck()">Submit</button>
+  </form>
+</mat-card>
