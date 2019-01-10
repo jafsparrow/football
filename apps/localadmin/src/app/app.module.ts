@@ -15,6 +15,11 @@ import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClubAdminManagementComponent } from './club-admin-management/club-admin-management.component';
 import { SuperAdminManagementComponent } from './super-admin-management/super-admin-management.component';
+import { AssignClubadminComponent } from './assign-clubadmin/assign-clubadmin.component';
+import { NgAisModule } from 'angular-instantsearch';
+import { LocaladminClubSearchModalComponent } from './localadmin-club-search-modal/localadmin-club-search-modal.component';
+
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -25,7 +30,8 @@ const routes: Routes = [
   { path: 'club', component: ClubRequestsComponent },
   { path: 'detail/:id', component: ClubDetailComponent },
   { path: 'adminuser', component: ClubAdminManagementComponent },
-  { path: 'superadmin', component: SuperAdminManagementComponent }
+  { path: 'superadmin', component: SuperAdminManagementComponent },
+  { path: 'assignadmin', component: AssignClubadminComponent }
 ];
 @NgModule({
   declarations: [
@@ -35,7 +41,9 @@ const routes: Routes = [
     ClubRequestsComponent,
     ClubDetailComponent,
     ClubAdminManagementComponent,
-    SuperAdminManagementComponent
+    SuperAdminManagementComponent,
+    AssignClubadminComponent,
+    LocaladminClubSearchModalComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +52,12 @@ const routes: Routes = [
     NxModule.forRoot(),
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     AngularFireModule.initializeApp(environment.firebase),
-    SharedModule
+    SharedModule,
+    NgAisModule.forRoot(),
+    MatDialogModule
   ],
   providers: [{ provide: 'siteType', useValue: evnType }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LocaladminClubSearchModalComponent]
 })
 export class AppModule {}

@@ -194,11 +194,11 @@ export class LocalAdminService {
       .valueChanges();
   }
 
-  updateUserAccess(user, role, clubId) {
+  updateUserAccess(user, role, clubId, clubName) {
     return this.db
       .collection('users')
       .doc(user.uid)
-      .update({ permission: { role: role, clubId: clubId } });
+      .update({ permission: { role: role, clubId: clubId, club: clubName } });
   }
 
   removedUserAccess(user) {

@@ -1,0 +1,138 @@
+<mat-card style="overflow: hidden">
+  <div *ngIf="selectedClub; else noClubSelected">
+    <div class="club-detail-container">
+      <div class="club-name">{{ selectedClub?.name }}</div>
+      <div><strong>Club Code :</strong> {{ selectedClub?.codeNumber }}</div>
+      <div><strong>Short Name :</strong> {{ selectedClub?.shortName }}</div>
+    </div>
+    <div fxLayout="row" fxLayout.sm="column">
+      <div fxFlex class="user-list-container">
+        <mat-card class="user-list">
+          <p>Enter the email to search the user</p>
+          <mat-form-field class="example-full-width">
+            <input
+              type="email"
+              matInput
+              placeholder="enter email"
+              #searchInput
+            />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            (click)="searchUserByEmail(searchInput.value)"
+            color="primary"
+          >
+            Search
+          </button>
+
+          <div *ngIf="_searchingForUser">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+          <div
+            class="user-result-container"
+            *ngIf="
+              searchedUser && searchedUser.displayName;
+              else noUserSearched
+            "
+          >
+            <div class="user-name">
+              {{
+                searchedUser.fullName
+                  ? searchedUser.fullName
+                  : searchedUser.displayName
+              }}
+            </div>
+            <br />
+            <div><strong>Phone: </strong> {{ searchedUser.phone }}</div>
+            <div><strong>Phome: </strong> {{ searchedUser.phone }}</div>
+            <div>
+              <div
+                style="padding: 5px"
+                *ngIf="searchedUser.taggedClubArray as tags"
+              >
+                <mat-chip-list>
+                  <mat-chip color="accent" selected *ngFor="let club of tags">{{
+                    club?.name ? club.name : 'club-name'
+                  }}</mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+            <div *ngIf="searchedUser.permission as userRole">
+              <p><strong>Club Name: </strong>{{ userRole.club }}</p>
+              <p><strong>Role : </strong>{{ userRole.role }}</p>
+
+              <div
+                style="padding: 20px; background-color: pink"
+                *ngIf="userRole.role === 'admin'"
+              >
+                User is already an admin to a {{ userRole.club }}. Giving
+                permission will remove current permission and will set as new
+                club admin.
+              </div>
+            </div>
+            <div>
+              <button mat-raised-button (click)="grantAccess()" color="primary">
+                Make him Admin
+              </button>
+            </div>
+          </div>
+
+          <ng-template #noUserSearched>
+            <div style="padding: 20px; padding-top: 50px; font-weight: 100">
+              No user is selected or doesn't exist, please search with email
+              address.
+            </div>
+          </ng-template>
+        </mat-card>
+      </div>
+      <div fxFlex class="user-list-container">
+        <mat-card class="user-list">
+          <mat-card-title> Current admins. </mat-card-title>
+
+          <div
+            class="admin-user-list-container"
+            *ngIf="adminUserArr.length > 0; else noAdminMappedYet"
+          >
+            <div
+              class="admin-user-item"
+              fxLayout="row"
+              *ngFor="let admin of adminUserArr"
+            >
+              <div class="user-name" fxFlex="40">Jafar</div>
+              <div class="phone" fxFlex="30">
+                <strong>Phone: </strong>93438493
+              </div>
+              <div class="action" fxFlex>
+                <button
+                  mat-raised-button
+                  (click)="revokeAccess(admin)"
+                  color="primary"
+                >
+                  Revoke Access
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #noAdminMappedYet>
+            <div style="padding:20px; font-weight: 100">
+              No admin has been assigned for this club.
+            </div>
+          </ng-template>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noClubSelected>
+    <div style="height: 100%; padding: 30px; font-size: 30px; font-weight: 100">
+      You have not selected any club to admin. Please click on 'Search Club'
+      button.
+    </div>
+  </ng-template>
+</mat-card>
+
+<button mat-fab (click)="openDialog()" color="accent" class="fab-button">
+  <mat-icon class="mat-18">search</mat-icon>
+</button>

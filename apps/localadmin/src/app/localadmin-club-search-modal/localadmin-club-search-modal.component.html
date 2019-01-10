@@ -1,0 +1,36 @@
+<ais-instantsearch
+  [config]="{
+    apiKey: 'bb54da3aa3a5f72f9d9bef9137d4548b',
+    appId: 'Y5AWSS2ZES',
+    indexName: 'clubs',
+    routing: true
+  }"
+>
+  <ais-search-box></ais-search-box>
+  <ais-hits>
+    <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+      <div *ngIf="hits.length === 0">
+        No results found matching <strong>{{ results.query }}</strong
+        >. if your clubs is not listed, please send us the details
+        <a routerLink="/registerclub">Register your club</a>
+      </div>
+      <div *ngFor="let hit of hits" style="padding: 5px">
+        <div style="background-color:#eee" fxLayout="row">
+          <div fxFlex style="padding:5px">
+            <ais-highlight attribute="name" [hit]="hit"> </ais-highlight>
+            <p style="font-size: 10px">{{ hit.address.location }}</p>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="onClubSelection(hit)"
+            >
+              Load Club Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ais-hits>
+</ais-instantsearch>

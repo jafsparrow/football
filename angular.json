@@ -458,7 +458,9 @@
               "apps/localadmin/src/assets"
             ],
             "styles": [
-              "apps/localadmin/src/styles.css"
+              "apps/localadmin/src/styles.css",
+              "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
+              "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css"
             ],
             "scripts": []
           },

@@ -153,7 +153,12 @@ export class SuperAdminManagementComponent implements OnInit {
       console.log(this.selectedClub);
       // console.log(user);
       this.localAdminService
-        .updateUserAccess(user, 'admin', this.selectedClub.id)
+        .updateUserAccess(
+          user,
+          'admin',
+          this.selectedClub.id,
+          this.selectedClub.name
+        )
         .then(() => {
           this.submitting = false;
           console.log('editor access updated');
