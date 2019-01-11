@@ -99,9 +99,11 @@
               fxLayout="row"
               *ngFor="let admin of adminUserArr"
             >
-              <div class="user-name" fxFlex="40">Jafar</div>
+              <div class="user-name" fxFlex="40">
+                {{ admin.fullName ? admin.fullName : admin.displayName }}
+              </div>
               <div class="phone" fxFlex="30">
-                <strong>Phone: </strong>93438493
+                <strong>Phone: </strong>{{ admin.phone }}
               </div>
               <div class="action" fxFlex>
                 <button

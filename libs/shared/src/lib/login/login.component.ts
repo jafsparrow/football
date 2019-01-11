@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit, OnChanges {
     this.auth.user$.subscribe(user => {
       if (user) {
         this.user = user;
+
+        console.log(this.loginRole);
         // check if the login site is admin or timeout normal user
         if (this.loginRole.toLowerCase() === 'admin') {
           if (this.auth.canLogin(user, 'admin')) {
@@ -80,11 +82,17 @@ export class LoginComponent implements OnInit, OnChanges {
   // checking if the login site is admin, if so only admin authenticated user should get in, to make the login component more generic.
   checkLoginEligibility(user, siteType) {
     if (this.loginRole.toLowerCase() === 'admin') {
-      if (this.auth.canLogin(user, 'admin')) {
-        return true;
-      } else {
-        return false;
-      }
+      // problem is after using behavior subject for checking the auth state, the value is still emitted null after
+      // login because it takes a short time to get the next value of user emited by the behavior subjet but the following
+      // code is ran before ran with user as null; that is breaking the app. as it is only affecting the admin user only doing the delay
+      // inside admin check
+      setTimeout(() => {
+        if (this.auth.canLogin(user, 'admin')) {
+          return true;
+        } else {
+          return false;
+        }
+      }, 2000);
     }
 
     return true;

@@ -1,4 +1,4 @@
-import { ClubAdminOnlyGuard } from './../../../../libs/shared/src/lib/guards/club-admin-only.guard';
+import { ClubAdminOnlyGuard } from '@football/shared';
 import { NewsListComponent } from './news/news-list/news-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ClubInfoComponent } from './club-info/club-info.component';
@@ -46,17 +46,17 @@ const routes: Routes = [
         path: 'club',
         canActivate: [ClubManagementGuard, ClubAdminOnlyGuard],
         component: ClubInfoComponent
-      },
-      {
-        path: 'dashboard',
-        canActivate: [ClubManagementGuard],
-        component: DashboardComponent
-      },
-      {
-        path: 'user',
-        canActivate: [ClubAdminOnlyGuard],
-        component: UserManagementComponent
       }
+      // {
+      //   path: 'dashboard',
+      //   canActivate: [ClubManagementGuard],
+      //   component: DashboardComponent
+      // },
+      // {
+      //   path: 'user',
+      //   canActivate: [ClubAdminOnlyGuard],
+      //   component: UserManagementComponent
+      // }
     ]
   }
 ];

@@ -91,6 +91,7 @@ export class AuthenticationService {
   // This will look into the permission document of the user and returns the role assigned and club
   canLogin(user, siteType: string) {
     if (siteType.toLowerCase() === 'admin') {
+      console.log(user);
       if (user && user.permission) {
         // console.log(user.permission)
         if (

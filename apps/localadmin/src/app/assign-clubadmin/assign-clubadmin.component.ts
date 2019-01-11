@@ -127,10 +127,15 @@ export class AssignClubadminComponent implements OnInit {
       )
     ) {
       this.submitting = true;
-      console.log(this.selectedClub);
+      // console.log(this.selectedClub);
       // console.log(user);
       this.localAdminService
-        .updateUserAccess(user, 'admin', this.clubId, 'Base Perumbavoor')
+        .updateUserAccess(
+          user,
+          'admin',
+          this.selectedClub.id,
+          this.selectedClub.name
+        )
         .then(() => {
           this.submitting = false;
           console.log('editor access updated');

@@ -13,8 +13,7 @@ export class HomeComponent implements OnInit {
   sideNavOptions: NavRoute[] = [
     { name: 'My Club Info', route: '/club' },
     { name: 'News', route: '/news', icon: 'more' },
-    { name: 'Events', route: '/events', icon: 'publish' },
-    { name: 'User Management', route: '/user', icon: 'publish' }
+    { name: 'Events', route: '/events', icon: 'publish' }
   ];
   constructor(
     public auth: AuthenticationService,
