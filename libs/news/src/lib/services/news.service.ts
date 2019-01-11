@@ -5,7 +5,7 @@ import {
   AngularFirestore
 } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { map, take, tap, finalize } from 'rxjs/operators';
+import { map, take, tap, finalize, switchMap } from 'rxjs/operators';
 import { FileUpload } from '../modals/upload-file';
 import { Observable, forkJoin } from 'rxjs';
 import { News } from '../modals/news';
@@ -123,9 +123,12 @@ export class NewsService {
     // console.log('upload image service function and the file is');
     // console.log(upload);
     const task = storageRef.put(upload);
-    return task.snapshotChanges().pipe(uploadTask => {
-      return storageRef.getDownloadURL();
-    });
+    return task.snapshotChanges().pipe(
+      switchMap(uploadTask => {
+        // console.log(uploadTask);
+        return storageRef.getDownloadURL();
+      })
+    );
   }
   updateNews(news, id = '') {
     return this.db

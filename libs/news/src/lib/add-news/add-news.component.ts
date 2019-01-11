@@ -270,7 +270,9 @@ export class AddNewsComponent implements OnInit {
         switchMap(result => {
           console.log('result', result);
           const uploadImage = new File([result], result.name);
-          return this.newService.uploadNewsImage(uploadImage);
+          return this.newService
+            .uploadNewsImage(uploadImage)
+            .pipe(tap(url => console.log(url)));
         })
       );
       // return this.ng2ImgMax.resizeImage(selectedImage, 600, 300).subscribe(
