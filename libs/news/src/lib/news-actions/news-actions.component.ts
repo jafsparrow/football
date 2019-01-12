@@ -99,6 +99,7 @@ export class NewsActionsComponent implements OnInit, OnChanges, OnDestroy {
   deleteNews() {
     if (confirm('Do you want to delete this news..? ')) {
       this.newsService.deleteNews(this.news).then(res => {
+        console.log('news has been deleted', res);
         this._router.navigate(['news']);
       });
     }

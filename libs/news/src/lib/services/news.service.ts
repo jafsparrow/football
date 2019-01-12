@@ -116,18 +116,29 @@ export class NewsService {
   }
 
   uploadNewsImage(upload: any) {
-    const storageRef = this.firebaseStorage.ref(
-      `${this.basePath}/${upload.name}`
-    );
+    const fileName = Math.ceil(Math.random() * 10000).toString() + upload.name;
+    const storageRef = this.firebaseStorage.ref(`${this.basePath}/${fileName}`);
+    console.log('jafar4 befoe downloadurl ref call');
+    console.log(storageRef.getDownloadURL());
     // const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
     // console.log('upload image service function and the file is');
     // console.log(upload);
     const task = storageRef.put(upload);
+
     return task.snapshotChanges().pipe(
-      switchMap(uploadTask => {
-        // console.log(uploadTask);
+      finalize(() => {
+        console.log(
+          'jafar3 observalabe finishes waiting fiznalia',
+          storageRef.getDownloadURL()
+        );
         return storageRef.getDownloadURL();
       })
+      // switchMap(uploadTask => {
+      //   // console.log(uploadTask);
+      //   return storageRef.getDownloadURL();
+      // }
+
+      // )
     );
   }
   updateNews(news, id = '') {
@@ -237,9 +248,10 @@ export class NewsService {
 
   updateNewsStatus(news, status) {
     // if news is getting published. publish date has to be added along.
+    const publishedDate = new Date();
     const data =
       status === 'published'
-        ? { status: status, publishedDate: Date() }
+        ? { status: status, publishedDate }
         : { status: status };
     return this.db
       .collection('news')

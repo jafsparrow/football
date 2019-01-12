@@ -18,6 +18,7 @@ import { switchMap, finalize, tap } from 'rxjs/operators';
 
 // image resize
 import { Ng2ImgMaxService } from 'ng2-img-max';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'news-add',
@@ -25,11 +26,12 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
   styleUrls: ['./add-news.component.css']
 })
 export class AddNewsComponent implements OnInit {
+  downloadURL$: Observable<null | string>;
   editorConfig = editorConfiguation;
   user;
   submitting = false;
   isEditing = false;
-  selectedFiles: FileList | null;
+  selectedFiles: FileList | null = null;
   createdNewsKey: any = null; // same varible is used to store key of new while it is editing. so it is refered in updateNews() method as well.
   // Declare 3 sections with 2 separate forms 1- news content, 2- tagged clubs and sports type, 3- upload image - this doesn't need a form.
   articleAddFrom: FormGroup;
@@ -69,7 +71,8 @@ export class AddNewsComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private auth: AuthenticationService,
-    private ng2ImgMax: Ng2ImgMaxService
+    private ng2ImgMax: Ng2ImgMaxService,
+    private storage: AngularFireStorage
   ) {
     // console.log('news add component');
     this.articleAddFrom = this.buildForm();
@@ -199,7 +202,68 @@ export class AddNewsComponent implements OnInit {
       }
     }
   }
-  submitNews() {
+
+  uploadAndCreateNews() {
+    this.submitting = true;
+    console.log('jafar1 calling upload and create');
+    // check if there are files.
+    if (this.selectedFiles && this.selectedFiles.length === 1) {
+      const selectedImage = this.selectedFiles[0];
+      console.log(selectedImage);
+      // compress the file.
+      this.ng2ImgMax
+        .resizeImage(selectedImage, 600, 10000)
+        .pipe(
+          switchMap(result => {
+            console.log('compressed', result);
+            const file = new File([result], result.name);
+            const filePath = '/news/images';
+            const fileRef = this.storage.ref(filePath);
+            const task = this.storage.upload(filePath, file);
+
+            // observe percentage changes
+            // this.uploadPercent = task.percentageChanges();
+            // get notified when the download URL is available
+            return task.snapshotChanges().pipe(
+              finalize(() =>
+                fileRef.getDownloadURL().subscribe(imageUrl => {
+                  this.submitNews(imageUrl);
+                })
+              )
+            );
+          })
+        )
+        .subscribe();
+    } else {
+      // this is where the news without any image selected.
+      this.submitNews();
+    }
+  }
+
+  submitNews(imageUrl = null) {
+    console.log('calling submit 2 again');
+    this.submitting = true;
+    const newsItem = this.newsObject;
+    newsItem['image'] = '';
+    if (imageUrl) {
+      newsItem['image'] = imageUrl;
+    }
+    newsItem['status'] = 'draft';
+    newsItem['mainClub'] = {
+      id: this.user.permission.clubId,
+      name: this.user.permission.club,
+      tier: this.user.permission.tier ? this.user.permission.tier : 'none'
+    };
+
+    this.newService.createNews(newsItem).then(res => {
+      console.log(res);
+      this.route.navigate(['/news/view', res.id]);
+    });
+  }
+
+  // this method has a bug, image is not uploaded in some cases.
+  //  changed the method submitNews(), this will be deprecated after sometime.
+  submitNewsOld() {
     this.submitting = true;
     const newsItem = this.newsObject;
     newsItem['image'] = '';
@@ -215,7 +279,11 @@ export class AddNewsComponent implements OnInit {
         // save the news id in a local variable.
         this.createdNewsKey = res.id;
         if (this.selectedFiles && this.selectedFiles.length === 1) {
+          console.log('news has been created.', this.createdNewsKey);
           this.uploadImage().subscribe(downLoadUrl => {
+            console.log('jafar 1', downLoadUrl);
+
+            console.log('downlaod url', downLoadUrl.getDownloadUrl());
             if (downLoadUrl) {
               this.updateNewsImage(downLoadUrl).then(() => {
                 this.submitting = false;
@@ -232,6 +300,7 @@ export class AddNewsComponent implements OnInit {
       }
     });
   }
+
   updateNews() {
     this.submitting = true;
     // string down the image property from newsOjbect.
@@ -242,34 +311,39 @@ export class AddNewsComponent implements OnInit {
       .updateNews(this.newsObject, this.createdNewsKey)
       .then(() => {
         if (this.selectedFiles && this.selectedFiles.length === 1) {
-          this.uploadImage().subscribe(downLoadUrl => {
-            if (downLoadUrl) {
-              this.updateNewsImage(downLoadUrl).then(() => {
+          this.uploadImage().subscribe(
+            downLoadUrl => {
+              if (downLoadUrl) {
+                this.updateNewsImage(downLoadUrl).then(() => {
+                  this.submitting = false;
+                  this.route.navigate(['/news/view', this.createdNewsKey]);
+                });
+              } else {
+                console.log('error in upload the file.');
                 this.submitting = false;
-                this.route.navigate(['/news/view', this.createdNewsKey]);
-              });
-            } else {
-              console.log('error in upload the file.');
-              this.submitting = false;
-            }
-          });
+              }
+            },
+            error => console.log(error)
+          );
         } else {
           console.log('no files are selected to upload.');
           this.submitting = false;
         }
       });
   }
+
   uploadImage() {
     const file = this.selectedFiles;
     if (file && file.length === 1) {
-      // console.log('upload image fucntion.');
-      // console.log(file.item(0));
+      console.log('upload image fucntion.');
+      console.log(file.item(0));
       // const currentUpload: FileUpload = new FileUpload(file.item(0));
       const selectedImage = file[0];
       return this.ng2ImgMax.resizeImage(selectedImage, 600, 10000).pipe(
         switchMap(result => {
           console.log('result', result);
           const uploadImage = new File([result], result.name);
+          console.log('uploading short image', uploadImage);
           return this.newService
             .uploadNewsImage(uploadImage)
             .pipe(tap(url => console.log(url)));
