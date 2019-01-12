@@ -38,4 +38,7 @@ export class BookingComponent implements OnInit {
       endTime: ['', Validators.required]
     });
   }
+
+  changeInput(evet = null) {}
+  btnClck() {}
 }
