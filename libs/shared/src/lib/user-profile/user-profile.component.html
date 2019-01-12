@@ -53,20 +53,21 @@
             </mat-select>
           </mat-form-field>
           <div
-            fxLayout="row"
-            fxLayout.sm="column"
+            fxLayout="column"
             *ngIf="addressDetails?.localBody"
             style="padding:5px"
           >
-            <span fxFlex="25">{{ addressDetails?.localBody }}</span>
-            <span *ngIf="addressDetails?.district"
-              >{{ addressDetails?.district }} <strong>district</strong></span
-            >
-            <span
-              ><button mat-button (click)="editLocalBody()" color="primary">
-                Edit
-              </button></span
-            >
+            <div fxFlex="25">{{ addressDetails?.localBody }}</div>
+            <div fxFlex>
+              <span *ngIf="addressDetails?.district"
+                >{{ addressDetails?.district }} <strong>district</strong></span
+              >
+              <span
+                ><button mat-button (click)="editLocalBody()" color="primary">
+                  Edit
+                </button></span
+              >
+            </div>
           </div>
 
           <div *ngIf="_isAddressDetailLocalBodyEditing">
