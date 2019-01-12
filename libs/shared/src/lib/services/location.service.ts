@@ -54,7 +54,8 @@ export class LocationService {
         if (bodyType) {
           query = query.where('bodyType', '==', bodyType);
         }
-        return query;
+
+        return query.orderBy('name');
       })
       .snapshotChanges()
       .pipe(
