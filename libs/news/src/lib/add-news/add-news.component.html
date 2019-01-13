@@ -4,7 +4,7 @@
 
 <div class="warning-message"></div>
 
-<mat-horizontal-stepper #stepper (animationDone)="randomClickEvent()">
+<mat-vertical-stepper #stepper (animationDone)="randomClickEvent()">
   <mat-step [stepControl]="articleAddFrom">
     <mat-card *ngIf="!submitting" class="form-container">
       <form [formGroup]="articleAddFrom" class="form-container">
@@ -176,4 +176,4 @@
       </div>
     </mat-card>
   </mat-step>
-</mat-horizontal-stepper>
+</mat-vertical-stepper>

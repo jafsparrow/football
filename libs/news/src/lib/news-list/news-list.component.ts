@@ -101,7 +101,7 @@ export class NewsListComponent implements OnInit {
         })
       )
       .subscribe(news => {
-        console.log(news);
+        // console.log(news);
         this.dataSource = new MatTableDataSource(news);
 
         this.dataSource.sort = this.sort;

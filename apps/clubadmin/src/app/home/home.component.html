@@ -9,6 +9,10 @@
 
   <mat-sidenav-content>
     <football-toolbar (menuClicked)="sidenav.toggle()"></football-toolbar>
+    <ng-container *ngIf="loadingRouteConfig">
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </ng-container>
+
     <div class="home-router"><router-outlet></router-outlet></div>
   </mat-sidenav-content>
 </mat-sidenav-container>

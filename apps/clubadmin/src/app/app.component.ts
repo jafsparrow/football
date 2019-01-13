@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {
+  Router,
+  RouteConfigLoadStart,
+  RouteConfigLoadEnd
+} from '@angular/router';
 
 @Component({
   selector: 'football-root',
@@ -7,4 +12,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'clubadmin';
+  loadingRouteConfig: boolean;
 }
