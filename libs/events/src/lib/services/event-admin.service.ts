@@ -33,13 +33,13 @@ export class EventAdminService {
     switch (user.permission.role) {
       case 'admin':
         allEvents$ = this.db.collection('events', ref =>
-          ref.where('mainClub.id', '==', user.mainClub.id)
+          ref.where('mainClub.id', '==', user.permission.clubId)
         );
         break;
       case 'editor':
         allEvents$ = this.db.collection('news', ref =>
           ref
-            .where('mainClub.id', '==', user.mainClub.id)
+            .where('mainClub.id', '==', user.permissions.clubId)
             .where('author.uid', '==', user.uid)
         );
         break;

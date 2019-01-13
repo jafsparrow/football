@@ -108,7 +108,10 @@ export class EventsAddComponent implements OnInit {
       id: this.loggedUser.permission.clubId
     };
     eventData['author'] = {
-      name: this.loggedUser.fullName,
+      name:
+        this.loggedUser.fullName !== ''
+          ? this.loggedUser.fullName
+          : this.loggedUser.displayName,
       id: this.loggedUser.uid
     };
 
@@ -117,7 +120,10 @@ export class EventsAddComponent implements OnInit {
     console.log(eventData);
     this.eventService
       .createEvent(eventData)
-      .then(res => this.router.navigate(['events']))
+      .then(res => {
+        console.log(res);
+        this.router.navigate(['events']);
+      })
       .catch(err => console.log('something went wrong while creating event.'));
   }
   updateEvent() {
