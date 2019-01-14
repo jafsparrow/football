@@ -1,31 +1,44 @@
-<mat-card>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  *ngIf="_isLoading; else groundDetails"
+>
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="accent"
+    [strokeWidth]="10"
+  ></mat-progress-spinner>
+</div>
+<ng-template #groundDetails>
   <div class="turf-details-container" fxLayout="column">
-    <div class="turf-name">Football Hut</div>
+    <div class="turf-name">{{ selectedGround.name }}</div>
 
     <div fxLayout="row">
-      <div class="description" fxflex="40">
-        We provide good quality surface with refreshment facilities. Lorem ipsum
-        dolor sit amet consectetur, adipisicing elit. Quia labore voluptas
-        dolores delectus enim fugit! Adipisci totam quibusdam quis aperiam in
-        esse fugiat velit, itaque dicta, officiis deleniti, nostrum eos.
-      </div>
+      <div class="description" fxflex>{{ selectedGround.description }}</div>
       <div class="contact-details" fxFlex="30">
-        <strong>PLACE: </strong> Vengara <br />
-        <strong>PHONE: </strong> 993393894
+        <strong>PLACE: </strong> {{ selectedGround.place }} <br />
+        <strong>PHONE: </strong> {{ selectedGround.phone }}
       </div>
     </div>
   </div>
-  <div class="ground-header"><h2>Our Grounds</h2></div>
-  <div fxLayout="row wrap">
-    <div *ngFor="let ground of grounds" class="ground-container" fxFlex>
-      <a>{{ ground.name }}</a>
-      <div>
-        <small>{{ ground.type }}</small>
-      </div>
-      <button mat-button (click)="(onClick)">Check Availability</button>
-      <button mat-button (click)="(onClick)">Book</button>
-    </div>
-  </div>
-</mat-card>
 
-<football-turf-detail [ground]="selectedGround"></football-turf-detail>
+  <mat-card>
+    <div class="ground-header"><h2>Our Grounds</h2></div>
+    <div fxLayout="row wrap">
+      <div *ngFor="let pitch of pitches" class="ground-container" fxFlex>
+        <a>{{ pitch.name }}</a>
+        <div>
+          <small>{{ pitch.type }}</small>
+        </div>
+        <button mat-button (click)="selectPitch(pitch)">
+          Check Availability
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
+
+<football-turf-detail
+  *ngIf="selectedPitch"
+  [pitch]="selectedPitch"
+></football-turf-detail>

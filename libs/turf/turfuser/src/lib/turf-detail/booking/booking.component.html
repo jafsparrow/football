@@ -1,18 +1,20 @@
 <mat-card>
-  <div>Booking for the ground 5s</div>
+  <div *ngIf="!loggedInUser" style="font-weight:100; font-size: 20px">
+    You are not logged in make the booking.
+    <button mat-button (click)="navigateToLogin()">Login</button>
+  </div>
+  <div>Booking for {{ pitch.name }}</div>
 
-  <form [formGroup]="bookGroundFrom">
+  <mat-progress-bar
+    mode="indeterminate"
+    *ngIf="_isSubmitting"
+  ></mat-progress-bar>
+  <form [formGroup]="bookGroundFrom" disabled="true">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" value="Sushi" formControlName="name" />
+      <input matInput placeholder="Name" formControlName="name" />
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input
-        matInput
-        placeholder="Phone"
-        value="Sushi"
-        type="tel"
-        formControlName="phone"
-      />
+      <input matInput placeholder="Phone" type="tel" formControlName="phone" />
     </mat-form-field>
     <mat-form-field>
       <input
@@ -33,7 +35,6 @@
         placeholder="Start Time"
         name="appt"
         required
-        (change)="changeInput($event)"
         formControlName="startTime"
       />
       <mat-hint align="start"><strong>Select Start time</strong> </mat-hint>
@@ -48,13 +49,24 @@
         placeholder="End Time"
         name="appt"
         required
-        (change)="changeInput()"
         formControlName="endTime"
       />
       <mat-hint align="start"><strong>Select End time</strong> </mat-hint>
       <mat-hint align="end">eg: 11:00 AM</mat-hint>
     </mat-form-field>
-
-    <button mat-button (click)="btnClck()">Submit</button>
+    <span *ngIf="loggedInUser">
+      <button
+        mat-button
+        *ngIf="!_isSubmitting"
+        (click)="submit()"
+        [disabled]="!bookGroundFrom.valid"
+      >
+        Submit
+      </button>
+      <button mat-button *ngIf="_isSubmitting" disabled="true">Submit</button>
+      <button mat-button (click)="closeDialog()" [disabled]="_isSubmitting">
+        Close
+      </button>
+    </span>
   </form>
 </mat-card>

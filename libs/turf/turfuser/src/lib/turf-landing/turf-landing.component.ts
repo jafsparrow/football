@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TurfService } from '../services/turf.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'football-turf-landing',
@@ -24,12 +26,32 @@ export class TurfLandingComponent implements OnInit {
       id: 'temp3'
     }
   ];
+  id = 'EsSCU8sqajSND80W1x6u';
   selectedGround = null;
-  constructor() {}
+  pitches = [];
+  selectedPitch = null;
+  _isLoading = false;
+  constructor(private turfService: TurfService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._isLoading = true;
+    this.turfService
+      .getPlayGround(this.id)
+      .pipe(
+        switchMap(ground => {
+          this.selectedGround = ground;
+          console.log(ground);
+          return this.turfService.getPitches(this.id);
+        })
+      )
+      .subscribe(pitches => {
+        this.pitches = pitches;
+        console.log(pitches);
+        this._isLoading = false;
+      });
+  }
 
-  selected(ground) {
-    this.selectedGround = ground;
+  selectPitch(pitch) {
+    this.selectedPitch = pitch;
   }
 }

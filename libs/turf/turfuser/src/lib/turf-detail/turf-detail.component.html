@@ -1,6 +1,53 @@
-<div *ngIf="ground">ground details.</div>
-<br />
-<button mat-button (click)="openDialog()">Action</button>
-<!-- <div><football-booking></football-booking></div> -->
-<br />
-<football-day-status (bookForThisDate)="openDialog()"></football-day-status>
+<mat-card>
+  <mat-card-title>{{ pitch.name }}</mat-card-title>
+  <mat-card-subtitle>{{ pitch.type }}</mat-card-subtitle>
+  <button mat-raised-button (click)="openBookForm()" color="primary">
+    Book
+  </button>
+  <p>Select a date to check availability</p>
+  <div fxLayout="row">
+    <div fxFlex="50">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Choose a date"
+          required
+          [(ngModel)]="value"
+          #dateField
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!dateField.value"
+        (click)="loadingBookingFor(dateField.value)"
+      >
+        Check Status
+      </button>
+    </div>
+  </div>
+
+  <div>Booking details for the Date: {{ value.toLocaleDateString() }}</div>
+  <mat-progress-spinner
+    *ngIf="_isLoading; else bookingDetails"
+    mode="indeterminate"
+    color="accent"
+    [strokeWidth]="10"
+  ></mat-progress-spinner>
+
+  <ng-template #bookingDetails>
+    <mat-card *ngIf="bookings.length == 0">
+      No Bookings have been updated for this date. Please contact us.
+    </mat-card>
+    <football-day-status
+      *ngIf="bookings.length !== 0"
+      (bookForThisDate)="openBookingForTheDate($event)"
+      [bookings]="bookings"
+    ></football-day-status>
+  </ng-template>
+</mat-card>

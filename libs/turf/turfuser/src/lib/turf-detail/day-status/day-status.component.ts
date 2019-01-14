@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'football-day-status',
@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class DayStatusComponent implements OnInit {
   sample = 'sjsdflkjsdf';
+  @Input() bookings: any[];
   @Output() bookForThisDate: EventEmitter<any>;
   constructor() {
     this.bookForThisDate = new EventEmitter();
@@ -14,8 +15,15 @@ export class DayStatusComponent implements OnInit {
 
   ngOnInit() {}
 
-  openBookingForm() {
+  openBookingForm(booking) {
     console.log('event is triggered');
-    this.bookForThisDate.emit(null);
+    this.bookForThisDate.emit(booking);
+  }
+
+  getAmPmTime(time) {
+    const timeValue = parseInt(time, 10);
+    const amOrPm = timeValue < 12 ? 'AM' : 'PM';
+    const hour = timeValue < 12 ? timeValue : timeValue - 12;
+    return `${hour.toString()} ${amOrPm}`;
   }
 }
