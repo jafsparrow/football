@@ -11,3 +11,18 @@
 .loading-indicator {
   margin: auto auto;
 }
+
+.type-container {
+  margin: 5px;
+  padding: 5px;
+  background-color: #eee;
+  font-weight: 100;
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+}
+
+.icon-active {
+  background-color: rgb(195, 198, 199);
+  color: white;
+}

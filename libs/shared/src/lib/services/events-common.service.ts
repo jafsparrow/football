@@ -9,6 +9,25 @@ import { Observable, forkJoin, of } from 'rxjs';
 export class EventsCommonService {
   constructor(private db: AngularFirestore) {}
 
+  getRecentEvents() {
+    return this.db
+      .collection('events', ref =>
+        ref
+          .orderBy('publishedDate', 'desc')
+          .where('status', '==', 'published')
+          .limit(50)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
   getEvents(user = null, limit = 10) {
     if (user && user.mainClub) {
       // return user's preferred club events. which are recent.

@@ -1,20 +1,38 @@
 <div class="section-header">More News</div>
-this page will show news from top clubs with infinit scroll.
-<!--
-  <news-list-view-two *ngIf="(news$ | async) as news; else loading" [newsToDisplay]="news"></news-list-view-two>
--->
 
-<ng-template #loading>
-  <div class="loading-container">
-    <mat-spinner
-      class="loading-indicator"
-      diameter="60"
-      strockWidth="5"
-    ></mat-spinner>
+<div
+  class="loading-container"
+  *ngIf="_loading"
+  style="width: 60px; margin: 5px auto;"
+>
+  <mat-spinner
+    class="loading-indicator"
+    diameter="60"
+    strockWidth="5"
+  ></mat-spinner>
+</div>
+<div *ngIf="!_loading">
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div
+      class="type-container"
+      fxflex="10"
+      *ngFor="let type of newsTypes"
+      [ngClass]="{ 'icon-active': type == selectedSport }"
+      (click)="filterNews(type)"
+    >
+      <img [src]="getIcon(type)" [alt]="type" style="height: 100%;" />
+    </div>
+    <div
+      class="type-container"
+      fxflex="10"
+      style="padding-top: 10px"
+      (click)="filterNews('clear')"
+    >
+      clear filter
+    </div>
   </div>
-</ng-template>
-<!--
-  <div *ngFor="let news of (taggedClubsNews | async)">
-    {{ news.title }}
-  </div>
--->
+
+  <football-news-summary-view-teaser
+    [news]="filteringNews"
+  ></football-news-summary-view-teaser>
+</div>

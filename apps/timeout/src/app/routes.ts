@@ -34,7 +34,7 @@ export const routes: Route[] = [
     children: [
       { path: '', component: NewsLandingComponent },
       // { path: 'view/:id', component: NewsViewComponent },
-      { path: 'list/:type', component: NewsListComponent },
+      { path: 'list', component: NewsListComponent },
       { path: 'detail/:id', component: NewsFullViewComponent }
     ]
   },

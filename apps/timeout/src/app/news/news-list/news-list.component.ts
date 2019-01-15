@@ -1,9 +1,5 @@
-import { AuthenticationService } from '@football/shared';
+import { AuthenticationService, NewsCommonService } from '@football/shared';
 import { Component, OnInit } from '@angular/core';
-import { switchMap, take } from 'rxjs/operators';
-import { Subscription, forkJoin } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { NewsService } from '@football/news';
 
 @Component({
   selector: 'football-news-list',
@@ -11,78 +7,88 @@ import { NewsService } from '@football/news';
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
-  news$;
-  user: any;
-  userSubscription: Subscription;
-  newsSubscription: Subscription;
-  constructor(
-    private _activatedRoute: ActivatedRoute,
-    public newsService: NewsService,
-    private _auth: AuthenticationService
-  ) {
-    this.user = null;
+  news: any[];
+  newsTypes = [];
+  filteringNews: any;
+  _loading = false;
+  selectedSport = '';
 
-    this.userSubscription = this._auth.user$.subscribe(
-      user => (this.user = user)
-    );
+  constructor(private _newsService: NewsCommonService) {
+    this.filteringNews = [];
   }
 
   ngOnInit() {
-    this.news$ = forkJoin([
-      this._activatedRoute.params.pipe(take(1)),
-      this._auth.user$.pipe(take(1))
-    ]).pipe(
-      switchMap(([params, user]) => {
-        const id = params['type'];
-        if (id) {
-          switch (id) {
-            case 'all':
-              // return news item for all the news
-              return this.newsService.getNews();
-              break;
-            case 'tagged':
-              return this.newsService.getTaggedClubNews(user);
-              break;
-            default:
-              return this.newsService.getClubNews(user.mainClub.id);
-              break;
+    this._loading = true;
+    this._newsService.getNews().subscribe(news => {
+      this.news = news;
+      // console.log(news);
+      this.filteringNews = news;
+      this.news.forEach(item => {
+        const relatedSports = item['relatedSports'];
+        Object.keys(relatedSports).forEach(key => {
+          if (relatedSports[key]) {
+            if (this.newsTypes.indexOf(key) === -1) {
+              this.newsTypes.push(key);
+            }
           }
+        });
+        // console.log(this.newsTypes);
+      });
+      console.log(this.newsTypes);
+      this._loading = false;
+    });
+  }
+
+  filterNews(type) {
+    if (type === 'clear') {
+      this.selectedSport = '';
+      this.filteringNews = this.news;
+      return;
+    }
+    this.selectedSport = type;
+    const filteredNews = this.news.filter(news => {
+      if (news.relatedSports) {
+        const relatedSports = news.relatedSports;
+        if (Object.keys(relatedSports).indexOf(type) > -1) {
+          return true;
         }
-      })
-    );
+      }
 
-    // });
-    // this.news$ = this._activatedRoute.params.pipe(
-    //   switchMap(params => {
-    //     const id = params['type'];
-    //     console.log('inside the param areas7' + id);
+      return false;
+    });
 
-    //     if (id) {
-    //       console.log('the ide ' + id);
+    this.filteringNews = filteredNews;
+    // this.filteringNews = Object.assign({}, filteredNews);
+    // console.log(this.filteringNews);
+  }
 
-    //       switch (id) {
-    //         case 'all':
-    //           // return news item for all the news
-    //           return this.newsService.getNews();
-    //           break;
-    //         case 'tagged':
-    //           console.log('I am in tagged section');
+  getIcon(type) {
+    const icon = 'assets/sportsTypes/';
+    let rest = '';
+    switch (type) {
+      case 'cricket':
+        rest = 'cricket.svg';
+        break;
+      case 'football':
+        rest = 'football.svg';
+        break;
+      case 'badminton':
+        rest = 'badminton.svg';
+        break;
+      case 'tug of war':
+        rest = 'tugofwar.svg';
+        break;
 
-    //           return this.newsService.getTaggedClubNews({
-    //             taggedClubs: {
-    //               VtT99aikQMEv3vh1VkGq: { id: 'VtT99aikQMEv3vh1VkGq' },
-    //               YYlnUyMiUstoMwXLWVlh: { id: 'YYlnUyMiUstoMwXLWVlh' }
-    //             }
-    //           });
-    //           break;
-    //         default:
-    //           return this.newsService.getClubNews('VtT99aikQMEv3vh1VkGq');
-    //           break;
-    //       }
-    //     }
-
-    //     return this.newsService.getDetailedNews(id);
-    //   })
-    // );
+      case 'basketball':
+        rest = 'basketball.svg';
+        break;
+      case 'volleyball':
+        rest = 'volleyball.svg';
+        break;
+      default:
+        rest = 'swim.svg';
+        break;
+    }
+    return icon + rest;
   }
 }

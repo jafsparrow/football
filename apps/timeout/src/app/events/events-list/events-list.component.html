@@ -1,3 +1,37 @@
-<p>
-  events-list works!
-</p>
+<div class="section-header">More Events</div>
+
+<div
+  class="loading-container"
+  *ngIf="_loading"
+  style="width: 60px; margin: 5px auto;"
+>
+  <mat-spinner
+    class="loading-indicator"
+    diameter="60"
+    strockWidth="5"
+  ></mat-spinner>
+</div>
+<div *ngIf="!_loading">
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div
+      class="type-container"
+      fxflex="10"
+      *ngFor="let type of eventTypes"
+      [ngClass]="{ 'icon-active': type == selectedSport }"
+      (click)="filterEvents(type)"
+    >
+      <img [src]="getIcon(type)" [alt]="type" style="height: 100%;" />
+    </div>
+    <div
+      class="type-container"
+      fxflex="10"
+      style="padding-top: 10px"
+      (click)="filterEvents('clear')"
+    >
+      clear filter
+    </div>
+  </div>
+  <football-events-summary-teaser
+    [events]="filteringEvents"
+  ></football-events-summary-teaser>
+</div>

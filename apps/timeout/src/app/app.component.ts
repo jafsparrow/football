@@ -15,11 +15,11 @@ export class AppComponent {
     },
     {
       name: 'News',
-      route: 'news'
+      route: '/news/list'
     },
     {
       name: 'Events',
-      route: 'events'
+      route: '/events/list'
     }
   ];
 }

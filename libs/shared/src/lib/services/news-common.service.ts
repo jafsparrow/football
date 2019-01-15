@@ -26,8 +26,30 @@ export class NewsCommonService {
           | firebase.firestore.CollectionReference
           | firebase.firestore.Query = ref;
         query = query.where('status', '==', 'published');
+        query.orderBy('publishedDate', 'desc');
         query = query.limit(limitNumber);
         return query;
+      })
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(item => {
+            const data = item.payload.doc.data();
+            const id = item.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
+  getNextNews(from, howMany) {
+    this.db
+      .collection('news', ref => {
+        return ref
+          .orderBy('publishedDate', 'desc')
+          .where('status', '==', 'published')
+          .limit(howMany)
+          .startAfter(from);
       })
       .snapshotChanges()
       .pipe(
