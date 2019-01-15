@@ -81,16 +81,20 @@ export class NewsService {
   // clubadmin has two users. editor and admin both will have query updated.
   getNewsForAdmin(user) {
     let allNews$: AngularFirestoreCollection<any> = null;
+    // precaution to check user has permissions.
+    if (!user.permission) {
+      user.permission = {};
+    }
     switch (user.permission.role) {
       case 'admin':
         allNews$ = this.db.collection('news', ref =>
-          ref.where('mainClub.id', '==', user.mainClub.id)
+          ref.where('mainClub.id', '==', user.permission.clubId)
         );
         break;
       case 'editor':
         allNews$ = this.db.collection('news', ref =>
           ref
-            .where('mainClub.id', '==', user.mainClub.id)
+            .where('mainClub.id', '==', user.permissions.clubId)
             .where('author.uid', '==', user.uid)
         );
         break;

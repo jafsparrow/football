@@ -1,0 +1,37 @@
+<mat-card>
+  <ais-instantsearch
+    [config]="{
+      apiKey: 'bb54da3aa3a5f72f9d9bef9137d4548b',
+      appId: 'Y5AWSS2ZES',
+      indexName: 'clubs',
+      routing: true
+    }"
+  >
+    <ais-search-box></ais-search-box>
+
+    <ais-hits>
+      <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+        <div *ngFor="let hit of hits" style="padding: 5px">
+          <div style="background-color:#eee">
+            <div fxFlex style="padding:5px">
+              <ais-highlight attribute="name" [hit]="hit"> </ais-highlight>
+              <p style="font-size: 10px">{{ hit.address.location }}</p>
+
+              <a
+                (click)="goToClubInfo(hit.id)"
+                style="background-color: rgb(240, 155, 173); padding:2px; border-radius: 3px"
+                >view</a
+              >
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ais-hits>
+  </ais-instantsearch>
+
+  <div class="close-button">
+    <button mat-mini-fab (click)="closeDialog()" color="accent">
+      <mat-icon class="mat-18">close</mat-icon>
+    </button>
+  </div>
+</mat-card>

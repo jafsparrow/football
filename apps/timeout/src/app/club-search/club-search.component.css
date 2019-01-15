@@ -1,0 +1,10 @@
+mat-card {
+  padding: 0px;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

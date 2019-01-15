@@ -75,7 +75,6 @@ export class TurfDetailComponent implements OnInit, OnChanges {
     console.log($event);
     const value = $event;
     const dateFromTimeStamp = new Date(value.date.seconds * 1000);
-    console.log(new Date(value.date.seconds * 1000).toLocaleDateString());
     const pitch = { id: this.pitch.id, name: this.pitch.name };
     const data = {
       pitch,
