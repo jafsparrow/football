@@ -1,3 +1,4 @@
+import { ClubSearchComponent } from './club-search/club-search.component';
 import { SeoService } from './services/seo.service';
 import { ClubsModule } from '@football/clubs';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -57,7 +58,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NewsListComponent,
     EventsLandingComponent,
     EventsListComponent,
-    EventsDetailComponent
+    EventsDetailComponent,
+    ClubSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
