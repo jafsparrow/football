@@ -1,3 +1,14 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="item" routerLink="news">News</div>
+    <div class="item" routerLink="events">Events</div>
+    <div class="item">Fav club news</div>
+    <div class="item">Fav club events</div>
+    <div class="item">Pitches</div>
+  </div>
+</div>
+
+<!--
 <div>
   <div *ngIf="homeMessage.isLoggedIn; else notLoggedIn">
     <div *ngIf="!homeMessage.hasFavClub" class="home-message">
@@ -61,10 +72,7 @@
 </div>
 <div class="section-header">
   Top Club News
-  <!-- <button mat-button routerLink="/news">
-    view more
-    <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button> -->
+
 </div>
 
 <div *ngIf="(news$ | async) as news; else newsLoading">
@@ -78,10 +86,10 @@
 
 <div class="section-header">
   Events
-  <!-- <button mat-button routerLink="/events">
+  <button mat-button routerLink="/events">
     view more
     <mat-icon class="mat-18">trending_flat</mat-icon>
-  </button> -->
+  </button>
 </div>
 
 <football-events-summary-teaser
@@ -92,4 +100,4 @@
 <ng-template #eventLoading>
   <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
   <br />
-</ng-template>
+</ng-template> -->
