@@ -1,7 +1,7 @@
 // import { ClubInfoComponent } from './club-info/club-info.component';
 import { AuthGuard } from '@football/shared';
 // import { ClubRequestComponent } from './club-request/club-request.component';
-import { AnnouncementComponent } from './announcement/announcement.component';
+// import { AnnouncementComponent } from './announcement/announcement.component';
 // import { EventsComponent } from './events/events.component';
 import { HomeComponent } from './home/home.component';
 import { Route } from '@angular/router';

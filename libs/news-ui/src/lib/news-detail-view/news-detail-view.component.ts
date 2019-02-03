@@ -45,7 +45,7 @@ export class NewsDetailViewComponent implements OnInit {
   // this should navigate to the given route. if not route is given as input,
   // it should default to 'clubinfo/id'.
   navigateToClubDetails(clubId) {
-    let routerPath = `clubinfo/${clubId}`;
+    let routerPath = `clubs/clubinfo/${clubId}`;
     if (this.route) {
       routerPath = `${this.route}/${clubId}`;
     }

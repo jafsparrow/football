@@ -6,7 +6,7 @@
     <span
       class="news-tags"
       [ngStyle]="{ 'background-color': randomTagColor() }"
-      [routerLink]="['/clubinfo', news.mainClub?.id]"
+      [routerLink]="['/clubs/clubinfo', news.mainClub?.id]"
       >{{ news.mainClub?.name ? news.mainClub?.name : 'Default club' }}</span
     >
     <div class="news-title" [routerLink]="['/news/detail', news.id]">

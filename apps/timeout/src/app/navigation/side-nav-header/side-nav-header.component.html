@@ -1,0 +1,29 @@
+<div
+  class="side-nav-header-container"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <div class="side-nav-header" fxFlex>
+    <div class="side-nav-header-image-container">
+      <img
+        src="{{
+          user ? user.photoUrl : 'https://picsum.photos/300/300/?random'
+        }}"
+        alt="user profile image"
+        class="side-nav-header-image"
+      />
+    </div>
+  </div>
+  <div class="side-nav-user-name">
+    <div *ngIf="user; else notLoggedIn">
+      {{ user?.fullName !== '' ? user.fullName : user.displayName }}
+    </div>
+
+    <ng-template #notLoggedIn>
+      <div>
+        <div>You are not logged in.</div>
+        <button mat-button routerLink="/login" color="accent">Login</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

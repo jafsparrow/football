@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   sideNavOptions: SideNavOption[] = [
     {
       name: 'Home',
-      route: 'home'
+      route: '/'
     },
     {
       name: 'News',

@@ -1,3 +1,4 @@
+import { ClubSearchComponent } from './club-search/club-search.component';
 import { EventUiModule } from '@football/event-ui';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,6 +29,11 @@ const routes: Routes = [
     NewsUiModule,
     EventUiModule
   ],
-  declarations: [ClubsComponent, ClubRequestComponent, ClubInfoComponent]
+  declarations: [
+    ClubsComponent,
+    ClubRequestComponent,
+    ClubInfoComponent,
+    ClubSearchComponent
+  ]
 })
 export class ClubsHomeModule {}

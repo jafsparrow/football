@@ -1,0 +1,16 @@
+<div class="nav-list-container">
+  <ul class="nav-list">
+    <li
+      class="nav-item"
+      routerLinkActive="active"
+      *ngFor="let link of navConfig"
+      [routerLink]="link.route"
+      (click)="onToggleClose()"
+    >
+      <a>
+        <mat-icon class="link-icon">more</mat-icon>
+        {{ link.name }}</a
+      >
+    </li>
+  </ul>
+</div>

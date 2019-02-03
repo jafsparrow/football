@@ -1,0 +1,17 @@
+.flex-full-width {
+  flex: 1 1 auto;
+}
+
+.username {
+  font-size: 5px;
+  font-weight: 100;
+}
+
+mat-toolbar {
+  overflow: hidden;
+}
+
+.app-title {
+  text-transform: uppercase;
+  font-weight: 200;
+}

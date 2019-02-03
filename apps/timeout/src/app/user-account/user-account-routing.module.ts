@@ -6,9 +6,14 @@ import { AuthGuard } from '@football/shared';
 import { AccountComponent } from './account.component';
 
 const routes: Routes = [
-  { path: '', component: AccountComponent },
-  { path: 'login', component: TimeoutLoginComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  {
+    path: '',
+    component: AccountComponent,
+    children: [
+      { path: '', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: TimeoutLoginComponent }
+    ]
+  }
 ];
 
 @NgModule({
