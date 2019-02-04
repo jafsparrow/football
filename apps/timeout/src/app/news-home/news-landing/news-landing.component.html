@@ -10,7 +10,7 @@
   </mat-chip-list>
 </div>
 
-<div *ngIf="user">
+<div *ngIf="user; else notLoggedIn">
   <!-- <div *ngIf="(mainClubNews$ | async) as mainClubNews">
     <div class="section-header">
       {{ user.mainClub.name }} News
@@ -37,6 +37,13 @@
     ></football-news-summary-view-teaser>
   </div>
 </div>
+
+<ng-template #notLoggedIn>
+  <div class="not-logged-msg">
+    You are not logged in. Please
+    <a routerLink="/account/login">login</a> and tag clubs
+  </div>
+</ng-template>
 
 <div *ngIf="(recentNews$ | async) as news">
   <div class="section-header">

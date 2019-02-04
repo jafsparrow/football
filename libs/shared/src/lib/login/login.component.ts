@@ -53,6 +53,8 @@ export class LoginComponent implements OnInit, OnChanges {
             this.auth.logout();
             console.log('you do not have permission to login to admin site');
           }
+        } else {
+          this.router.navigate([this.redirectURL]);
         }
       }
     });

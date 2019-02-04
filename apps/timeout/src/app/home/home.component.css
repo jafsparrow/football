@@ -27,7 +27,7 @@
   justify-content: center;
   align-content: flex-start;
 }
-.item {
+.container > div {
   background-color: #eee;
   min-height: 150px;
   min-width: 150px;
@@ -41,7 +41,33 @@
   font-weight: 200;
   font-size: 20px;
   cursor: pointer;
+
+  background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
+
+.news {
+  /* background: linear-gradient(110deg, #7fdbff 60%, #ffdc00 60%); */
+  /* background: linear-gradient(-70deg, #fa7c30 30%, rgba(0, 0, 0, 0) 30%),
+    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIqCMbzG0gT--mgwwnZtp6beZ_ev5xKWoiFjdtrGg68on90sXLoQ'); */
+
+  /* filter: blur(5px); */
+}
+
+/* .events {
+  background: linear-gradient(110deg, #dddddd 60%, #b10dc9 60%);
+}
+
+.mynews {
+  background: linear-gradient(110deg, #f012be 60%, #ff851b 60%);
+}
+.myevents {
+}
+
+.turf {
+} */
+/* background: linear-gradient(-70deg, #fa7c30 30%, rgba(0, 0, 0, 0) 30%), url('planets.jpg'); */
 @media screen and (max-width: 600px) {
   .container {
     flex-direction: column;

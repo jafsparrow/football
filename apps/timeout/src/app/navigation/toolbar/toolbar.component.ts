@@ -22,9 +22,9 @@ export class ToolbarComponent implements OnInit {
     this.menuClicked.emit('opened');
   }
   login() {
-    this._router.navigate(['login']);
+    this._router.navigate(['account/login']);
   }
   logout() {
-    this._auth.logout().then(res => this._router.navigate(['/login']));
+    this._auth.logout().then(res => this._router.navigate(['/account/login']));
   }
 }

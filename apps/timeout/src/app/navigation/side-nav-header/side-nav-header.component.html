@@ -1,9 +1,5 @@
-<div
-  class="side-nav-header-container"
-  fxLayout="column"
-  fxLayoutAlign="center center"
->
-  <div class="side-nav-header" fxFlex>
+<div class="side-nav-header-container">
+  <div class="side-nav-header">
     <div class="side-nav-header-image-container">
       <img
         src="{{
@@ -22,7 +18,9 @@
     <ng-template #notLoggedIn>
       <div>
         <div>You are not logged in.</div>
-        <button mat-button routerLink="/login" color="accent">Login</button>
+        <button mat-button routerLink="/account/login" color="accent">
+          Login
+        </button>
       </div>
     </ng-template>
   </div>

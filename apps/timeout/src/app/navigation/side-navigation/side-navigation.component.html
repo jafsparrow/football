@@ -2,6 +2,7 @@
   <ul class="nav-list">
     <li
       class="nav-item"
+      [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active"
       *ngFor="let link of navConfig"
       [routerLink]="link.route"
