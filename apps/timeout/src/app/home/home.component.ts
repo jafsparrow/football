@@ -17,6 +17,11 @@ import { Observable, of, Subscription } from 'rxjs';
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
+import {
+  RouteConfigLoadStart,
+  RouteConfigLoadEnd,
+  Router
+} from '@angular/router';
 
 @Component({
   selector: 'football-home',
@@ -24,6 +29,7 @@ import { isPlatformServer } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  loadingRouteConfig: boolean;
   // userSubscription: Subscription;
   // taggedClubNews$: Observable<any[]>;
   // taggedClubsEvents$: Observable<any[]>;
@@ -42,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // events: EventItem[];
   // homeMessage = { isLoggedIn: false, hasFavClub: true, hasTaggedClubs: false };
 
-  constructor() {}
+  constructor(private router: Router) {}
   // constructor(
   //   private authSerivice: AuthenticationService,
   //   private newsTeaser: NewsTeaserService,
@@ -53,6 +59,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof RouteConfigLoadStart) {
+        this.loadingRouteConfig = true;
+      } else if (event instanceof RouteConfigLoadEnd) {
+        this.loadingRouteConfig = false;
+      }
+    });
+
     // // const EVENT_KEY = makeStateKey<any>('events-' + 3);
     // this.events$ = this.eventService
     //   .getTopeTierClubEvents(10)
