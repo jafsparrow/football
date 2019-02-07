@@ -62,10 +62,12 @@ export class NewsFullViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.seo.generateTags({
-      title: 'timeout sports'
-    });
+    // this.seo.generateTags({
+    //   title: 'Timeout sports - where we get together to challenge.',
+    //   description:
+    // });
 
+    this.seo.resetTags();
     console.log('hello ');
   }
 }

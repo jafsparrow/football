@@ -10,7 +10,11 @@ const routes: Routes = [
     path: '',
     component: AccountComponent,
     children: [
-      { path: '', component: ProfileComponent, canActivate: [AuthGuard] },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard]
+      },
       { path: 'login', component: TimeoutLoginComponent }
     ]
   }
