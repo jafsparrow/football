@@ -13,6 +13,14 @@
       [appTitle]="title"
     ></football-timeout-toolbar>
 
+    <div *ngIf="loadingRouteConfig">
+      <div class="nav-loading">
+        Loading...
+      </div>
+
+      <div class="blur-back"></div>
+    </div>
+
     <div class="router-outlet"><router-outlet></router-outlet></div>
     <!--
     <div fxLayout="row" fxLayoutAlignment="center" class="footer">

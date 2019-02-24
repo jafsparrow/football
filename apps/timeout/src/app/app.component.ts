@@ -1,6 +1,7 @@
 import { SideNavOption } from '@football/shared';
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { Router, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 
 @Component({
   selector: 'football-root',
@@ -23,8 +24,9 @@ export class AppComponent implements OnInit {
       route: '/events/list'
     }
   ];
+  loadingRouteConfig: boolean;
 
-  constructor(private swUpdate: SwUpdate) {}
+  constructor(private swUpdate: SwUpdate,private router: Router) {}
 
   ngOnInit() {
     if (this.swUpdate.isEnabled) {
@@ -34,5 +36,13 @@ export class AppComponent implements OnInit {
         }
       });
     }
+
+    this.router.events.subscribe(event => {
+      if (event instanceof RouteConfigLoadStart) {
+        this.loadingRouteConfig = true;
+      } else if (event instanceof RouteConfigLoadEnd) {
+        this.loadingRouteConfig = false;
+      }
+    });
   }
 }

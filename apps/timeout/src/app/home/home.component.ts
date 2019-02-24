@@ -59,14 +59,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof RouteConfigLoadStart) {
-        this.loadingRouteConfig = true;
-      } else if (event instanceof RouteConfigLoadEnd) {
-        this.loadingRouteConfig = false;
-      }
-    });
-
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof RouteConfigLoadStart) {
+    //     this.loadingRouteConfig = true;
+    //   } else if (event instanceof RouteConfigLoadEnd) {
+    //     this.loadingRouteConfig = false;
+    //   }
+    // });
     // // const EVENT_KEY = makeStateKey<any>('events-' + 3);
     // this.events$ = this.eventService
     //   .getTopeTierClubEvents(10)
